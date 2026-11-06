@@ -2,11 +2,11 @@
 function wordBtns(kind, label){
   return `<button class="btn pri" data-act="wordDl" data-arg="${kind}">📄 Unduh Word${label ? ": " + esc(label) : ""}</button><button class="btn" data-act="wordCopy" data-arg="${kind}">📋 Salin untuk Word${label ? " (" + esc(label) + ")" : ""}</button>`;
 }
-function docShell(title, body, landscape){
+function docShell(title, body, landscape, multi){
   const page = landscape ? "size:29.7cm 21cm;mso-page-orientation:landscape;margin:1.5cm 1.5cm 1.5cm 1.5cm;" : "size:21cm 29.7cm;margin:2cm 2cm 2cm 2.5cm;";
   return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>${esc(title)}</title>
   <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
-  <style>@page Section1{${page}} div.Section1{page:Section1}
+  <style>${multi ? "@page {" + page + "} " : "@page Section1{" + page + "} div.Section1{page:Section1}"}
   body{font-family:"Times New Roman",serif;font-size:12pt;line-height:1.35}
   h1{font-size:14pt;text-align:center;margin:0 0 4pt} h2{font-size:12.5pt;margin:12pt 0 4pt} h3{font-size:12pt;margin:10pt 0 3pt}
   p.sub{text-align:center;margin:0 0 10pt}
@@ -91,7 +91,7 @@ DOC.naskah = (p) => ({title:"Naskah Soal", body: `<h1>${esc((state.profil.sekola
   ${p.kisi.butir.map((b, i) => `<p>${i + 1}. ${nl2br(b.soal)}</p>${b.opsi ? `<p style="margin-left:18pt">${Object.entries(b.opsi).map(([o, v]) => esc(o) + ". " + esc(v)).join("<br>")}</p>` : "<p>.................................................................................................................</p>"}`).join("")}`});
 DOC.analisis = (p) => { const h = p.analisis.hasil; if (!h) return null; return {title:"Analisis Butir Soal", body: judul("ANALISIS BUTIR SOAL", p) + identitas(p) + landasan(p) + analisisHTML(h).replace(/class="tbl-wrap"/g, "").replace(/class="note info"/g, "") + ttd(p)}; };
 
-const PB = '<br clear="all" style="page-break-before:always;mso-break-type:page-break">';
+const pageDiv = (html) => html.indexOf("<h1") >= 0 ? html.replace("<h1", '<h1 style="page-break-before:always"') : '<p style="page-break-before:always;margin:0"></p>' + html;
 DOC.paket = (p) => {
   const keepM = p.modulOpsi.tpId, keepL = p.lkpdTp;
   const parts = [];
@@ -111,8 +111,8 @@ DOC.paket = (p) => {
   const cover = `<br><br><br><h1 style="font-size:20pt">PERANGKAT AJAR</h1><p class="sub" style="font-size:14pt">${esc(mapelName(p))}<br>Kelas ${esc(p.kelas)} · Fase ${faseOf(p)}${p.kelasRangkap ? "<br>(" + esc(p.kelasRangkap) + ")" : ""}</p>
     <p class="sub" style="font-size:13pt">Tahun Ajaran ${esc(pr.tahunAjaran)}</p><br><br><p class="sub">Disusun oleh:<br><b>${esc(pr.namaGuru || "..............................")}</b><br>NIP. ${esc(pr.nip || "-")}</p><br><br>
     <p class="sub" style="font-size:13pt"><b>${esc((pr.sekolah || "").toUpperCase())}</b><br>${esc([pr.desa, pr.kabupaten, pr.provinsi].filter(Boolean).join(", "))}</p>
-    ${PB}<h1>DAFTAR ISI</h1><ol>${parts.map(x => `<li>${esc(x.judul)}</li>`).join("")}</ol>`;
-  return {title:"Perangkat Ajar Lengkap", body: cover + parts.map(x => PB + x.body).join("")};
+    ${pageDiv(`<h1>DAFTAR ISI</h1><ol>${parts.map(x => `<li>${esc(x.judul)}</li>`).join("")}</ol>`)}`;
+  return {title:"Perangkat Ajar Lengkap", multi:true, body: cover + parts.map(x => pageDiv(x.body)).join("")};
 };
 
 function buildDoc(kind){
@@ -124,14 +124,14 @@ function buildDoc(kind){
 }
 ACT.wordDl = (kind) => {
   const d = buildDoc(kind); if (!d) return;
-  const html = docShell(d.title, d.body, d.landscape);
+  const html = docShell(d.title, d.body, d.landscape, d.multi);
   const nama = (d.title + " " + mapelName(P()) + " kelas " + P().kelas).replace(/[^\w\-]+/g, "_").slice(0, 80);
   downloadBlob(new Blob(["﻿", html], {type:"application/msword"}), nama + ".doc");
   toast("Dokumen Word diunduh. Bila Word bertanya, pilih Aktifkan Pengeditan.", 3500);
 };
 ACT.wordCopy = (kind) => {
   const d = buildDoc(kind); if (!d) return;
-  const html = docShell(d.title, d.body, d.landscape);
+  const html = docShell(d.title, d.body, d.landscape, d.multi);
   const plain = d.body.replace(/<br\s*\/?>/g, "\n").replace(/<\/(p|tr|h\d|li)>/g, "\n").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
   if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
     navigator.clipboard.write([new ClipboardItem({"text/html": new Blob([html], {type:"text/html"}), "text/plain": new Blob([plain], {type:"text/plain"})})]).then(() => toast("Tersalin. Tempel di Word atau Google Dokumen."), () => copyRich(d.body));
