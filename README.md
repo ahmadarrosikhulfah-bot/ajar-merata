@@ -56,19 +56,19 @@ Daftar acuan diperiksa per 6 November 2026 dan bisa diubah di Menu › Acuan huk
 
 ## Memasang di Gemini Canvas
 
-Pakai berkas kecil `canvas.html`. Berkas ini hanya berisi tampilan dan memuat skrip aplikasi (`app.js`) dari repositori ini lewat jsDelivr, jadi Gemini tidak perlu menyalin ratusan kilobita kode.
+Pakai berkas `canvas.html` (kurang dari 1 KB). Berkas ini hanya memuat `app.js` dari repositori ini lewat jsDelivr, jadi Gemini tidak perlu menyalin ratusan kilobita kode, dan Anda cukup memasangnya sekali.
 
 1. Buka `canvas.html` di repositori ini, lalu tekan **Copy raw file**.
 2. Di [gemini.google.com](https://gemini.google.com), nyalakan **Canvas** (menu + › Alat lainnya), tempel kodenya, lalu tulis: *Tampilkan kode HTML ini di Canvas persis apa adanya. Jangan ubah kodenya.*
 3. Tekan **Share** untuk mendapat link.
 
-Setiap perubahan yang Anda kirim ke `app.js` di cabang `main` ikut sampai ke link Canvas setelah cache jsDelivr diperbarui (paling lama sekitar 12 jam).
+Setiap perubahan yang Anda kirim ke cabang `main` ikut sampai ke link Canvas setelah cache jsDelivr diperbarui (paling lama sekitar 12 jam; bisa dipercepat dengan membuka `https://purge.jsdelivr.net/gh/ahmadarrosikhulfah-bot/ajar-merata@main/app.js`).
 
 Bila tombol AI di Canvas menolak dengan HTTP 403 atau 404, Google sudah mengganti model yang dilayani kunci Canvas. Perbarui daftar model di Menu › Pengaturan AI, atau ubah konstanta `AI_MODELS` di `src/01-core.js`.
 
 ## Pengembangan
 
-Kode sumber ada di folder `src/`. Jalankan `python3 build.py` untuk membuat `index.html` (versi lengkap), `app.js`, dan `canvas.html`.
+Kode sumber ada di folder `src/`. Jalankan `python3 build.py` untuk membuat `index.html` (versi lengkap), `app.js` (seluruh aplikasi, dipakai versi Canvas), dan `canvas.html` (pemuat kecil).
 
 ## Lisensi
 
