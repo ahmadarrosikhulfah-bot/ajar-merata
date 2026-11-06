@@ -135,6 +135,7 @@ function defaultState(){
     regs: REGS_DEFAULT.map(r => Object.assign({checked: true}, r)),
     regsCustom: [],
     ai:{models: AI_MODELS.slice(), lastOk:"", alwaysManual:false},
+    ui:{fs:0, welcomed:false},
     savedAt:"", exportedAt:""
   };
 }
@@ -142,6 +143,7 @@ let state = null;
 state = defaultState();
 state.pkgs.push(newPkg());
 
+function applyFont(){ const h = document.documentElement; h.classList.toggle("fs1", state.ui.fs === 1); h.classList.toggle("fs2", state.ui.fs === 2); }
 function P(){ return state.pkgs[state.active] || state.pkgs[0]; }
 
 /* ============ HELPERS ============ */
@@ -192,6 +194,7 @@ function applyLoaded(s){
   state.profil = Object.assign(d.profil, s.profil || {});
   state.kalender = Object.assign(d.kalender, s.kalender || {});
   state.ai = Object.assign(d.ai, s.ai || {});
+  state.ui = Object.assign(d.ui, s.ui || {});
   // gabungkan daftar regulasi: pertahankan centang lama, tambahkan yang baru
   const old = {}; (s.regs || []).forEach(r => old[r.id] = r);
   state.regs = REGS_DEFAULT.map(r => Object.assign({}, r, {checked: old[r.id] ? !!old[r.id].checked : true}));

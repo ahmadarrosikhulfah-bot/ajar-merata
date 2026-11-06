@@ -91,6 +91,30 @@ DOC.naskah = (p) => ({title:"Naskah Soal", body: `<h1>${esc((state.profil.sekola
   ${p.kisi.butir.map((b, i) => `<p>${i + 1}. ${nl2br(b.soal)}</p>${b.opsi ? `<p style="margin-left:18pt">${Object.entries(b.opsi).map(([o, v]) => esc(o) + ". " + esc(v)).join("<br>")}</p>` : "<p>.................................................................................................................</p>"}`).join("")}`});
 DOC.analisis = (p) => { const h = p.analisis.hasil; if (!h) return null; return {title:"Analisis Butir Soal", body: judul("ANALISIS BUTIR SOAL", p) + identitas(p) + landasan(p) + analisisHTML(h).replace(/class="tbl-wrap"/g, "").replace(/class="note info"/g, "") + ttd(p)}; };
 
+const PB = '<br clear="all" style="page-break-before:always;mso-break-type:page-break">';
+DOC.paket = (p) => {
+  const keepM = p.modulOpsi.tpId, keepL = p.lkpdTp;
+  const parts = [];
+  const add = (judul, d) => { if (d && d.body) parts.push({judul, body:d.body}); };
+  if (jpPerMinggu(p)) add("Rincian minggu dan JP efektif", DOC.kalender(p));
+  if (p.cpTeks.trim()) add("Capaian Pembelajaran", DOC.cp(p));
+  if (p.atp.length) { add("Alur Tujuan Pembelajaran", DOC.atp(p)); add("Program Tahunan", DOC.prota(p)); add("Program Semester", DOC.promes(p)); }
+  if (Object.keys(p.kktp).length) add("KKTP", DOC.kktp(p));
+  p.atp.forEach((t, i) => { const m = p.modul[t.id]; if (m && m.parts && Object.keys(m.parts).length) { p.modulOpsi.tpId = t.id; add("Modul Ajar TP " + (i + 1), DOC.modul(p)); } });
+  p.atp.forEach((t, i) => { if (p.lkpd[t.id]) { p.lkpdTp = t.id; add("LKPD TP " + (i + 1), DOC.lkpd(p)); } });
+  p.modulOpsi.tpId = keepM; p.lkpdTp = keepL;
+  if (p.asesmen.rows.length) add("Rencana Asesmen", DOC.asesmen(p));
+  if (p.kisi.butir.length) { add("Kisi-kisi dan Kartu Soal", DOC.kisi(p)); add("Naskah Soal", DOC.naskah(p)); }
+  if (p.analisis.hasil) add("Analisis Butir Soal", DOC.analisis(p));
+  if (!parts.length) return null;
+  const pr = state.profil;
+  const cover = `<br><br><br><h1 style="font-size:20pt">PERANGKAT AJAR</h1><p class="sub" style="font-size:14pt">${esc(mapelName(p))}<br>Kelas ${esc(p.kelas)} · Fase ${faseOf(p)}${p.kelasRangkap ? "<br>(" + esc(p.kelasRangkap) + ")" : ""}</p>
+    <p class="sub" style="font-size:13pt">Tahun Ajaran ${esc(pr.tahunAjaran)}</p><br><br><p class="sub">Disusun oleh:<br><b>${esc(pr.namaGuru || "..............................")}</b><br>NIP. ${esc(pr.nip || "-")}</p><br><br>
+    <p class="sub" style="font-size:13pt"><b>${esc((pr.sekolah || "").toUpperCase())}</b><br>${esc([pr.desa, pr.kabupaten, pr.provinsi].filter(Boolean).join(", "))}</p>
+    ${PB}<h1>DAFTAR ISI</h1><ol>${parts.map(x => `<li>${esc(x.judul)}</li>`).join("")}</ol>`;
+  return {title:"Perangkat Ajar Lengkap", body: cover + parts.map(x => PB + x.body).join("")};
+};
+
 function buildDoc(kind){
   const p = P(); syncTxtFields(p); syncKKTP(p); syncLKPD(p);
   const d = DOC[kind] && DOC[kind](p);

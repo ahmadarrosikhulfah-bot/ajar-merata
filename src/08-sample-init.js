@@ -33,5 +33,7 @@ function loadSample(){
 (function init(){
   const had = load();
   if (!had) { try { localStorage.setItem(STORE_KEY + ".test", "1"); localStorage.removeItem(STORE_KEY + ".test"); } catch (e) { storageOK = false; } }
+  applyFont();
   render();
+  if (!state.ui.welcomed) openWelcome();
 })();

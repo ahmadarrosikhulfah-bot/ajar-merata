@@ -1,4 +1,5 @@
 /* ============ KERANGKA UI ============ */
+const ACT = {};
 const STEPS = [
   {n:1, t:"Profil Guru & Sekolah", ai:false},
   {n:2, t:"Paket Mengajar", ai:false},
@@ -80,19 +81,46 @@ function confirmModal(title, body, yesLabel, onYes){
 function showBusy(msg){ const d = document.createElement("div"); d.className = "busy"; d.id = "busy"; d.innerHTML = `<div class="busy-box"><div class="spin"></div><b>${esc(msg)}</b><div class="small muted" style="margin-top:6px">Biasanya 10–40 detik. Jangan tutup halaman.</div></div>`; document.body.appendChild(d); }
 function hideBusy(){ const d = document.getElementById("busy"); if (d) d.remove(); }
 
+/* ---------- sambutan ---------- */
+function fsButtons(){
+  return `<div class="row fsrow">${["A","A+","A++"].map((l, i) => `<button class="btn sm ${state.ui.fs === i ? "on" : ""}" data-act="setFont" data-arg="${i}" style="font-size:${[0.9, 1.05, 1.2][i]}rem">${l}</button>`).join("")}</div>`;
+}
+function openWelcome(){
+  openLayer(`<div class="modal welcome"><div class="mhead"><h2>Selamat datang di Ajar Merata 👋</h2><button class="btn sm" data-act="welcomeClose" aria-label="Tutup">✕</button></div>
+  <p>Ajar Merata membantu Bapak/Ibu menyusun perangkat ajar lengkap: kalender, ATP, Prota, Promes, modul ajar, LKPD, asesmen, sampai soal. Gratis, dan isian tersimpan di perangkat ini.</p>
+  <ol class="small" style="margin:6px 0 12px;padding-left:20px"><li>Isi profil sekolah dan kelas yang diajar.</li><li>Tempel teks CP resmi.</li><li>Tekan tombol AI berwarna oranye.</li><li>Periksa hasilnya, lalu unduh Word.</li></ol>
+  <div class="menu-list">
+    <button class="btn big pri" data-act="welcomeStart">▶ Mulai isi data saya<small>Dari Langkah 1: profil guru dan sekolah</small></button>
+    <button class="btn big" data-act="welcomeSample">🧪 Coba dulu dengan contoh<small>Data contoh SD pesisir, kelas rangkap, IPAS</small></button>
+    <button class="btn big" data-act="welcomeOpen">📂 Lanjutkan dari berkas .json<small>Berkas yang pernah Anda unduh dari aplikasi ini</small></button>
+  </div>
+  <h3 style="margin-top:16px">Ukuran tulisan</h3>${fsButtons()}
+  <p class="small muted" style="margin-top:12px">Layar ini bisa dibuka lagi lewat Menu › Layar sambutan.</p></div>`);
+}
+ACT.welcomeClose = () => { state.ui.welcomed = true; save(); closeLayer(); };
+ACT.welcomeStart = () => { state.ui.welcomed = true; state.step = 1; save(); closeLayer(); renderAll(); };
+ACT.welcomeSample = () => { loadSample(); state.ui.welcomed = true; applyFont(); save(); closeLayer(); renderAll(); toast("Data contoh dimuat. Coba buka Langkah 5 sampai 13."); };
+ACT.welcomeOpen = () => { state.ui.welcomed = true; save(); openJSON(); };
+ACT.setFont = (i) => { state.ui.fs = +i; applyFont(); save(); document.querySelectorAll(".fsrow .btn").forEach((b, j) => b.classList.toggle("on", j === +i)); };
+ACT.cycleFont = () => { state.ui.fs = (state.ui.fs + 1) % 3; applyFont(); save(); toast(["Tulisan normal", "Tulisan besar", "Tulisan sangat besar"][state.ui.fs]); };
+ACT.openWelcome = openWelcome;
+
 /* ---------- menu ---------- */
 function openMenu(){
   openLayer(`<div class="modal"><div class="mhead"><h2>Menu</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
   <div class="menu-list">
+    <button class="btn pri" data-act="wordDl" data-arg="paket">📦 Unduh paket lengkap (satu berkas Word)</button>
     <button class="btn" data-act="downloadJSON">⬇ Unduh berkas kerja (.json)</button>
     <button class="btn" data-act="openJSON">📂 Buka berkas kerja (.json)</button>
     <button class="btn" data-act="openProgress">📊 Ringkasan progres</button>
     <button class="btn" data-act="openRegs">⚖ Acuan hukum (landasan regulasi)</button>
     <button class="btn" data-act="openGuide">📖 Cara pakai</button>
+    <button class="btn" data-act="openWelcome">🏠 Layar sambutan</button>
     <button class="btn" data-act="openAISettings">⚙ Pengaturan AI</button>
     <button class="btn" data-act="loadSample">🧪 Muat data contoh (SD kelas rangkap, IPAS)</button>
     <button class="btn danger" data-act="resetAll">✨ Mulai baru (hapus semua isian)</button>
   </div>
+  <h3 style="margin-top:14px">Ukuran tulisan</h3>${fsButtons()}
   <p class="small muted" style="margin-top:12px">Ajar Merata v${APP_VER}. Daftar acuan diperiksa per ${ACUAN_DICEK}.</p></div>`);
 }
 function openProgress(){
@@ -102,6 +130,7 @@ function openProgress(){
   }).join("");
   openLayer(`<div class="modal"><div class="mhead"><h2>Ringkasan progres</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
   <div class="tbl-wrap"><table class="t"><tr><th>Paket</th><th>Kelas</th><th class="num">Langkah</th><th class="num">TP</th><th class="num">Modul</th></tr>${rows}</table></div>
+  <div class="row" style="margin:10px 0"><button class="btn pri" data-act="wordDl" data-arg="paket">📦 Unduh paket lengkap paket aktif (satu berkas Word)</button></div>
   <p class="small muted">Satu guru bisa punya beberapa paket (misalnya guru kelas yang memegang beberapa mapel). Tambah paket di Langkah 2.</p></div>`);
 }
 function openRegs(){
@@ -165,10 +194,9 @@ function openGuide(){
 }
 
 /* ---------- event ---------- */
-const ACT = {};
 ACT.go = (n) => { state.step = +n; save(); renderAll(); };
 ACT.openMenu = openMenu; ACT.closeLayer = closeLayer;
-ACT.ovlClick = (a, el, ev) => { if (ev.target === el) closeLayer(); };
+ACT.ovlClick = (a, el, ev) => { if (ev.target === el) { if (!state.ui.welcomed) { state.ui.welcomed = true; save(); } closeLayer(); } };
 ACT.downloadJSON = () => { downloadJSON(); toast("Berkas .json diunduh. Simpan di tempat yang mudah ditemukan."); };
 ACT.openJSON = openJSON; ACT.openProgress = openProgress; ACT.openRegs = openRegs; ACT.openGuide = openGuide; ACT.openAISettings = openAISettings;
 ACT.addRegC = () => { const v = document.getElementById("regNew").value.trim(); if (!v) return; state.regsCustom.push({text:v, checked:true}); save(); openRegs(); };

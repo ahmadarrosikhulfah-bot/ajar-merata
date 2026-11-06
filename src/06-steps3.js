@@ -46,7 +46,7 @@ RENDER[9] = () => {
   return `<section class="card">${head(9, "Modul ajar per TP dalam lima bagian: Identifikasi, Desain Pembelajaran, Pengalaman Belajar, Asesmen, dan Lampiran.", [
     "Pilih TP, lalu sesuaikan topik dan jumlah pertemuan. Alokasi waktu dihitung dari JP TP dibagi jumlah pertemuan.",
     "Tulis rencana Anda di <b>Instruksi khusus</b> (misalnya: \"pertemuan 2 belajar di pantai\") agar hasil AI sesuai kelas Anda.",
-    "Tekan Klik 1 sampai Klik 5 berurutan. Setiap bagian memakai hasil bagian sebelumnya agar modul utuh.",
+    "Tekan <b>Buat modul lengkap sekali klik</b>. Kelima bagian dibuat otomatis dan saling nyambung. Tombol per bagian dipakai bila Anda hanya ingin mengganti satu bagian.",
     "Semua isi bisa disunting langsung. Unduh Word setelah kelima bagian terisi."])}
     <div class="grid2">${tpSelect("pkg.modulOpsi.tpId", p)}
       ${inp("pkg.modul." + t.id + ".tema", "Topik / tema")}
@@ -54,35 +54,74 @@ RENDER[9] = () => {
       <div><label class="f">Alokasi waktu</label><div class="in" style="background:var(--paper)">${t.jp} JP × ${p.menitJP} menit · ±${jpPer} JP per pertemuan</div></div></div>
     <div style="margin-top:8px">${ta("pkg.modulOpsi.instruksi", "Instruksi khusus untuk AI (berlaku untuk semua TP)", {ph:"Contoh: murid belajar di luar kelas memakai benda di sekitar sekolah; hindari tugas yang perlu dicetak; gunakan permainan tradisional", h:70})}</div>
     ${isAgama(p) ? `<div class="note warn" style="margin-top:10px"><b>Ayat, hadis, atau kutipan kitab suci tidak dibuat oleh AI.</b> Tulis sendiri beserta sumbernya:<textarea class="in" style="margin-top:6px" data-bind="pkg.modul.${t.id}.dalil" placeholder="Contoh: QS ... ayat ... (tulis teks dan terjemahan dari mushaf/sumber sahih)">${esc(m.dalil || "")}</textarea></div>` : ""}
+    <div class="note ok" style="margin-top:12px"><b>Cara tercepat:</b> tekan tombol ini, lalu tunggu. Kelima bagian modul dibuat otomatis.<div class="row" style="margin-top:8px"><button class="btn ai" data-act="genModulAll" style="font-size:1.05em">✦ Buat modul lengkap sekali klik</button></div></div>
+    <details class="help"><summary>Atau buat per bagian (untuk menyunting satu bagian saja)</summary><p class="small muted">Setiap bagian bisa dibuat ulang sendiri tanpa mengubah bagian lain.</p></details>
     ${parts}
     <div class="row" style="margin-top:12px">${wordBtns("modul")}</div></section>`;
 };
-ACT.genModul = (part) => {
-  const p = P(); const t = curTP(p, "pkg.modulOpsi.tpId"); const m = modulOf(p, t);
+function modulBase(p, t, m, skipPart){
   const el = elemenList(p).find(e => e.id === t.elemenId) || {nama:t.elemen, teks:p.cpTeks};
-  const prev = Object.keys(m.parts).filter(k => k !== part).map(k => k.toUpperCase() + ": " + JSON.stringify(m.parts[k]).slice(0, 1800)).join("\n");
-  const base = [
+  const prev = Object.keys(m.parts).filter(k => k !== skipPart).map(k => k.toUpperCase() + ": " + JSON.stringify(m.parts[k]).slice(0, 1800)).join("\n");
+  return [
     "MODUL AJAR PEMBELAJARAN MENDALAM untuk satu TP.",
     "Elemen CP: " + el.nama + "\nTeks CP: " + (el.teks || "").slice(0, 1500),
     "TP: " + t.tp, "Materi pokok: " + t.materi, "Topik: " + (m.tema || t.materi),
     "DPL terkait: " + (t.dpl || []).join(", ") + (p.kbc ? "\nPanca Cinta terkait: " + (t.cinta || []).join(", ") : ""),
     "Alokasi: " + t.jp + " JP (" + p.menitJP + " menit/JP) dalam " + m.pertemuan + " pertemuan.",
     "Instruksi khusus guru: " + (p.modulOpsi.instruksi || "(tidak ada)"),
-    prev ? "BAGIAN YANG SUDAH ADA (jaga konsistensi):\n" + prev : ""
+    prev && skipPart !== "__all" ? "BAGIAN YANG SUDAH ADA (jaga konsistensi):\n" + prev : ""
   ].join("\n");
+}
+function modulSpec(p, m){
   const kbcLine = p.kbc ? ',"cinta":[{"nilai":"Cinta Ilmu","wujud":"..."}]' : "";
-  const spec = {
-    identifikasi: "TUGAS: tulis bagian IDENTIFIKASI.\n- murid: kesiapan, pengetahuan awal, minat, latar belakang, dan kebutuhan belajar murid (pakai catatan guru dan konteks daerah).\n- materi: jenis pengetahuan, relevansi dengan kehidupan murid di daerahnya, tingkat kesulitan, struktur materi, integrasi nilai dan karakter.\n- dpl: dimensi yang dikembangkan dan wujudnya.\n- rangkap: strategi bila kelas rangkap (tulis \"Tidak ada kelas rangkap\" bila tidak).\n" + 'FORMAT JSON: {"murid":"...","materi":"...","dpl":[{"dimensi":"...","wujud":"..."}]' + kbcLine + ',"rangkap":"..."}',
-    desain: "TUGAS: tulis bagian DESAIN PEMBELAJARAN.\n- lintas_disiplin, topik, praktik_pedagogis (model/strategi/metode yang mendukung pembelajaran mendalam), kemitraan (orang tua, tokoh adat/agama, nelayan/petani, puskesmas, dsb. yang ada di sekitar), lingkungan (ruang fisik, budaya belajar; manfaatkan alam sekitar), digital (bila sarana terbatas, tulis alternatif tanpa perangkat digital).\n" + 'FORMAT JSON: {"lintas_disiplin":"...","topik":"...","praktik_pedagogis":"...","kemitraan":"...","lingkungan":"...","digital":"..."}',
-    pengalaman: "TUGAS: tulis bagian PENGALAMAN BELAJAR untuk " + m.pertemuan + " pertemuan. Setiap pertemuan memuat kegiatan_awal (orientasi, apersepsi, motivasi; boleh memakai bahasa ibu murid), memahami, mengaplikasi, merefleksi, penutup, serta diferensiasi (termasuk pembedaan tingkat kelas bila kelas rangkap). Tulis langkah bernomor yang konkret dengan perkiraan menit, dan tandai prinsip [berkesadaran]/[bermakna]/[menggembirakan] di kegiatan yang relevan.\n" + 'FORMAT JSON: {"pertemuan":[{"ke":1,"kegiatan_awal":"1. ... (10 menit)","memahami":"...","mengaplikasi":"...","merefleksi":"...","penutup":"...","diferensiasi":"..."}]}',
-    asesmen: "TUGAS: tulis bagian ASESMEN. Untuk awal, proses (formatif), dan akhir (sumatif): sebutkan tujuan, teknik, instrumen, dan contoh butir/tugas singkat. Instrumen harus bisa dipakai tanpa cetak (misalnya ditulis di papan, lisan, unjuk kerja).\n" + 'FORMAT JSON: {"awal":"...","proses":"...","akhir":"..."}',
-    lampiran: "TUGAS: tulis bagian LAMPIRAN: rubrik penilaian 3–4 aspek, bahan bacaan ringkas untuk guru dan murid (sederhana, sesuai usia), glosarium 4–8 istilah, serta alat dan bahan dari lingkungan sekitar. Jangan mencantumkan judul buku atau tautan yang tidak pasti.\n" + 'FORMAT JSON: {"rubrik":[{"aspek":"...","l1":"...","l2":"...","l3":"...","l4":"..."}],"bahan_bacaan":"...","glosarium":[{"istilah":"...","arti":"..."}],"media":"..."}'
-  }[part];
-  runAI({label:"Menyusun " + MODUL_PARTS.find(x => x.k === part).t + "...", prompt: base + "\n\n" + spec, onResult: (o) => {
-    if (!o || typeof o !== "object") throw new Error("bukan objek");
-    if (part === "pengalaman" && !Array.isArray(o.pertemuan)) throw new Error("daftar pertemuan kosong");
-    m.parts[part] = o;
-  }});
+  return {
+    identifikasi: {t: "bagian IDENTIFIKASI.\n- murid: kesiapan, pengetahuan awal, minat, latar belakang, dan kebutuhan belajar murid (pakai catatan guru dan konteks daerah).\n- materi: jenis pengetahuan, relevansi dengan kehidupan murid di daerahnya, tingkat kesulitan, struktur materi, integrasi nilai dan karakter.\n- dpl: dimensi yang dikembangkan dan wujudnya.\n- rangkap: strategi bila kelas rangkap (tulis \"Tidak ada kelas rangkap\" bila tidak).",
+      f: '{"murid":"...","materi":"...","dpl":[{"dimensi":"...","wujud":"..."}]' + kbcLine + ',"rangkap":"..."}'},
+    desain: {t: "bagian DESAIN PEMBELAJARAN.\n- lintas_disiplin, topik, praktik_pedagogis (model/strategi/metode yang mendukung pembelajaran mendalam), kemitraan (orang tua, tokoh adat/agama, nelayan/petani, puskesmas, dsb. yang ada di sekitar), lingkungan (ruang fisik, budaya belajar; manfaatkan alam sekitar), digital (bila sarana terbatas, tulis alternatif tanpa perangkat digital).",
+      f: '{"lintas_disiplin":"...","topik":"...","praktik_pedagogis":"...","kemitraan":"...","lingkungan":"...","digital":"..."}'},
+    pengalaman: {t: "bagian PENGALAMAN BELAJAR untuk " + m.pertemuan + " pertemuan. Setiap pertemuan memuat kegiatan_awal (orientasi, apersepsi, motivasi; boleh memakai bahasa ibu murid), memahami, mengaplikasi, merefleksi, penutup, serta diferensiasi (termasuk pembedaan tingkat kelas bila kelas rangkap). Tulis langkah bernomor yang konkret dengan perkiraan menit, dan tandai prinsip [berkesadaran]/[bermakna]/[menggembirakan] di kegiatan yang relevan.",
+      f: '{"pertemuan":[{"ke":1,"kegiatan_awal":"1. ... (10 menit)","memahami":"...","mengaplikasi":"...","merefleksi":"...","penutup":"...","diferensiasi":"..."}]}'},
+    asesmen: {t: "bagian ASESMEN. Untuk awal, proses (formatif), dan akhir (sumatif): sebutkan tujuan, teknik, instrumen, dan contoh butir/tugas singkat. Instrumen harus bisa dipakai tanpa cetak (misalnya ditulis di papan, lisan, unjuk kerja).",
+      f: '{"awal":"...","proses":"...","akhir":"..."}'},
+    lampiran: {t: "bagian LAMPIRAN: rubrik penilaian 3–4 aspek, bahan bacaan ringkas untuk guru dan murid (sederhana, sesuai usia), glosarium 4–8 istilah, serta alat dan bahan dari lingkungan sekitar. Jangan mencantumkan judul buku atau tautan yang tidak pasti.",
+      f: '{"rubrik":[{"aspek":"...","l1":"...","l2":"...","l3":"...","l4":"..."}],"bahan_bacaan":"...","glosarium":[{"istilah":"...","arti":"..."}],"media":"..."}'}
+  };
+}
+function checkPart(part, o){
+  if (!o || typeof o !== "object" || Array.isArray(o)) throw new Error("bagian " + part + " kosong");
+  if (part === "pengalaman" && !Array.isArray(o.pertemuan)) throw new Error("daftar pertemuan kosong");
+}
+function genModulPart(part, onDone, step){
+  const p = P(); const t = curTP(p, "pkg.modulOpsi.tpId"); const m = modulOf(p, t);
+  const sp = modulSpec(p, m)[part];
+  const label = (step ? "(" + step + "/5) " : "") + "Menyusun " + MODUL_PARTS.find(x => x.k === part).t + "...";
+  runAI({label, prompt: modulBase(p, t, m, part) + "\n\nTUGAS: tulis " + sp.t + "\nFORMAT JSON: " + sp.f, onDone, onResult: (o) => { checkPart(part, o); m.parts[part] = o; }});
+}
+ACT.genModul = (part) => genModulPart(part);
+ACT.genModulAll = () => {
+  const p = P(); const t = curTP(p, "pkg.modulOpsi.tpId"); const m = modulOf(p, t);
+  const keys = MODUL_PARTS.map(x => x.k);
+  const go = () => {
+    if (state.ai.alwaysManual || !aiLangsung()) {
+      // cara salin-tempel: satu perintah untuk kelima bagian
+      const sp = modulSpec(p, m);
+      const prompt = modulBase(p, t, m, "__all") + "\n\nTUGAS: tulis modul lengkap dalam lima bagian berikut.\n" +
+        keys.map((k, i) => (i + 1) + ". " + sp[k].t).join("\n") +
+        "\nFORMAT JSON: {" + keys.map(k => '"' + k + '":' + sp[k].f).join(",") + "}";
+      runAI({label:"Buat modul ajar lengkap", prompt, onResult: (o) => {
+        keys.forEach(k => checkPart(k, o[k])); keys.forEach(k => { m.parts[k] = o[k]; });
+      }, onDone: () => toast("Modul lengkap sudah masuk. Periksa lalu unduh Word.", 3500)});
+      return;
+    }
+    // AI langsung: kelima bagian dibuat berurutan agar tidak terpotong
+    const run = (i) => {
+      if (i >= keys.length) { toast("Modul lengkap selesai. Periksa lalu unduh Word.", 3500); return; }
+      genModulPart(keys[i], () => run(i + 1), i + 1);
+    };
+    m.parts = {};
+    run(0);
+  };
+  if (Object.keys(m.parts).length) confirmModal("Buat ulang seluruh modul?", "Bagian modul yang sudah ada untuk TP ini akan diganti.", "Ya, buat ulang", go); else go();
 };
 
 /* ---- 10. LKPD ---- */

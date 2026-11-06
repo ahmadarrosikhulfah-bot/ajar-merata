@@ -81,60 +81,78 @@ async function callGemini(sys, prompt){
   throw lastErr || {kind:"lain", msg:"AI gagal tanpa keterangan."};
 }
 
-/* runAI: panggil AI; bila gagal, tawarkan mode salin-prompt */
+/* runAI: panggil AI langsung (Canvas atau kunci pribadi); selain itu mode salin-prompt.
+   opts: {label, prompt, onResult(obj), onDone(), quiet} */
 function runAI(opts){
   const p = P();
   const sys = sistemPrompt(p);
   const full = opts.prompt + "\n\n" + konteks(p);
   if (state.ai.alwaysManual || !aiLangsung()) return manualPrompt(sys, full, opts);
-  if (!inCanvas() && !opts.force) return manualPrompt(sys, full, opts, true);
   showBusy(opts.label || "AI sedang menyusun...");
   callGemini(sys, full).then(obj => {
     hideBusy();
-    try { opts.onResult(obj); save(); render(); toast("Selesai. Periksa dan sunting hasilnya bila perlu."); }
-    catch (e) { aiErrorModal({kind:"format", msg:"Isi jawaban AI tidak sesuai format yang diharapkan (" + e.message + ")."}, sys, full, opts); }
+    try { opts.onResult(obj); } catch (e) { aiErrorModal({kind:"format", msg:"Isi jawaban AI tidak sesuai format yang diharapkan (" + e.message + ")."}, sys, full, opts); return; }
+    save(); render();
+    if (opts.onDone) opts.onDone(); else toast("Selesai. Periksa dan sunting hasilnya bila perlu.");
   }).catch(err => { hideBusy(); aiErrorModal(err, sys, full, opts); });
 }
 function aiErrorModal(err, sys, full, opts){
   const saran = {
-    model:"Kunci AI bawaan Canvas hanya berlaku untuk model tertentu. Buka Menu › Pengaturan AI untuk mengganti daftar model, atau minta Gemini di Canvas memperbarui nama model.",
+    model:"Kunci AI bawaan Canvas hanya berlaku untuk model tertentu. Buka Menu › Pengaturan AI untuk mengganti daftar model.",
     kuota:"Kuota harian akun Gemini Anda habis. Tunggu sebentar atau coba lagi besok.",
     jaringan:"Periksa sinyal. Pekerjaan Anda tetap tersimpan.",
-    format:"Muat ulang lalu coba lagi, atau pilih lebih sedikit TP/soal per klik.",
+    format:"Coba lagi, atau pilih lebih sedikit TP/soal per klik.",
     server:"Tunggu 1–2 menit lalu coba lagi.", kosong:"Ubah sedikit isian lalu coba lagi."
   }[err.kind] || "";
   openLayer(`<div class="modal"><div class="mhead"><h2>AI belum berhasil</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
     <div class="note bad"><b>Penyebab:</b> ${esc(err.msg)}</div>
-    <p class="small">${esc(saran)}</p>
-    <p class="small">Bila Anda membuka aplikasi ini di luar Gemini Canvas (misalnya dari berkas di HP), AI langsung tidak tersedia. Pakai <b>mode salin-prompt</b>: aplikasi menyiapkan perintah, Anda menempelkannya ke Gemini, ChatGPT, atau Meta AI, lalu menempelkan jawabannya kembali di sini.</p>
-    <div class="row"><button class="btn ai" data-act="aiRetry">↻ Coba lagi</button><button class="btn" data-act="aiManual">📋 Pakai mode salin-prompt</button></div></div>`);
+    <p class="small">${esc(saran)} Pekerjaan Anda tidak hilang.</p>
+    <p class="small">Masih belum bisa? Pakai <b>cara salin-tempel</b>: aplikasi menyiapkan perintah, Anda menempelkannya ke Gemini, ChatGPT, atau Meta AI di WhatsApp, lalu menempelkan jawabannya kembali di sini.</p>
+    <div class="row"><button class="btn ai" data-act="aiRetry">↻ Coba lagi</button><button class="btn" data-act="aiManual">📋 Pakai cara salin-tempel</button></div></div>`);
   ACT.aiRetry = () => { closeLayer(); runAI(opts); };
   ACT.aiManual = () => { closeLayer(); manualPrompt(sys, full, opts); };
 }
-function inCanvas(){
-  const h = location.hostname || "";
-  return /\.goog$|googleusercontent\.com$|gemini\.google\.com$/.test(h);
-}
-function manualPrompt(sys, full, opts, outside){
+const CHATBOTS = [
+  ["Gemini", "https://gemini.google.com/app"],
+  ["ChatGPT", "https://chatgpt.com/"],
+  ["Meta AI (WhatsApp)", "https://wa.me/13135555555"]
+];
+function manualPrompt(sys, full, opts){
   const all = sys + "\n\n=== TUGAS ===\n" + full;
-  const why = !aiLangsung() ? `<div class="note info small">Aplikasi dibuka di luar Gemini Canvas, jadi AI dijalankan lewat chatbot pilihan Anda. Ingin AI langsung? Buka versi Canvas, atau isi kunci API Gemini gratis Anda di Menu › Pengaturan AI.</div>` : "";
-  openLayer(`<div class="modal"><div class="mhead"><h2>Mode salin-prompt</h2><button class="btn sm" data-act="closeLayer">✕</button></div>${why}
-    ${outside ? `<div class="note info small">Aplikasi ini dibuka di luar Gemini Canvas, jadi AI tidak bisa dipanggil langsung. Ikuti tiga langkah di bawah memakai chatbot apa saja. <button class="btn sm" data-act="mpForce">Tetap coba AI langsung</button></div>` : ""}
-    <ol class="small"><li>Tekan <b>Salin perintah</b>.</li><li>Buka Gemini, ChatGPT, atau Meta AI (WhatsApp), tempel, lalu kirim.</li><li>Salin seluruh jawaban AI, tempel di kotak kedua, tekan <b>Proses jawaban</b>.</li></ol>
-    <label class="f">Perintah untuk AI</label><textarea class="in" id="mpPrompt" readonly style="min-height:120px">${esc(all)}</textarea>
-    <div class="row" style="margin:8px 0 14px"><button class="btn pri" data-act="mpCopy">📋 Salin perintah</button></div>
-    <label class="f">Tempel jawaban AI di sini</label><textarea class="in" id="mpAnswer" style="min-height:140px" placeholder='{ ... }'></textarea>
-    <div class="row" style="margin-top:8px"><button class="btn ai" data-act="mpProcess">Proses jawaban</button></div></div>`);
-  ACT.mpCopy = () => copyText(all);
-  ACT.mpForce = () => { closeLayer(); runAI(Object.assign({}, opts, {force:true})); };
-  ACT.mpProcess = () => {
-    const v = document.getElementById("mpAnswer").value;
-    try { const obj = cleanJSON(v); opts.onResult(obj); save(); closeLayer(); render(); toast("Jawaban diproses."); }
-    catch (e) { toast("Jawaban belum bisa dibaca. Pastikan Anda menyalin seluruh jawaban yang berbentuk JSON.", 4000); }
+  const why = !aiLangsung()
+    ? `<div class="note info small">Di halaman ini AI dijalankan lewat chatbot pilihan Anda, gratis. Ingin sekali klik? Buka versi Gemini Canvas, atau isi kunci API Gemini gratis di Menu › Pengaturan AI.</div>` : "";
+  openLayer(`<div class="modal"><div class="mhead"><h2>${esc(opts.label || "Minta bantuan AI")}</h2><button class="btn sm" data-act="closeLayer">✕</button></div>${why}
+    <div class="sec"><h4>1. Salin perintah</h4>
+      <button class="btn pri" data-act="mpCopy" style="width:100%;justify-content:center">📋 Salin perintah untuk AI</button>
+      <details class="small" style="margin-top:6px"><summary>Lihat isi perintah</summary><textarea class="in" readonly style="min-height:110px;margin-top:6px">${esc(all)}</textarea></details></div>
+    <div class="sec"><h4>2. Buka chatbot, tempel, lalu kirim</h4>
+      <div class="row">${CHATBOTS.map(([n, u]) => `<a class="btn" href="${u}" target="_blank" rel="noopener">${esc(n)} ↗</a>`).join("")}</div>
+      <p class="small muted mb0">Bila jawabannya terputus di tengah, ketik <b>lanjutkan</b> di chatbot, lalu salin semua bagian jawaban.</p></div>
+    <div class="sec"><h4>3. Salin jawaban AI, tempel di sini</h4>
+      <button class="btn" data-act="mpPaste" style="width:100%;justify-content:center">📥 Tempel jawaban dari papan klip</button>
+      <textarea class="in" id="mpAnswer" style="min-height:110px;margin-top:8px" placeholder="Atau tekan lama di sini lalu pilih Tempel"></textarea>
+      <div id="mpStatus" class="small" style="margin-top:6px"></div>
+      <div class="row" style="margin-top:8px"><button class="btn ai" data-act="mpProcess">✓ Masukkan ke aplikasi</button></div></div></div>`);
+  const ta = document.getElementById("mpAnswer"), st = document.getElementById("mpStatus");
+  const process = (auto) => {
+    let obj; try { obj = cleanJSON(ta.value); } catch (e) {
+      if (!auto) st.innerHTML = `<span style="color:var(--bad)">Jawaban belum terbaca. Pastikan Anda menyalin seluruh jawaban AI, dari tanda { pertama sampai } terakhir.</span>`;
+      return;
+    }
+    try { opts.onResult(obj); } catch (e) { st.innerHTML = `<span style="color:var(--bad)">Isi jawaban tidak sesuai (${esc(e.message)}). Minta AI mengulang dengan format JSON yang diminta.</span>`; return; }
+    save(); closeLayer(); render();
+    if (opts.onDone) opts.onDone(); else toast("Jawaban dimasukkan. Periksa dan sunting bila perlu.");
   };
+  ta.addEventListener("input", () => process(true));
+  ACT.mpCopy = () => copyText(all, "Perintah tersalin. Sekarang buka chatbot dan tempel.");
+  ACT.mpPaste = () => {
+    if (navigator.clipboard && navigator.clipboard.readText) navigator.clipboard.readText().then(t => { ta.value = t; process(false); }, () => { ta.focus(); toast("Tekan lama kotak jawaban lalu pilih Tempel.", 3500); });
+    else { ta.focus(); toast("Tekan lama kotak jawaban lalu pilih Tempel.", 3500); }
+  };
+  ACT.mpProcess = () => process(false);
 }
-function copyText(t){
-  const done = () => toast("Tersalin.");
+function copyText(t, msg){
+  const done = () => toast(msg || "Tersalin.");
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, () => fallbackCopy(t));
   else fallbackCopy(t);
 }

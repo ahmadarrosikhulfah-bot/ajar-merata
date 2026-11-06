@@ -33,6 +33,15 @@ Seluruh aplikasi berupa satu berkas `index.html`. Anda tidak perlu server, akun,
 
 Setiap langkah menghasilkan dokumen Word lengkap dengan identitas, landasan regulasi, dan kolom tanda tangan.
 
+## Dibuat supaya mudah
+
+- **Layar sambutan** dengan tiga pilihan: mulai isi data, coba dengan contoh, atau lanjutkan dari berkas.
+- **Ukuran tulisan** bisa diperbesar lewat tombol **Aa**.
+- **Modul ajar lengkap sekali klik.** Kelima bagian modul dibuat otomatis.
+- **Cara salin-tempel yang ringkas:** salin perintah, buka Gemini, ChatGPT, atau Meta AI di WhatsApp lewat tombol, lalu tempel jawabannya. Aplikasi langsung memasukkan jawaban yang terbaca.
+- **Paket lengkap dalam satu berkas Word**, dengan sampul dan daftar isi, lewat Menu › Unduh paket lengkap.
+- **Tombol Cari dokumen CP resmi** di Langkah 4.
+
 ## Fitur untuk sekolah 3T
 
 - AI menyesuaikan kegiatan dengan listrik, internet, proyektor, dan printer yang benar-benar tersedia.

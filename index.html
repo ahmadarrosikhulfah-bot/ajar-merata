@@ -12,7 +12,10 @@
   --r:12px; --sh:0 1px 2px rgba(31,42,40,.06),0 4px 14px rgba(31,42,40,.05);
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;font-size:15px;line-height:1.5}
+html{font-size:100%}
+html.fs1{font-size:112.5%}
+html.fs2{font-size:125%}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;font-size:0.9375rem;line-height:1.5}
 button,input,select,textarea{font:inherit;color:inherit}
 a{color:var(--teal)}
 .hidden{display:none!important}
@@ -20,14 +23,14 @@ a{color:var(--teal)}
 /* header */
 .top{position:sticky;top:0;z-index:40;background:var(--teal);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .top-in{max-width:1200px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;gap:10px}
-.logo{width:34px;height:34px;border-radius:9px;background:#fff;color:var(--teal);display:grid;place-items:center;font-weight:800;font-size:15px;flex:none}
+.logo{width:34px;height:34px;border-radius:9px;background:#fff;color:var(--teal);display:grid;place-items:center;font-weight:800;font-size:0.9375rem;flex:none}
 .brand{min-width:0;flex:1}
-.brand b{display:block;font-size:15px;line-height:1.2}
-.brand small{display:block;opacity:.85;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pkgsel{max-width:46vw;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:9px;padding:6px 8px;font-size:13px}
+.brand b{display:block;font-size:0.9375rem;line-height:1.2}
+.brand small{display:block;opacity:.85;font-size:0.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pkgsel{max-width:46vw;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:9px;padding:6px 8px;font-size:0.8125rem}
 .pkgsel option{color:var(--ink)}
 .iconbtn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:9px;min-width:40px;height:36px;padding:0 10px;cursor:pointer;font-weight:600}
-.savebar{background:var(--teal2);font-size:12px}
+.savebar{background:var(--teal2);font-size:0.75rem}
 .savebar .top-in{padding:4px 14px;gap:8px;flex-wrap:wrap}
 .savebar .btn{color:var(--ink)}
 @media(max-width:640px){.savebar .hint{display:none}}
@@ -41,57 +44,58 @@ main{min-width:0}
 .steps{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
 @media(min-width:960px){.steps{flex-direction:column;overflow:visible;position:sticky;top:96px;align-self:start}}
 .step{flex:none;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 10px;cursor:pointer;text-align:left;min-height:44px}
-.step .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--paper);border:1px solid var(--line2);flex:none}
-.step .t{font-size:13px;font-weight:600;white-space:nowrap}
-.step .s{font-size:11px;color:var(--muted);display:block}
+.step .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:0.75rem;font-weight:700;background:var(--paper);border:1px solid var(--line2);flex:none}
+.step .t{font-size:0.8125rem;font-weight:600;white-space:nowrap}
+.step .s{font-size:0.6875rem;color:var(--muted);display:block}
 .step.done .n{background:var(--ok);border-color:var(--ok);color:#fff}
 .step.active{border-color:var(--teal);background:var(--teal-soft)}
 .step.active .n{background:var(--teal);border-color:var(--teal);color:#fff}
-.ai-tag{font-size:10px;font-weight:700;color:var(--clay);background:var(--clay-soft);border-radius:6px;padding:0 5px;margin-left:4px}
+.ai-tag{font-size:0.625rem;font-weight:700;color:var(--clay);background:var(--clay-soft);border-radius:6px;padding:0 5px;margin-left:4px}
 
 /* cards & forms */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin-bottom:14px}
-.card h2{margin:0 0 4px;font-size:20px;line-height:1.25}
-.card h3{margin:0 0 8px;font-size:16px}
-.lead{color:var(--muted);margin:0 0 12px;font-size:14px}
+.card h2{margin:0 0 4px;font-size:1.25rem;line-height:1.25}
+.card h3{margin:0 0 8px;font-size:1rem}
+.lead{color:var(--muted);margin:0 0 12px;font-size:0.875rem}
 .grid2{display:grid;grid-template-columns:1fr;gap:10px 14px}
 @media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
 .grid3{display:grid;grid-template-columns:1fr;gap:10px 14px}
 @media(min-width:640px){.grid3{grid-template-columns:1fr 1fr 1fr}}
-label.f{display:block;font-size:13px;font-weight:600;margin-bottom:3px}
+label.f{display:block;font-size:0.8125rem;font-weight:600;margin-bottom:3px}
 label.f small{font-weight:400;color:var(--muted)}
 .in{width:100%;border:1px solid var(--line2);border-radius:9px;padding:9px 11px;background:#fff;min-height:42px}
 textarea.in{min-height:90px;resize:vertical}
 .in:focus{outline:2px solid var(--sun);outline-offset:1px;border-color:var(--teal)}
-.chk{display:flex;gap:8px;align-items:flex-start;padding:6px 0;font-size:14px;cursor:pointer}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:6px 0;font-size:0.875rem;cursor:pointer}
 .chk input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--teal)}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .btn{border:1px solid var(--line2);background:#fff;border-radius:9px;padding:8px 14px;min-height:42px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px}
 .btn:hover{border-color:var(--teal)}
+a.btn{text-decoration:none;color:var(--ink)}
 .btn.pri{background:var(--teal);border-color:var(--teal);color:#fff}
 .btn.pri:hover{background:var(--teal2)}
 .btn.ai{background:var(--clay);border-color:var(--clay);color:#fff}
 .btn.ai.done{background:#fff;color:var(--clay)}
-.btn.sm{min-height:34px;padding:4px 10px;font-size:13px}
+.btn.sm{min-height:34px;padding:4px 10px;font-size:0.8125rem}
 .btn.ghost{background:transparent}
 .btn.danger{color:var(--bad);border-color:#e8c2bf}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.note{border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0}
+.note{border-radius:10px;padding:10px 12px;font-size:0.875rem;margin:10px 0}
 .note.info{background:var(--teal-soft);border:1px solid #bfdcd6}
 .note.warn{background:var(--sun-soft);border:1px solid #f0d58f}
 .note.bad{background:var(--bad-soft);border:1px solid #f0c2bf}
 .note.ok{background:var(--ok-soft);border:1px solid #bfdcc2}
-.pill{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--paper);border:1px solid var(--line2)}
+.pill{display:inline-block;font-size:0.75rem;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--paper);border:1px solid var(--line2)}
 .pill.ok{background:var(--ok-soft);border-color:#bfdcc2;color:var(--ok)}
 .pill.bad{background:var(--bad-soft);border-color:#f0c2bf;color:var(--bad)}
 details.help{border:1px dashed var(--line2);border-radius:10px;padding:8px 12px;margin:8px 0 12px;background:#fffdf8}
-details.help summary{cursor:pointer;font-weight:600;font-size:14px}
-details.help ol,details.help ul{margin:8px 0 4px;padding-left:20px;font-size:14px}
+details.help summary{cursor:pointer;font-weight:600;font-size:0.875rem}
+details.help ol,details.help ul{margin:8px 0 4px;padding-left:20px;font-size:0.875rem}
 .navbtm{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
 
 /* tables */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
-table.t{border-collapse:collapse;width:100%;font-size:13.5px}
+table.t{border-collapse:collapse;width:100%;font-size:0.8438rem}
 table.t th,table.t td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:7px 8px;vertical-align:top;text-align:left}
 table.t th{background:#f3efe4;font-weight:700;position:sticky;top:0}
 table.t td:last-child,table.t th:last-child{border-right:none}
@@ -100,9 +104,9 @@ table.t .cell-in{width:100%;border:1px solid transparent;border-radius:6px;paddi
 table.t .cell-in:focus{border-color:var(--teal);background:#fff;outline:none}
 table.t td.hl{background:var(--teal-soft);font-weight:700;text-align:center}
 .sec{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:#fffefb}
-.sec h4{margin:0 0 6px;font-size:15px;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.sec h4{margin:0 0 6px;font-size:0.9375rem;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
 .pre{white-space:pre-wrap;word-break:break-word}
-.kv{display:grid;grid-template-columns:150px 1fr;gap:4px 10px;font-size:14px}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:4px 10px;font-size:0.875rem}
 .kv div:nth-child(odd){color:var(--muted)}
 
 /* modal, drawer, overlay */
@@ -110,7 +114,7 @@ table.t td.hl{background:var(--teal-soft);font-weight:700;text-align:center}
 @media(min-width:720px){.ovl{align-items:center}}
 .modal{background:#fff;width:100%;max-width:760px;max-height:92vh;overflow:auto;border-radius:16px 16px 0 0;padding:18px}
 @media(min-width:720px){.modal{border-radius:16px}}
-.modal h2{margin:0 0 6px;font-size:19px}
+.modal h2{margin:0 0 6px;font-size:1.1875rem}
 .mhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
 .menu-list{display:grid;gap:8px}
 .menu-list .btn{justify-content:flex-start;width:100%}
@@ -118,14 +122,18 @@ table.t td.hl{background:var(--teal-soft);font-weight:700;text-align:center}
 .busy-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 26px;text-align:center;box-shadow:var(--sh);max-width:340px}
 .spin{width:34px;height:34px;border:4px solid var(--teal-soft);border-top-color:var(--teal);border-radius:50%;margin:0 auto 10px;animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;z-index:95;font-size:14px;max-width:90vw}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;z-index:95;font-size:0.875rem;max-width:90vw}
 .muted{color:var(--muted)}
-.small{font-size:13px}
+.small{font-size:0.8125rem}
 .mt0{margin-top:0}.mb0{margin-bottom:0}
 .elem{border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0;background:#fffefb}
-.budget{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;font-weight:600}
+.budget{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:0.875rem;font-weight:600}
 .budget .over{color:var(--bad)}
-footer.foot{max-width:1200px;margin:0 auto;padding:10px 14px 30px;color:var(--muted);font-size:12px}
+.welcome .big{width:100%;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:58px;font-size:1.05rem;text-align:left}
+.welcome .big small{display:block;font-weight:400;color:var(--muted);font-size:.8rem}
+.welcome .big.pri small{color:#d9efe9}
+.fsrow .btn.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+footer.foot{max-width:1200px;margin:0 auto;padding:10px 14px 30px;color:var(--muted);font-size:0.75rem}
 </style>
 </head>
 <body>
@@ -134,6 +142,7 @@ footer.foot{max-width:1200px;margin:0 auto;padding:10px 14px 30px;color:var(--mu
     <div class="logo" aria-hidden="true">AM</div>
     <div class="brand"><b>Ajar Merata</b><small>Perangkat ajar gratis untuk guru 3T · Pembelajaran Mendalam &amp; KBC</small></div>
     <select id="pkgSel" class="pkgsel" aria-label="Paket aktif"></select>
+    <button class="iconbtn" data-act="cycleFont" aria-label="Ukuran tulisan" title="Ukuran tulisan">Aa</button>
     <button class="iconbtn" data-act="openMenu" aria-label="Menu">☰ Menu</button>
   </div>
   <div class="savebar"><div class="top-in" id="saveBar"></div></div>
@@ -282,6 +291,7 @@ function defaultState(){
     regs: REGS_DEFAULT.map(r => Object.assign({checked: true}, r)),
     regsCustom: [],
     ai:{models: AI_MODELS.slice(), lastOk:"", alwaysManual:false},
+    ui:{fs:0, welcomed:false},
     savedAt:"", exportedAt:""
   };
 }
@@ -289,6 +299,7 @@ let state = null;
 state = defaultState();
 state.pkgs.push(newPkg());
 
+function applyFont(){ const h = document.documentElement; h.classList.toggle("fs1", state.ui.fs === 1); h.classList.toggle("fs2", state.ui.fs === 2); }
 function P(){ return state.pkgs[state.active] || state.pkgs[0]; }
 
 /* ============ HELPERS ============ */
@@ -339,6 +350,7 @@ function applyLoaded(s){
   state.profil = Object.assign(d.profil, s.profil || {});
   state.kalender = Object.assign(d.kalender, s.kalender || {});
   state.ai = Object.assign(d.ai, s.ai || {});
+  state.ui = Object.assign(d.ui, s.ui || {});
   // gabungkan daftar regulasi: pertahankan centang lama, tambahkan yang baru
   const old = {}; (s.regs || []).forEach(r => old[r.id] = r);
   state.regs = REGS_DEFAULT.map(r => Object.assign({}, r, {checked: old[r.id] ? !!old[r.id].checked : true}));
@@ -458,60 +470,78 @@ async function callGemini(sys, prompt){
   throw lastErr || {kind:"lain", msg:"AI gagal tanpa keterangan."};
 }
 
-/* runAI: panggil AI; bila gagal, tawarkan mode salin-prompt */
+/* runAI: panggil AI langsung (Canvas atau kunci pribadi); selain itu mode salin-prompt.
+   opts: {label, prompt, onResult(obj), onDone(), quiet} */
 function runAI(opts){
   const p = P();
   const sys = sistemPrompt(p);
   const full = opts.prompt + "\n\n" + konteks(p);
   if (state.ai.alwaysManual || !aiLangsung()) return manualPrompt(sys, full, opts);
-  if (!inCanvas() && !opts.force) return manualPrompt(sys, full, opts, true);
   showBusy(opts.label || "AI sedang menyusun...");
   callGemini(sys, full).then(obj => {
     hideBusy();
-    try { opts.onResult(obj); save(); render(); toast("Selesai. Periksa dan sunting hasilnya bila perlu."); }
-    catch (e) { aiErrorModal({kind:"format", msg:"Isi jawaban AI tidak sesuai format yang diharapkan (" + e.message + ")."}, sys, full, opts); }
+    try { opts.onResult(obj); } catch (e) { aiErrorModal({kind:"format", msg:"Isi jawaban AI tidak sesuai format yang diharapkan (" + e.message + ")."}, sys, full, opts); return; }
+    save(); render();
+    if (opts.onDone) opts.onDone(); else toast("Selesai. Periksa dan sunting hasilnya bila perlu.");
   }).catch(err => { hideBusy(); aiErrorModal(err, sys, full, opts); });
 }
 function aiErrorModal(err, sys, full, opts){
   const saran = {
-    model:"Kunci AI bawaan Canvas hanya berlaku untuk model tertentu. Buka Menu › Pengaturan AI untuk mengganti daftar model, atau minta Gemini di Canvas memperbarui nama model.",
+    model:"Kunci AI bawaan Canvas hanya berlaku untuk model tertentu. Buka Menu › Pengaturan AI untuk mengganti daftar model.",
     kuota:"Kuota harian akun Gemini Anda habis. Tunggu sebentar atau coba lagi besok.",
     jaringan:"Periksa sinyal. Pekerjaan Anda tetap tersimpan.",
-    format:"Muat ulang lalu coba lagi, atau pilih lebih sedikit TP/soal per klik.",
+    format:"Coba lagi, atau pilih lebih sedikit TP/soal per klik.",
     server:"Tunggu 1–2 menit lalu coba lagi.", kosong:"Ubah sedikit isian lalu coba lagi."
   }[err.kind] || "";
   openLayer(`<div class="modal"><div class="mhead"><h2>AI belum berhasil</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
     <div class="note bad"><b>Penyebab:</b> ${esc(err.msg)}</div>
-    <p class="small">${esc(saran)}</p>
-    <p class="small">Bila Anda membuka aplikasi ini di luar Gemini Canvas (misalnya dari berkas di HP), AI langsung tidak tersedia. Pakai <b>mode salin-prompt</b>: aplikasi menyiapkan perintah, Anda menempelkannya ke Gemini, ChatGPT, atau Meta AI, lalu menempelkan jawabannya kembali di sini.</p>
-    <div class="row"><button class="btn ai" data-act="aiRetry">↻ Coba lagi</button><button class="btn" data-act="aiManual">📋 Pakai mode salin-prompt</button></div></div>`);
+    <p class="small">${esc(saran)} Pekerjaan Anda tidak hilang.</p>
+    <p class="small">Masih belum bisa? Pakai <b>cara salin-tempel</b>: aplikasi menyiapkan perintah, Anda menempelkannya ke Gemini, ChatGPT, atau Meta AI di WhatsApp, lalu menempelkan jawabannya kembali di sini.</p>
+    <div class="row"><button class="btn ai" data-act="aiRetry">↻ Coba lagi</button><button class="btn" data-act="aiManual">📋 Pakai cara salin-tempel</button></div></div>`);
   ACT.aiRetry = () => { closeLayer(); runAI(opts); };
   ACT.aiManual = () => { closeLayer(); manualPrompt(sys, full, opts); };
 }
-function inCanvas(){
-  const h = location.hostname || "";
-  return /\.goog$|googleusercontent\.com$|gemini\.google\.com$/.test(h);
-}
-function manualPrompt(sys, full, opts, outside){
+const CHATBOTS = [
+  ["Gemini", "https://gemini.google.com/app"],
+  ["ChatGPT", "https://chatgpt.com/"],
+  ["Meta AI (WhatsApp)", "https://wa.me/13135555555"]
+];
+function manualPrompt(sys, full, opts){
   const all = sys + "\n\n=== TUGAS ===\n" + full;
-  const why = !aiLangsung() ? `<div class="note info small">Aplikasi dibuka di luar Gemini Canvas, jadi AI dijalankan lewat chatbot pilihan Anda. Ingin AI langsung? Buka versi Canvas, atau isi kunci API Gemini gratis Anda di Menu › Pengaturan AI.</div>` : "";
-  openLayer(`<div class="modal"><div class="mhead"><h2>Mode salin-prompt</h2><button class="btn sm" data-act="closeLayer">✕</button></div>${why}
-    ${outside ? `<div class="note info small">Aplikasi ini dibuka di luar Gemini Canvas, jadi AI tidak bisa dipanggil langsung. Ikuti tiga langkah di bawah memakai chatbot apa saja. <button class="btn sm" data-act="mpForce">Tetap coba AI langsung</button></div>` : ""}
-    <ol class="small"><li>Tekan <b>Salin perintah</b>.</li><li>Buka Gemini, ChatGPT, atau Meta AI (WhatsApp), tempel, lalu kirim.</li><li>Salin seluruh jawaban AI, tempel di kotak kedua, tekan <b>Proses jawaban</b>.</li></ol>
-    <label class="f">Perintah untuk AI</label><textarea class="in" id="mpPrompt" readonly style="min-height:120px">${esc(all)}</textarea>
-    <div class="row" style="margin:8px 0 14px"><button class="btn pri" data-act="mpCopy">📋 Salin perintah</button></div>
-    <label class="f">Tempel jawaban AI di sini</label><textarea class="in" id="mpAnswer" style="min-height:140px" placeholder='{ ... }'></textarea>
-    <div class="row" style="margin-top:8px"><button class="btn ai" data-act="mpProcess">Proses jawaban</button></div></div>`);
-  ACT.mpCopy = () => copyText(all);
-  ACT.mpForce = () => { closeLayer(); runAI(Object.assign({}, opts, {force:true})); };
-  ACT.mpProcess = () => {
-    const v = document.getElementById("mpAnswer").value;
-    try { const obj = cleanJSON(v); opts.onResult(obj); save(); closeLayer(); render(); toast("Jawaban diproses."); }
-    catch (e) { toast("Jawaban belum bisa dibaca. Pastikan Anda menyalin seluruh jawaban yang berbentuk JSON.", 4000); }
+  const why = !aiLangsung()
+    ? `<div class="note info small">Di halaman ini AI dijalankan lewat chatbot pilihan Anda, gratis. Ingin sekali klik? Buka versi Gemini Canvas, atau isi kunci API Gemini gratis di Menu › Pengaturan AI.</div>` : "";
+  openLayer(`<div class="modal"><div class="mhead"><h2>${esc(opts.label || "Minta bantuan AI")}</h2><button class="btn sm" data-act="closeLayer">✕</button></div>${why}
+    <div class="sec"><h4>1. Salin perintah</h4>
+      <button class="btn pri" data-act="mpCopy" style="width:100%;justify-content:center">📋 Salin perintah untuk AI</button>
+      <details class="small" style="margin-top:6px"><summary>Lihat isi perintah</summary><textarea class="in" readonly style="min-height:110px;margin-top:6px">${esc(all)}</textarea></details></div>
+    <div class="sec"><h4>2. Buka chatbot, tempel, lalu kirim</h4>
+      <div class="row">${CHATBOTS.map(([n, u]) => `<a class="btn" href="${u}" target="_blank" rel="noopener">${esc(n)} ↗</a>`).join("")}</div>
+      <p class="small muted mb0">Bila jawabannya terputus di tengah, ketik <b>lanjutkan</b> di chatbot, lalu salin semua bagian jawaban.</p></div>
+    <div class="sec"><h4>3. Salin jawaban AI, tempel di sini</h4>
+      <button class="btn" data-act="mpPaste" style="width:100%;justify-content:center">📥 Tempel jawaban dari papan klip</button>
+      <textarea class="in" id="mpAnswer" style="min-height:110px;margin-top:8px" placeholder="Atau tekan lama di sini lalu pilih Tempel"></textarea>
+      <div id="mpStatus" class="small" style="margin-top:6px"></div>
+      <div class="row" style="margin-top:8px"><button class="btn ai" data-act="mpProcess">✓ Masukkan ke aplikasi</button></div></div></div>`);
+  const ta = document.getElementById("mpAnswer"), st = document.getElementById("mpStatus");
+  const process = (auto) => {
+    let obj; try { obj = cleanJSON(ta.value); } catch (e) {
+      if (!auto) st.innerHTML = `<span style="color:var(--bad)">Jawaban belum terbaca. Pastikan Anda menyalin seluruh jawaban AI, dari tanda { pertama sampai } terakhir.</span>`;
+      return;
+    }
+    try { opts.onResult(obj); } catch (e) { st.innerHTML = `<span style="color:var(--bad)">Isi jawaban tidak sesuai (${esc(e.message)}). Minta AI mengulang dengan format JSON yang diminta.</span>`; return; }
+    save(); closeLayer(); render();
+    if (opts.onDone) opts.onDone(); else toast("Jawaban dimasukkan. Periksa dan sunting bila perlu.");
   };
+  ta.addEventListener("input", () => process(true));
+  ACT.mpCopy = () => copyText(all, "Perintah tersalin. Sekarang buka chatbot dan tempel.");
+  ACT.mpPaste = () => {
+    if (navigator.clipboard && navigator.clipboard.readText) navigator.clipboard.readText().then(t => { ta.value = t; process(false); }, () => { ta.focus(); toast("Tekan lama kotak jawaban lalu pilih Tempel.", 3500); });
+    else { ta.focus(); toast("Tekan lama kotak jawaban lalu pilih Tempel.", 3500); }
+  };
+  ACT.mpProcess = () => process(false);
 }
-function copyText(t){
-  const done = () => toast("Tersalin.");
+function copyText(t, msg){
+  const done = () => toast(msg || "Tersalin.");
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, () => fallbackCopy(t));
   else fallbackCopy(t);
 }
@@ -588,6 +618,7 @@ function sebarPromes(p){
 }
 
 /* ============ KERANGKA UI ============ */
+const ACT = {};
 const STEPS = [
   {n:1, t:"Profil Guru & Sekolah", ai:false},
   {n:2, t:"Paket Mengajar", ai:false},
@@ -669,19 +700,46 @@ function confirmModal(title, body, yesLabel, onYes){
 function showBusy(msg){ const d = document.createElement("div"); d.className = "busy"; d.id = "busy"; d.innerHTML = `<div class="busy-box"><div class="spin"></div><b>${esc(msg)}</b><div class="small muted" style="margin-top:6px">Biasanya 10–40 detik. Jangan tutup halaman.</div></div>`; document.body.appendChild(d); }
 function hideBusy(){ const d = document.getElementById("busy"); if (d) d.remove(); }
 
+/* ---------- sambutan ---------- */
+function fsButtons(){
+  return `<div class="row fsrow">${["A","A+","A++"].map((l, i) => `<button class="btn sm ${state.ui.fs === i ? "on" : ""}" data-act="setFont" data-arg="${i}" style="font-size:${[0.9, 1.05, 1.2][i]}rem">${l}</button>`).join("")}</div>`;
+}
+function openWelcome(){
+  openLayer(`<div class="modal welcome"><div class="mhead"><h2>Selamat datang di Ajar Merata 👋</h2><button class="btn sm" data-act="welcomeClose" aria-label="Tutup">✕</button></div>
+  <p>Ajar Merata membantu Bapak/Ibu menyusun perangkat ajar lengkap: kalender, ATP, Prota, Promes, modul ajar, LKPD, asesmen, sampai soal. Gratis, dan isian tersimpan di perangkat ini.</p>
+  <ol class="small" style="margin:6px 0 12px;padding-left:20px"><li>Isi profil sekolah dan kelas yang diajar.</li><li>Tempel teks CP resmi.</li><li>Tekan tombol AI berwarna oranye.</li><li>Periksa hasilnya, lalu unduh Word.</li></ol>
+  <div class="menu-list">
+    <button class="btn big pri" data-act="welcomeStart">▶ Mulai isi data saya<small>Dari Langkah 1: profil guru dan sekolah</small></button>
+    <button class="btn big" data-act="welcomeSample">🧪 Coba dulu dengan contoh<small>Data contoh SD pesisir, kelas rangkap, IPAS</small></button>
+    <button class="btn big" data-act="welcomeOpen">📂 Lanjutkan dari berkas .json<small>Berkas yang pernah Anda unduh dari aplikasi ini</small></button>
+  </div>
+  <h3 style="margin-top:16px">Ukuran tulisan</h3>${fsButtons()}
+  <p class="small muted" style="margin-top:12px">Layar ini bisa dibuka lagi lewat Menu › Layar sambutan.</p></div>`);
+}
+ACT.welcomeClose = () => { state.ui.welcomed = true; save(); closeLayer(); };
+ACT.welcomeStart = () => { state.ui.welcomed = true; state.step = 1; save(); closeLayer(); renderAll(); };
+ACT.welcomeSample = () => { loadSample(); state.ui.welcomed = true; applyFont(); save(); closeLayer(); renderAll(); toast("Data contoh dimuat. Coba buka Langkah 5 sampai 13."); };
+ACT.welcomeOpen = () => { state.ui.welcomed = true; save(); openJSON(); };
+ACT.setFont = (i) => { state.ui.fs = +i; applyFont(); save(); document.querySelectorAll(".fsrow .btn").forEach((b, j) => b.classList.toggle("on", j === +i)); };
+ACT.cycleFont = () => { state.ui.fs = (state.ui.fs + 1) % 3; applyFont(); save(); toast(["Tulisan normal", "Tulisan besar", "Tulisan sangat besar"][state.ui.fs]); };
+ACT.openWelcome = openWelcome;
+
 /* ---------- menu ---------- */
 function openMenu(){
   openLayer(`<div class="modal"><div class="mhead"><h2>Menu</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
   <div class="menu-list">
+    <button class="btn pri" data-act="wordDl" data-arg="paket">📦 Unduh paket lengkap (satu berkas Word)</button>
     <button class="btn" data-act="downloadJSON">⬇ Unduh berkas kerja (.json)</button>
     <button class="btn" data-act="openJSON">📂 Buka berkas kerja (.json)</button>
     <button class="btn" data-act="openProgress">📊 Ringkasan progres</button>
     <button class="btn" data-act="openRegs">⚖ Acuan hukum (landasan regulasi)</button>
     <button class="btn" data-act="openGuide">📖 Cara pakai</button>
+    <button class="btn" data-act="openWelcome">🏠 Layar sambutan</button>
     <button class="btn" data-act="openAISettings">⚙ Pengaturan AI</button>
     <button class="btn" data-act="loadSample">🧪 Muat data contoh (SD kelas rangkap, IPAS)</button>
     <button class="btn danger" data-act="resetAll">✨ Mulai baru (hapus semua isian)</button>
   </div>
+  <h3 style="margin-top:14px">Ukuran tulisan</h3>${fsButtons()}
   <p class="small muted" style="margin-top:12px">Ajar Merata v${APP_VER}. Daftar acuan diperiksa per ${ACUAN_DICEK}.</p></div>`);
 }
 function openProgress(){
@@ -691,6 +749,7 @@ function openProgress(){
   }).join("");
   openLayer(`<div class="modal"><div class="mhead"><h2>Ringkasan progres</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
   <div class="tbl-wrap"><table class="t"><tr><th>Paket</th><th>Kelas</th><th class="num">Langkah</th><th class="num">TP</th><th class="num">Modul</th></tr>${rows}</table></div>
+  <div class="row" style="margin:10px 0"><button class="btn pri" data-act="wordDl" data-arg="paket">📦 Unduh paket lengkap paket aktif (satu berkas Word)</button></div>
   <p class="small muted">Satu guru bisa punya beberapa paket (misalnya guru kelas yang memegang beberapa mapel). Tambah paket di Langkah 2.</p></div>`);
 }
 function openRegs(){
@@ -754,10 +813,9 @@ function openGuide(){
 }
 
 /* ---------- event ---------- */
-const ACT = {};
 ACT.go = (n) => { state.step = +n; save(); renderAll(); };
 ACT.openMenu = openMenu; ACT.closeLayer = closeLayer;
-ACT.ovlClick = (a, el, ev) => { if (ev.target === el) closeLayer(); };
+ACT.ovlClick = (a, el, ev) => { if (ev.target === el) { if (!state.ui.welcomed) { state.ui.welcomed = true; save(); } closeLayer(); } };
 ACT.downloadJSON = () => { downloadJSON(); toast("Berkas .json diunduh. Simpan di tempat yang mudah ditemukan."); };
 ACT.openJSON = openJSON; ACT.openProgress = openProgress; ACT.openRegs = openRegs; ACT.openGuide = openGuide; ACT.openAISettings = openAISettings;
 ACT.addRegC = () => { const v = document.getElementById("regNew").value.trim(); if (!v) return; state.regsCustom.push({text:v, checked:true}); save(); openRegs(); };
@@ -960,7 +1018,7 @@ RENDER[4] = () => {
     <div class="note info small">Unduh dokumen CP dari kanal resmi Kemendikdasmen (untuk sekolah) atau Kemenag/Ditjen Pendis (untuk madrasah). Untuk CP Agama dan Budi Pekerti, BKPDM menegaskan bahwa perubahan 2026 hanya berlaku bagi mapel agama; mapel lain tetap memakai Kepka BSKAP 046/H/KR/2025.</div>
     <label class="f" style="margin-top:8px">Teks CP resmi — ${esc(mapelName(p) || "mapel")} Fase ${faseOf(p)}</label>
     <textarea class="in" data-bind="pkg.cpTeks" style="min-height:200px" placeholder="Nama Elemen 1&#10;Pada akhir Fase ..., murid mampu ...&#10;&#10;Nama Elemen 2&#10;...">${esc(p.cpTeks)}</textarea>
-    <div class="row" style="margin:8px 0 14px"><button class="btn pri" data-act="cpSplit">✂ Pecah per elemen (baris kosong)</button><button class="btn" data-act="elAdd">＋ Tambah elemen manual</button></div>
+    <div class="row" style="margin:8px 0 14px"><button class="btn" data-act="cpSearch">🔎 Cari dokumen CP resmi</button><button class="btn pri" data-act="cpSplit">✂ Pecah per elemen (baris kosong)</button><button class="btn" data-act="elAdd">＋ Tambah elemen manual</button></div>
     <h3>Elemen CP (${p.elemen.length})</h3>
     ${el || '<p class="small muted">Belum ada elemen. Anda tetap bisa lanjut: ATP akan dibuat dari seluruh teks CP sebagai satu elemen.</p>'}
     <div class="row" style="margin-top:10px">${wordBtns("cp")}</div>
@@ -972,6 +1030,11 @@ ACT.cpSplit = () => {
   const blocks = txt.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
   p.elemen = blocks.map((b, i) => { const lines = b.split(/\n/); return lines.length > 1 && lines[0].length < 120 ? {id:uid(), nama:lines[0].replace(/[:：]\s*$/, "").trim(), teks:lines.slice(1).join("\n").trim()} : {id:uid(), nama:"Elemen " + (i + 1), teks:b}; });
   save(); render(); toast(p.elemen.length + " elemen dibuat. Periksa nama elemennya.");
+};
+ACT.cpSearch = () => {
+  const p = P();
+  const q = "Capaian Pembelajaran " + mapelName(p) + " Fase " + faseOf(p) + " " + (p.cpSumber || cpSumberSaran(p)).replace(/\s*\(.*\)$/, "") + " pdf";
+  window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener");
 };
 ACT.elAdd = () => { P().elemen.push({id:uid(), nama:"", teks:""}); save(); render(); };
 ACT.elDel = (i) => { P().elemen.splice(+i, 1); save(); render(); };
@@ -1216,7 +1279,7 @@ RENDER[9] = () => {
   return `<section class="card">${head(9, "Modul ajar per TP dalam lima bagian: Identifikasi, Desain Pembelajaran, Pengalaman Belajar, Asesmen, dan Lampiran.", [
     "Pilih TP, lalu sesuaikan topik dan jumlah pertemuan. Alokasi waktu dihitung dari JP TP dibagi jumlah pertemuan.",
     "Tulis rencana Anda di <b>Instruksi khusus</b> (misalnya: \"pertemuan 2 belajar di pantai\") agar hasil AI sesuai kelas Anda.",
-    "Tekan Klik 1 sampai Klik 5 berurutan. Setiap bagian memakai hasil bagian sebelumnya agar modul utuh.",
+    "Tekan <b>Buat modul lengkap sekali klik</b>. Kelima bagian dibuat otomatis dan saling nyambung. Tombol per bagian dipakai bila Anda hanya ingin mengganti satu bagian.",
     "Semua isi bisa disunting langsung. Unduh Word setelah kelima bagian terisi."])}
     <div class="grid2">${tpSelect("pkg.modulOpsi.tpId", p)}
       ${inp("pkg.modul." + t.id + ".tema", "Topik / tema")}
@@ -1224,35 +1287,74 @@ RENDER[9] = () => {
       <div><label class="f">Alokasi waktu</label><div class="in" style="background:var(--paper)">${t.jp} JP × ${p.menitJP} menit · ±${jpPer} JP per pertemuan</div></div></div>
     <div style="margin-top:8px">${ta("pkg.modulOpsi.instruksi", "Instruksi khusus untuk AI (berlaku untuk semua TP)", {ph:"Contoh: murid belajar di luar kelas memakai benda di sekitar sekolah; hindari tugas yang perlu dicetak; gunakan permainan tradisional", h:70})}</div>
     ${isAgama(p) ? `<div class="note warn" style="margin-top:10px"><b>Ayat, hadis, atau kutipan kitab suci tidak dibuat oleh AI.</b> Tulis sendiri beserta sumbernya:<textarea class="in" style="margin-top:6px" data-bind="pkg.modul.${t.id}.dalil" placeholder="Contoh: QS ... ayat ... (tulis teks dan terjemahan dari mushaf/sumber sahih)">${esc(m.dalil || "")}</textarea></div>` : ""}
+    <div class="note ok" style="margin-top:12px"><b>Cara tercepat:</b> tekan tombol ini, lalu tunggu. Kelima bagian modul dibuat otomatis.<div class="row" style="margin-top:8px"><button class="btn ai" data-act="genModulAll" style="font-size:1.05em">✦ Buat modul lengkap sekali klik</button></div></div>
+    <details class="help"><summary>Atau buat per bagian (untuk menyunting satu bagian saja)</summary><p class="small muted">Setiap bagian bisa dibuat ulang sendiri tanpa mengubah bagian lain.</p></details>
     ${parts}
     <div class="row" style="margin-top:12px">${wordBtns("modul")}</div></section>`;
 };
-ACT.genModul = (part) => {
-  const p = P(); const t = curTP(p, "pkg.modulOpsi.tpId"); const m = modulOf(p, t);
+function modulBase(p, t, m, skipPart){
   const el = elemenList(p).find(e => e.id === t.elemenId) || {nama:t.elemen, teks:p.cpTeks};
-  const prev = Object.keys(m.parts).filter(k => k !== part).map(k => k.toUpperCase() + ": " + JSON.stringify(m.parts[k]).slice(0, 1800)).join("\n");
-  const base = [
+  const prev = Object.keys(m.parts).filter(k => k !== skipPart).map(k => k.toUpperCase() + ": " + JSON.stringify(m.parts[k]).slice(0, 1800)).join("\n");
+  return [
     "MODUL AJAR PEMBELAJARAN MENDALAM untuk satu TP.",
     "Elemen CP: " + el.nama + "\nTeks CP: " + (el.teks || "").slice(0, 1500),
     "TP: " + t.tp, "Materi pokok: " + t.materi, "Topik: " + (m.tema || t.materi),
     "DPL terkait: " + (t.dpl || []).join(", ") + (p.kbc ? "\nPanca Cinta terkait: " + (t.cinta || []).join(", ") : ""),
     "Alokasi: " + t.jp + " JP (" + p.menitJP + " menit/JP) dalam " + m.pertemuan + " pertemuan.",
     "Instruksi khusus guru: " + (p.modulOpsi.instruksi || "(tidak ada)"),
-    prev ? "BAGIAN YANG SUDAH ADA (jaga konsistensi):\n" + prev : ""
+    prev && skipPart !== "__all" ? "BAGIAN YANG SUDAH ADA (jaga konsistensi):\n" + prev : ""
   ].join("\n");
+}
+function modulSpec(p, m){
   const kbcLine = p.kbc ? ',"cinta":[{"nilai":"Cinta Ilmu","wujud":"..."}]' : "";
-  const spec = {
-    identifikasi: "TUGAS: tulis bagian IDENTIFIKASI.\n- murid: kesiapan, pengetahuan awal, minat, latar belakang, dan kebutuhan belajar murid (pakai catatan guru dan konteks daerah).\n- materi: jenis pengetahuan, relevansi dengan kehidupan murid di daerahnya, tingkat kesulitan, struktur materi, integrasi nilai dan karakter.\n- dpl: dimensi yang dikembangkan dan wujudnya.\n- rangkap: strategi bila kelas rangkap (tulis \"Tidak ada kelas rangkap\" bila tidak).\n" + 'FORMAT JSON: {"murid":"...","materi":"...","dpl":[{"dimensi":"...","wujud":"..."}]' + kbcLine + ',"rangkap":"..."}',
-    desain: "TUGAS: tulis bagian DESAIN PEMBELAJARAN.\n- lintas_disiplin, topik, praktik_pedagogis (model/strategi/metode yang mendukung pembelajaran mendalam), kemitraan (orang tua, tokoh adat/agama, nelayan/petani, puskesmas, dsb. yang ada di sekitar), lingkungan (ruang fisik, budaya belajar; manfaatkan alam sekitar), digital (bila sarana terbatas, tulis alternatif tanpa perangkat digital).\n" + 'FORMAT JSON: {"lintas_disiplin":"...","topik":"...","praktik_pedagogis":"...","kemitraan":"...","lingkungan":"...","digital":"..."}',
-    pengalaman: "TUGAS: tulis bagian PENGALAMAN BELAJAR untuk " + m.pertemuan + " pertemuan. Setiap pertemuan memuat kegiatan_awal (orientasi, apersepsi, motivasi; boleh memakai bahasa ibu murid), memahami, mengaplikasi, merefleksi, penutup, serta diferensiasi (termasuk pembedaan tingkat kelas bila kelas rangkap). Tulis langkah bernomor yang konkret dengan perkiraan menit, dan tandai prinsip [berkesadaran]/[bermakna]/[menggembirakan] di kegiatan yang relevan.\n" + 'FORMAT JSON: {"pertemuan":[{"ke":1,"kegiatan_awal":"1. ... (10 menit)","memahami":"...","mengaplikasi":"...","merefleksi":"...","penutup":"...","diferensiasi":"..."}]}',
-    asesmen: "TUGAS: tulis bagian ASESMEN. Untuk awal, proses (formatif), dan akhir (sumatif): sebutkan tujuan, teknik, instrumen, dan contoh butir/tugas singkat. Instrumen harus bisa dipakai tanpa cetak (misalnya ditulis di papan, lisan, unjuk kerja).\n" + 'FORMAT JSON: {"awal":"...","proses":"...","akhir":"..."}',
-    lampiran: "TUGAS: tulis bagian LAMPIRAN: rubrik penilaian 3–4 aspek, bahan bacaan ringkas untuk guru dan murid (sederhana, sesuai usia), glosarium 4–8 istilah, serta alat dan bahan dari lingkungan sekitar. Jangan mencantumkan judul buku atau tautan yang tidak pasti.\n" + 'FORMAT JSON: {"rubrik":[{"aspek":"...","l1":"...","l2":"...","l3":"...","l4":"..."}],"bahan_bacaan":"...","glosarium":[{"istilah":"...","arti":"..."}],"media":"..."}'
-  }[part];
-  runAI({label:"Menyusun " + MODUL_PARTS.find(x => x.k === part).t + "...", prompt: base + "\n\n" + spec, onResult: (o) => {
-    if (!o || typeof o !== "object") throw new Error("bukan objek");
-    if (part === "pengalaman" && !Array.isArray(o.pertemuan)) throw new Error("daftar pertemuan kosong");
-    m.parts[part] = o;
-  }});
+  return {
+    identifikasi: {t: "bagian IDENTIFIKASI.\n- murid: kesiapan, pengetahuan awal, minat, latar belakang, dan kebutuhan belajar murid (pakai catatan guru dan konteks daerah).\n- materi: jenis pengetahuan, relevansi dengan kehidupan murid di daerahnya, tingkat kesulitan, struktur materi, integrasi nilai dan karakter.\n- dpl: dimensi yang dikembangkan dan wujudnya.\n- rangkap: strategi bila kelas rangkap (tulis \"Tidak ada kelas rangkap\" bila tidak).",
+      f: '{"murid":"...","materi":"...","dpl":[{"dimensi":"...","wujud":"..."}]' + kbcLine + ',"rangkap":"..."}'},
+    desain: {t: "bagian DESAIN PEMBELAJARAN.\n- lintas_disiplin, topik, praktik_pedagogis (model/strategi/metode yang mendukung pembelajaran mendalam), kemitraan (orang tua, tokoh adat/agama, nelayan/petani, puskesmas, dsb. yang ada di sekitar), lingkungan (ruang fisik, budaya belajar; manfaatkan alam sekitar), digital (bila sarana terbatas, tulis alternatif tanpa perangkat digital).",
+      f: '{"lintas_disiplin":"...","topik":"...","praktik_pedagogis":"...","kemitraan":"...","lingkungan":"...","digital":"..."}'},
+    pengalaman: {t: "bagian PENGALAMAN BELAJAR untuk " + m.pertemuan + " pertemuan. Setiap pertemuan memuat kegiatan_awal (orientasi, apersepsi, motivasi; boleh memakai bahasa ibu murid), memahami, mengaplikasi, merefleksi, penutup, serta diferensiasi (termasuk pembedaan tingkat kelas bila kelas rangkap). Tulis langkah bernomor yang konkret dengan perkiraan menit, dan tandai prinsip [berkesadaran]/[bermakna]/[menggembirakan] di kegiatan yang relevan.",
+      f: '{"pertemuan":[{"ke":1,"kegiatan_awal":"1. ... (10 menit)","memahami":"...","mengaplikasi":"...","merefleksi":"...","penutup":"...","diferensiasi":"..."}]}'},
+    asesmen: {t: "bagian ASESMEN. Untuk awal, proses (formatif), dan akhir (sumatif): sebutkan tujuan, teknik, instrumen, dan contoh butir/tugas singkat. Instrumen harus bisa dipakai tanpa cetak (misalnya ditulis di papan, lisan, unjuk kerja).",
+      f: '{"awal":"...","proses":"...","akhir":"..."}'},
+    lampiran: {t: "bagian LAMPIRAN: rubrik penilaian 3–4 aspek, bahan bacaan ringkas untuk guru dan murid (sederhana, sesuai usia), glosarium 4–8 istilah, serta alat dan bahan dari lingkungan sekitar. Jangan mencantumkan judul buku atau tautan yang tidak pasti.",
+      f: '{"rubrik":[{"aspek":"...","l1":"...","l2":"...","l3":"...","l4":"..."}],"bahan_bacaan":"...","glosarium":[{"istilah":"...","arti":"..."}],"media":"..."}'}
+  };
+}
+function checkPart(part, o){
+  if (!o || typeof o !== "object" || Array.isArray(o)) throw new Error("bagian " + part + " kosong");
+  if (part === "pengalaman" && !Array.isArray(o.pertemuan)) throw new Error("daftar pertemuan kosong");
+}
+function genModulPart(part, onDone, step){
+  const p = P(); const t = curTP(p, "pkg.modulOpsi.tpId"); const m = modulOf(p, t);
+  const sp = modulSpec(p, m)[part];
+  const label = (step ? "(" + step + "/5) " : "") + "Menyusun " + MODUL_PARTS.find(x => x.k === part).t + "...";
+  runAI({label, prompt: modulBase(p, t, m, part) + "\n\nTUGAS: tulis " + sp.t + "\nFORMAT JSON: " + sp.f, onDone, onResult: (o) => { checkPart(part, o); m.parts[part] = o; }});
+}
+ACT.genModul = (part) => genModulPart(part);
+ACT.genModulAll = () => {
+  const p = P(); const t = curTP(p, "pkg.modulOpsi.tpId"); const m = modulOf(p, t);
+  const keys = MODUL_PARTS.map(x => x.k);
+  const go = () => {
+    if (state.ai.alwaysManual || !aiLangsung()) {
+      // cara salin-tempel: satu perintah untuk kelima bagian
+      const sp = modulSpec(p, m);
+      const prompt = modulBase(p, t, m, "__all") + "\n\nTUGAS: tulis modul lengkap dalam lima bagian berikut.\n" +
+        keys.map((k, i) => (i + 1) + ". " + sp[k].t).join("\n") +
+        "\nFORMAT JSON: {" + keys.map(k => '"' + k + '":' + sp[k].f).join(",") + "}";
+      runAI({label:"Buat modul ajar lengkap", prompt, onResult: (o) => {
+        keys.forEach(k => checkPart(k, o[k])); keys.forEach(k => { m.parts[k] = o[k]; });
+      }, onDone: () => toast("Modul lengkap sudah masuk. Periksa lalu unduh Word.", 3500)});
+      return;
+    }
+    // AI langsung: kelima bagian dibuat berurutan agar tidak terpotong
+    const run = (i) => {
+      if (i >= keys.length) { toast("Modul lengkap selesai. Periksa lalu unduh Word.", 3500); return; }
+      genModulPart(keys[i], () => run(i + 1), i + 1);
+    };
+    m.parts = {};
+    run(0);
+  };
+  if (Object.keys(m.parts).length) confirmModal("Buat ulang seluruh modul?", "Bagian modul yang sudah ada untuk TP ini akan diganti.", "Ya, buat ulang", go); else go();
 };
 
 /* ---- 10. LKPD ---- */
@@ -1525,6 +1627,30 @@ DOC.naskah = (p) => ({title:"Naskah Soal", body: `<h1>${esc((state.profil.sekola
   ${p.kisi.butir.map((b, i) => `<p>${i + 1}. ${nl2br(b.soal)}</p>${b.opsi ? `<p style="margin-left:18pt">${Object.entries(b.opsi).map(([o, v]) => esc(o) + ". " + esc(v)).join("<br>")}</p>` : "<p>.................................................................................................................</p>"}`).join("")}`});
 DOC.analisis = (p) => { const h = p.analisis.hasil; if (!h) return null; return {title:"Analisis Butir Soal", body: judul("ANALISIS BUTIR SOAL", p) + identitas(p) + landasan(p) + analisisHTML(h).replace(/class="tbl-wrap"/g, "").replace(/class="note info"/g, "") + ttd(p)}; };
 
+const PB = '<br clear="all" style="page-break-before:always;mso-break-type:page-break">';
+DOC.paket = (p) => {
+  const keepM = p.modulOpsi.tpId, keepL = p.lkpdTp;
+  const parts = [];
+  const add = (judul, d) => { if (d && d.body) parts.push({judul, body:d.body}); };
+  if (jpPerMinggu(p)) add("Rincian minggu dan JP efektif", DOC.kalender(p));
+  if (p.cpTeks.trim()) add("Capaian Pembelajaran", DOC.cp(p));
+  if (p.atp.length) { add("Alur Tujuan Pembelajaran", DOC.atp(p)); add("Program Tahunan", DOC.prota(p)); add("Program Semester", DOC.promes(p)); }
+  if (Object.keys(p.kktp).length) add("KKTP", DOC.kktp(p));
+  p.atp.forEach((t, i) => { const m = p.modul[t.id]; if (m && m.parts && Object.keys(m.parts).length) { p.modulOpsi.tpId = t.id; add("Modul Ajar TP " + (i + 1), DOC.modul(p)); } });
+  p.atp.forEach((t, i) => { if (p.lkpd[t.id]) { p.lkpdTp = t.id; add("LKPD TP " + (i + 1), DOC.lkpd(p)); } });
+  p.modulOpsi.tpId = keepM; p.lkpdTp = keepL;
+  if (p.asesmen.rows.length) add("Rencana Asesmen", DOC.asesmen(p));
+  if (p.kisi.butir.length) { add("Kisi-kisi dan Kartu Soal", DOC.kisi(p)); add("Naskah Soal", DOC.naskah(p)); }
+  if (p.analisis.hasil) add("Analisis Butir Soal", DOC.analisis(p));
+  if (!parts.length) return null;
+  const pr = state.profil;
+  const cover = `<br><br><br><h1 style="font-size:20pt">PERANGKAT AJAR</h1><p class="sub" style="font-size:14pt">${esc(mapelName(p))}<br>Kelas ${esc(p.kelas)} · Fase ${faseOf(p)}${p.kelasRangkap ? "<br>(" + esc(p.kelasRangkap) + ")" : ""}</p>
+    <p class="sub" style="font-size:13pt">Tahun Ajaran ${esc(pr.tahunAjaran)}</p><br><br><p class="sub">Disusun oleh:<br><b>${esc(pr.namaGuru || "..............................")}</b><br>NIP. ${esc(pr.nip || "-")}</p><br><br>
+    <p class="sub" style="font-size:13pt"><b>${esc((pr.sekolah || "").toUpperCase())}</b><br>${esc([pr.desa, pr.kabupaten, pr.provinsi].filter(Boolean).join(", "))}</p>
+    ${PB}<h1>DAFTAR ISI</h1><ol>${parts.map(x => `<li>${esc(x.judul)}</li>`).join("")}</ol>`;
+  return {title:"Perangkat Ajar Lengkap", body: cover + parts.map(x => PB + x.body).join("")};
+};
+
 function buildDoc(kind){
   const p = P(); syncTxtFields(p); syncKKTP(p); syncLKPD(p);
   const d = DOC[kind] && DOC[kind](p);
@@ -1589,7 +1715,9 @@ function loadSample(){
 (function init(){
   const had = load();
   if (!had) { try { localStorage.setItem(STORE_KEY + ".test", "1"); localStorage.removeItem(STORE_KEY + ".test"); } catch (e) { storageOK = false; } }
+  applyFont();
   render();
+  if (!state.ui.welcomed) openWelcome();
 })();
 
 </script>

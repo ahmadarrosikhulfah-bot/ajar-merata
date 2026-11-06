@@ -159,7 +159,7 @@ RENDER[4] = () => {
     <div class="note info small">Unduh dokumen CP dari kanal resmi Kemendikdasmen (untuk sekolah) atau Kemenag/Ditjen Pendis (untuk madrasah). Untuk CP Agama dan Budi Pekerti, BKPDM menegaskan bahwa perubahan 2026 hanya berlaku bagi mapel agama; mapel lain tetap memakai Kepka BSKAP 046/H/KR/2025.</div>
     <label class="f" style="margin-top:8px">Teks CP resmi — ${esc(mapelName(p) || "mapel")} Fase ${faseOf(p)}</label>
     <textarea class="in" data-bind="pkg.cpTeks" style="min-height:200px" placeholder="Nama Elemen 1&#10;Pada akhir Fase ..., murid mampu ...&#10;&#10;Nama Elemen 2&#10;...">${esc(p.cpTeks)}</textarea>
-    <div class="row" style="margin:8px 0 14px"><button class="btn pri" data-act="cpSplit">✂ Pecah per elemen (baris kosong)</button><button class="btn" data-act="elAdd">＋ Tambah elemen manual</button></div>
+    <div class="row" style="margin:8px 0 14px"><button class="btn" data-act="cpSearch">🔎 Cari dokumen CP resmi</button><button class="btn pri" data-act="cpSplit">✂ Pecah per elemen (baris kosong)</button><button class="btn" data-act="elAdd">＋ Tambah elemen manual</button></div>
     <h3>Elemen CP (${p.elemen.length})</h3>
     ${el || '<p class="small muted">Belum ada elemen. Anda tetap bisa lanjut: ATP akan dibuat dari seluruh teks CP sebagai satu elemen.</p>'}
     <div class="row" style="margin-top:10px">${wordBtns("cp")}</div>
@@ -171,6 +171,11 @@ ACT.cpSplit = () => {
   const blocks = txt.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
   p.elemen = blocks.map((b, i) => { const lines = b.split(/\n/); return lines.length > 1 && lines[0].length < 120 ? {id:uid(), nama:lines[0].replace(/[:：]\s*$/, "").trim(), teks:lines.slice(1).join("\n").trim()} : {id:uid(), nama:"Elemen " + (i + 1), teks:b}; });
   save(); render(); toast(p.elemen.length + " elemen dibuat. Periksa nama elemennya.");
+};
+ACT.cpSearch = () => {
+  const p = P();
+  const q = "Capaian Pembelajaran " + mapelName(p) + " Fase " + faseOf(p) + " " + (p.cpSumber || cpSumberSaran(p)).replace(/\s*\(.*\)$/, "") + " pdf";
+  window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener");
 };
 ACT.elAdd = () => { P().elemen.push({id:uid(), nama:"", teks:""}); save(); render(); };
 ACT.elDel = (i) => { P().elemen.splice(+i, 1); save(); render(); };
