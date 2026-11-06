@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajar Merata · Perangkat Ajar Gratis untuk Guru 3T</title>
+<style>
+:root{
+  --ink:#1f2a28; --muted:#646b63; --paper:#f7f3ea; --card:#ffffff; --line:#e3dccb; --line2:#cfc6b1;
+  --teal:#0f6f66; --teal2:#0b5a53; --teal-soft:#e3f1ee; --clay:#b8522a; --clay-soft:#fbe9e0;
+  --sun:#e4ac2f; --sun-soft:#fdf3d8; --ok:#2f7d3b; --ok-soft:#e5f3e6; --bad:#b3261e; --bad-soft:#fdeceb;
+  --r:12px; --sh:0 1px 2px rgba(31,42,40,.06),0 4px 14px rgba(31,42,40,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;font-size:15px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--teal)}
+.hidden{display:none!important}
+
+/* header */
+.top{position:sticky;top:0;z-index:40;background:var(--teal);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.top-in{max-width:1200px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;gap:10px}
+.logo{width:34px;height:34px;border-radius:9px;background:#fff;color:var(--teal);display:grid;place-items:center;font-weight:800;font-size:15px;flex:none}
+.brand{min-width:0;flex:1}
+.brand b{display:block;font-size:15px;line-height:1.2}
+.brand small{display:block;opacity:.85;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pkgsel{max-width:46vw;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:9px;padding:6px 8px;font-size:13px}
+.pkgsel option{color:var(--ink)}
+.iconbtn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:9px;min-width:40px;height:36px;padding:0 10px;cursor:pointer;font-weight:600}
+.savebar{background:var(--teal2);font-size:12px}
+.savebar .top-in{padding:4px 14px;gap:8px;flex-wrap:wrap}
+.savebar .btn{color:var(--ink)}
+@media(max-width:640px){.savebar .hint{display:none}}
+main{min-width:0}
+.dot{width:8px;height:8px;border-radius:50%;background:#7ee0a8;display:inline-block}
+.dot.warn{background:var(--sun)}
+
+/* layout */
+.wrap{max-width:1200px;margin:0 auto;padding:14px;display:grid;grid-template-columns:1fr;gap:14px}
+@media(min-width:960px){.wrap{grid-template-columns:260px 1fr}}
+.steps{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+@media(min-width:960px){.steps{flex-direction:column;overflow:visible;position:sticky;top:96px;align-self:start}}
+.step{flex:none;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 10px;cursor:pointer;text-align:left;min-height:44px}
+.step .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--paper);border:1px solid var(--line2);flex:none}
+.step .t{font-size:13px;font-weight:600;white-space:nowrap}
+.step .s{font-size:11px;color:var(--muted);display:block}
+.step.done .n{background:var(--ok);border-color:var(--ok);color:#fff}
+.step.active{border-color:var(--teal);background:var(--teal-soft)}
+.step.active .n{background:var(--teal);border-color:var(--teal);color:#fff}
+.ai-tag{font-size:10px;font-weight:700;color:var(--clay);background:var(--clay-soft);border-radius:6px;padding:0 5px;margin-left:4px}
+
+/* cards & forms */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 4px;font-size:20px;line-height:1.25}
+.card h3{margin:0 0 8px;font-size:16px}
+.lead{color:var(--muted);margin:0 0 12px;font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr;gap:10px 14px}
+@media(min-width:640px){.grid2{grid-template-columns:1fr 1fr}}
+.grid3{display:grid;grid-template-columns:1fr;gap:10px 14px}
+@media(min-width:640px){.grid3{grid-template-columns:1fr 1fr 1fr}}
+label.f{display:block;font-size:13px;font-weight:600;margin-bottom:3px}
+label.f small{font-weight:400;color:var(--muted)}
+.in{width:100%;border:1px solid var(--line2);border-radius:9px;padding:9px 11px;background:#fff;min-height:42px}
+textarea.in{min-height:90px;resize:vertical}
+.in:focus{outline:2px solid var(--sun);outline-offset:1px;border-color:var(--teal)}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:6px 0;font-size:14px;cursor:pointer}
+.chk input{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--teal)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:1px solid var(--line2);background:#fff;border-radius:9px;padding:8px 14px;min-height:42px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--teal)}
+.btn.pri{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.pri:hover{background:var(--teal2)}
+.btn.ai{background:var(--clay);border-color:var(--clay);color:#fff}
+.btn.ai.done{background:#fff;color:var(--clay)}
+.btn.sm{min-height:34px;padding:4px 10px;font-size:13px}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--bad);border-color:#e8c2bf}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.note{border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0}
+.note.info{background:var(--teal-soft);border:1px solid #bfdcd6}
+.note.warn{background:var(--sun-soft);border:1px solid #f0d58f}
+.note.bad{background:var(--bad-soft);border:1px solid #f0c2bf}
+.note.ok{background:var(--ok-soft);border:1px solid #bfdcc2}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--paper);border:1px solid var(--line2)}
+.pill.ok{background:var(--ok-soft);border-color:#bfdcc2;color:var(--ok)}
+.pill.bad{background:var(--bad-soft);border-color:#f0c2bf;color:var(--bad)}
+details.help{border:1px dashed var(--line2);border-radius:10px;padding:8px 12px;margin:8px 0 12px;background:#fffdf8}
+details.help summary{cursor:pointer;font-weight:600;font-size:14px}
+details.help ol,details.help ul{margin:8px 0 4px;padding-left:20px;font-size:14px}
+.navbtm{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:#fff}
+table.t{border-collapse:collapse;width:100%;font-size:13.5px}
+table.t th,table.t td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:7px 8px;vertical-align:top;text-align:left}
+table.t th{background:#f3efe4;font-weight:700;position:sticky;top:0}
+table.t td:last-child,table.t th:last-child{border-right:none}
+table.t td.num,table.t th.num{text-align:center;white-space:nowrap}
+table.t .cell-in{width:100%;border:1px solid transparent;border-radius:6px;padding:4px 6px;background:transparent;min-height:34px;resize:vertical}
+table.t .cell-in:focus{border-color:var(--teal);background:#fff;outline:none}
+table.t td.hl{background:var(--teal-soft);font-weight:700;text-align:center}
+.sec{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:#fffefb}
+.sec h4{margin:0 0 6px;font-size:15px;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.pre{white-space:pre-wrap;word-break:break-word}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:4px 10px;font-size:14px}
+.kv div:nth-child(odd){color:var(--muted)}
+
+/* modal, drawer, overlay */
+.ovl{position:fixed;inset:0;background:rgba(20,28,26,.45);z-index:80;display:flex;align-items:flex-end;justify-content:center}
+@media(min-width:720px){.ovl{align-items:center}}
+.modal{background:#fff;width:100%;max-width:760px;max-height:92vh;overflow:auto;border-radius:16px 16px 0 0;padding:18px}
+@media(min-width:720px){.modal{border-radius:16px}}
+.modal h2{margin:0 0 6px;font-size:19px}
+.mhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.menu-list{display:grid;gap:8px}
+.menu-list .btn{justify-content:flex-start;width:100%}
+.busy{position:fixed;inset:0;z-index:90;background:rgba(247,243,234,.85);display:grid;place-items:center}
+.busy-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 26px;text-align:center;box-shadow:var(--sh);max-width:340px}
+.spin{width:34px;height:34px;border:4px solid var(--teal-soft);border-top-color:var(--teal);border-radius:50%;margin:0 auto 10px;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;z-index:95;font-size:14px;max-width:90vw}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.mt0{margin-top:0}.mb0{margin-bottom:0}
+.elem{border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0;background:#fffefb}
+.budget{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;font-weight:600}
+.budget .over{color:var(--bad)}
+footer.foot{max-width:1200px;margin:0 auto;padding:10px 14px 30px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="logo" aria-hidden="true">AM</div>
+    <div class="brand"><b>Ajar Merata</b><small>Perangkat ajar gratis untuk guru 3T · Pembelajaran Mendalam &amp; KBC</small></div>
+    <select id="pkgSel" class="pkgsel" aria-label="Paket aktif"></select>
+    <button class="iconbtn" data-act="openMenu" aria-label="Menu">☰ Menu</button>
+  </div>
+  <div class="savebar"><div class="top-in" id="saveBar"></div></div>
+</header>
+<div class="wrap">
+  <nav class="steps" id="steps" aria-label="Langkah"></nav>
+  <main id="main"></main>
+</div>
+<footer class="foot">Ajar Merata v1.0 · Dibuat untuk dibagikan gratis kepada guru. Hasil AI adalah draf: periksa, sesuaikan dengan kelas Anda, dan cek setiap acuan pada kanal resmi Kemendikdasmen/Kemenag.</footer>
+<div id="layer"></div>
+<script>
+"use strict";
+/* ============ KONFIGURASI AI (Gemini Canvas) ============
+   Gemini Canvas mengisi kunci API secara otomatis bila apiKey dibiarkan kosong.
+   Kunci bawaan Canvas hanya berlaku untuk model tertentu yang berganti dari waktu ke waktu.
+   Aplikasi mencoba model di bawah satu per satu dan mengingat yang berhasil.
+   Bila semua gagal, ubah daftar ini lewat Menu > Pengaturan AI, atau minta Gemini di Canvas
+   "perbarui nama model di AI_MODELS ke model yang didukung Canvas saat ini". */
+const apiKey = "";
+/* Deteksi: berjalan di dalam Gemini Canvas atau tidak */
+const IN_CANVAS = (function(){
+  let src = location.href + " " + location.origin + " " + document.referrer;
+  try { if (location.ancestorOrigins) for (let i = 0; i < location.ancestorOrigins.length; i++) src += " " + location.ancestorOrigins[i]; } catch (e) {}
+  return /usercontent\.goog|googleusercontent\.com|gemini\.google\.com/.test(src);
+})();
+const USERKEY_STORE = "ajarMerata.userKey";
+function userKey(){ try { return localStorage.getItem(USERKEY_STORE) || ""; } catch (e) { return ""; } }
+function setUserKey(v){ try { if (v) localStorage.setItem(USERKEY_STORE, v); else localStorage.removeItem(USERKEY_STORE); } catch (e) {} }
+function aiLangsung(){ return IN_CANVAS || !!userKey(); }
+const AI_MODELS = ["gemini-3-flash-preview", "gemini-2.5-flash-preview-09-2025", "gemini-2.5-flash", "gemini-flash-latest"];
+
+const APP_VER = "1.0";
+const STORE_KEY = "ajarMerata.v1";
+const ACUAN_DICEK = "6 November 2026";
+
+/* ============ DATA ACUAN ============ */
+const DPL = ["Keimanan dan Ketakwaan terhadap Tuhan Yang Maha Esa", "Kewargaan", "Penalaran Kritis", "Kreativitas", "Kolaborasi", "Kemandirian", "Kesehatan", "Komunikasi"];
+const DPL_SHORT = ["Keimanan & Ketakwaan", "Kewargaan", "Penalaran Kritis", "Kreativitas", "Kolaborasi", "Kemandirian", "Kesehatan", "Komunikasi"];
+const PANCA_CINTA = ["Cinta Allah dan Rasul-Nya", "Cinta Ilmu", "Cinta Lingkungan", "Cinta Diri dan Sesama", "Cinta Tanah Air"];
+
+/* scope: all | agama (mapel Agama & BP di sekolah) | madrasah | kbc | cpmadrasah */
+const REGS_DEFAULT = [
+  {id:"r1", scope:"all", text:"Peraturan Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Nomor 12 Tahun 2024 tentang Kurikulum pada Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Jenjang Pendidikan Menengah, sebagaimana diubah dengan Peraturan Menteri Pendidikan Dasar dan Menengah Nomor 13 Tahun 2025."},
+  {id:"r2", scope:"all", text:"Peraturan Menteri Pendidikan Dasar dan Menengah Nomor 13 Tahun 2025 tentang Perubahan atas Peraturan Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Nomor 12 Tahun 2024 tentang Kurikulum pada Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Jenjang Pendidikan Menengah."},
+  {id:"r3", scope:"all", text:"Keputusan Kepala Badan Standar, Kurikulum, dan Asesmen Pendidikan Nomor 046/H/KR/2025 tentang Capaian Pembelajaran pada Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Jenjang Pendidikan Menengah."},
+  {id:"r4", scope:"agama", text:"Keputusan Kepala Badan Kebijakan Pendidikan Dasar dan Menengah (BKPDM) Nomor 020 Tahun 2026 tentang Perubahan atas Keputusan Kepala Badan Standar, Kurikulum, dan Asesmen Pendidikan Nomor 046/H/KR/2025 tentang Capaian Pembelajaran pada Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Jenjang Pendidikan Menengah (Capaian Pembelajaran Pendidikan Agama dan Budi Pekerti)."},
+  {id:"r5", scope:"all", text:"Panduan Pembelajaran dan Asesmen Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Jenjang Pendidikan Menengah, Edisi Revisi Tahun 2025, Badan Standar, Kurikulum, dan Asesmen Pendidikan."},
+  {id:"r6", scope:"all", text:"Peraturan Menteri Pendidikan Dasar dan Menengah Nomor 10 Tahun 2025 tentang Standar Kompetensi Lulusan pada Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Jenjang Pendidikan Menengah."},
+  {id:"r7", scope:"all", text:"Peraturan Menteri Pendidikan Dasar dan Menengah Nomor 12 Tahun 2025 tentang Standar Isi pada Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Jenjang Pendidikan Menengah."},
+  {id:"m1", scope:"madrasah", text:"Keputusan Menteri Agama Nomor 1503 Tahun 2025 tentang Perubahan atas Keputusan Menteri Agama Nomor 450 Tahun 2024 tentang Pedoman Implementasi Kurikulum pada Raudhatul Athfal, Madrasah Ibtidaiyah, Madrasah Tsanawiyah, Madrasah Aliyah, dan Madrasah Aliyah Kejuruan."},
+  {id:"m2", scope:"kbc", text:"Keputusan Menteri Agama Nomor 512 Tahun 2026 tentang Pedoman Kurikulum Berbasis Cinta."},
+  {id:"m3", scope:"kbcm", text:"Keputusan Direktur Jenderal Pendidikan Islam Nomor 6077 Tahun 2025 tentang Panduan Kurikulum Berbasis Cinta."},
+  {id:"m4", scope:"cpmadrasah", text:"Keputusan Direktur Jenderal Pendidikan Islam Nomor 9941 Tahun 2025 tentang Capaian Pembelajaran Mata Pelajaran Pendidikan Agama Islam dan Bahasa Arab pada Madrasah."}
+];
+const SCOPE_LABEL = {all:"Semua sekolah & madrasah", agama:"Khusus mapel Agama dan Budi Pekerti (sekolah)", madrasah:"Khusus madrasah (Kemenag)", kbc:"Kurikulum Berbasis Cinta", kbcm:"Kurikulum Berbasis Cinta di madrasah", cpmadrasah:"Khusus PAI & Bahasa Arab di madrasah"};
+
+const JENJANG = {
+  kemendikdasmen: ["PAUD/TK", "SD", "SMP", "SMA", "SMK"],
+  kemenag: ["RA", "MI", "MTs", "MA", "MAK"]
+};
+const KELAS = {"PAUD/TK":["Kelompok A","Kelompok B"], RA:["Kelompok A","Kelompok B"], SD:["1","2","3","4","5","6"], MI:["1","2","3","4","5","6"], SMP:["7","8","9"], MTs:["7","8","9"], SMA:["10","11","12"], MA:["10","11","12"], SMK:["10","11","12"], MAK:["10","11","12"]};
+const MENIT = {"PAUD/TK":30, RA:30, SD:35, MI:35, SMP:40, MTs:40, SMA:45, MA:45, SMK:45, MAK:45};
+const AGAMA_LIST = ["Islam","Kristen","Katolik","Hindu","Buddha","Khonghucu"];
+const PAI_MADRASAH = ["Al-Qur'an Hadis","Akidah Akhlak","Fikih","Sejarah Kebudayaan Islam","Bahasa Arab"];
+const PAI_MA_KEAGAMAAN = ["Tafsir","Ilmu Tafsir","Hadis","Ilmu Hadis","Ushul Fikih"];
+
+function mapelOptions(p){
+  const j = p.jenjang, k = +p.kelas || 0, kemenag = p.kementerian === "kemenag";
+  if (j === "PAUD/TK") return ["Fase Fondasi (terpadu): Nilai Agama dan Budi Pekerti, Jati Diri, Dasar-dasar Literasi, Matematika, Sains, Teknologi, Rekayasa, dan Seni"];
+  if (j === "RA") return ["Fase Fondasi (terpadu): Nilai Agama dan Budi Pekerti, Jati Diri, Dasar-dasar Literasi, Matematika, Sains, Teknologi, Rekayasa, dan Seni", "PAI dan Bahasa Arab (RA)"];
+  let L = [];
+  if (kemenag) L = L.concat(PAI_MADRASAH);
+  else L.push("Pendidikan Agama dan Budi Pekerti", "Pendidikan Kepercayaan terhadap Tuhan Yang Maha Esa dan Budi Pekerti");
+  L.push("Pendidikan Pancasila", "Bahasa Indonesia", "Matematika");
+  if (["SD","MI"].includes(j)) { L.push("Ilmu Pengetahuan Alam dan Sosial (IPAS)", "Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK)", "Seni Musik", "Seni Rupa", "Seni Tari", "Seni Teater", "Bahasa Inggris"); if (k >= 5) L.push("Koding dan Kecerdasan Artifisial"); }
+  if (["SMP","MTs"].includes(j)) L.push("Ilmu Pengetahuan Alam (IPA)", "Ilmu Pengetahuan Sosial (IPS)", "Bahasa Inggris", "PJOK", "Informatika", "Seni Musik", "Seni Rupa", "Seni Tari", "Seni Teater", "Prakarya", "Koding dan Kecerdasan Artifisial");
+  if (["SMA","MA","SMK","MAK"].includes(j)) {
+    L.push("Bahasa Inggris", "PJOK", "Sejarah", "Seni dan Budaya");
+    if (["SMA","MA"].includes(j)) {
+      if (k === 10) L.push("Ilmu Pengetahuan Alam (IPA)", "Ilmu Pengetahuan Sosial (IPS)", "Informatika");
+      else L.push("Fisika","Kimia","Biologi","Ekonomi","Geografi","Sosiologi","Antropologi","Informatika","Matematika Tingkat Lanjut","Bahasa Indonesia Tingkat Lanjut","Bahasa Inggris Tingkat Lanjut");
+      L.push("Koding dan Kecerdasan Artifisial");
+      if (kemenag && k >= 11) L = L.concat(PAI_MA_KEAGAMAAN);
+    } else {
+      L.push("Informatika", "Projek Ilmu Pengetahuan Alam dan Sosial", "Dasar-dasar Program Keahlian", "Konsentrasi Keahlian", "Projek Kreatif dan Kewirausahaan", "Mata Pelajaran Pilihan");
+    }
+  }
+  L.push("Muatan Lokal");
+  return [...new Set(L)];
+}
+function faseOf(p){
+  if (["PAUD/TK","RA"].includes(p.jenjang)) return "Fondasi";
+  const k = +p.kelas;
+  if (k <= 2) return "A"; if (k <= 4) return "B"; if (k <= 6) return "C"; if (k <= 9) return "D"; if (k === 10) return "E"; return "F";
+}
+function isAgamaSekolah(p){ return p.kementerian !== "kemenag" && /Agama dan Budi Pekerti|Kepercayaan/.test(p.mapel); }
+function isPAIMadrasah(p){ return p.kementerian === "kemenag" && (PAI_MADRASAH.concat(PAI_MA_KEAGAMAAN).includes(p.mapel) || /PAI dan Bahasa Arab/.test(p.mapel)); }
+function isAgama(p){ return isAgamaSekolah(p) || isPAIMadrasah(p); }
+function mapelName(p){
+  if (!p) return "";
+  if (p.mapel === "__lain") return p.mapelLain || "Mapel lainnya";
+  if (p.mapel === "Pendidikan Agama dan Budi Pekerti") return "Pendidikan Agama " + (p.agama || "Islam") + " dan Budi Pekerti";
+  return p.mapel || "";
+}
+function cpSumberSaran(p){
+  if (isPAIMadrasah(p)) return "Keputusan Dirjen Pendis No. 9941 Tahun 2025 (CP PAI & Bahasa Arab Madrasah)";
+  if (isAgamaSekolah(p)) return "Keputusan Kepala BKPDM No. 020 Tahun 2026 (perubahan CP Agama & BP)";
+  return "Keputusan Kepala BSKAP No. 046/H/KR/2025";
+}
+function regApplies(r, p){
+  if (!p) return r.scope === "all";
+  switch (r.scope) {
+    case "all": return true;
+    case "agama": return isAgamaSekolah(p);
+    case "madrasah": return p.kementerian === "kemenag";
+    case "kbc": return !!p.kbc;
+    case "kbcm": return !!p.kbc && p.kementerian === "kemenag";
+    case "cpmadrasah": return isPAIMadrasah(p);
+    default: return true;
+  }
+}
+function regsFor(p){
+  const out = state.regs.filter(r => r.checked && regApplies(r, p)).map(r => r.text);
+  (state.regsCustom || []).filter(r => r.checked && r.text.trim()).forEach(r => out.push(r.text.trim()));
+  return out;
+}
+function satuanLabel(p){ return (p && p.kementerian === "kemenag") ? "Madrasah" : "Sekolah"; }
+
+/* ============ STATE ============ */
+function uid(){ return Math.random().toString(36).slice(2, 9); }
+function newPkg(){
+  return {id:uid(), kementerian:(state && state.profil && state.profil.kementerian) || "kemendikdasmen", jenjang:"SD", kelas:"4", mapel:"", mapelLain:"", agama:"Islam",
+    jadwal:{1:0,2:0,3:0,4:0,5:0,6:0}, menitJP:35, jumlahMurid:"", kelasRangkap:"", catatanMurid:"", kbc:false,
+    cpSumber:"", cpTeks:"", elemen:[], atp:[], kktp:{}, modul:{}, modulOpsi:{pertemuan:2, instruksi:""}, lkpd:{},
+    asesmen:{rows:[]}, kisi:{tpIds:[], jumlah:10, bentuk:"Pilihan ganda", butir:[]}, analisis:{kunci:"", data:"", hasil:null}};
+}
+function defaultState(){
+  return {
+    ver: APP_VER,
+    profil:{kementerian:"kemendikdasmen", namaGuru:"", nip:"", sekolah:"", npsn:"", kepala:"", nipKepala:"", desa:"", kabupaten:"", provinsi:"", kotaTtd:"",
+      daerah3T:true, jenis3T:"Tertinggal", listrik:"Terbatas", internet:"Tidak stabil", proyektor:false, printer:false, lab:false, perpustakaan:true,
+      potensi:"", bahasaIbu:"", tahunAjaran:"2026/2027"},
+    kalender:{s1Mulai:"2026-07-13", s1Akhir:"2026-12-19", s2Mulai:"2027-01-04", s2Akhir:"2027-06-26",
+      libur:"17-08-2026 HUT Kemerdekaan RI\n21-12-2026 sampai 02-01-2027 Libur semester ganjil\n28-06-2027 sampai 10-07-2027 Libur kenaikan kelas"},
+    pkgs:[], active:0, step:1,
+    regs: REGS_DEFAULT.map(r => Object.assign({checked: true}, r)),
+    regsCustom: [],
+    ai:{models: AI_MODELS.slice(), lastOk:"", alwaysManual:false},
+    savedAt:"", exportedAt:""
+  };
+}
+let state = null;
+state = defaultState();
+state.pkgs.push(newPkg());
+
+function P(){ return state.pkgs[state.active] || state.pkgs[0]; }
+
+/* ============ HELPERS ============ */
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function nl2br(s){ return esc(s).replace(/\n/g, "<br>"); }
+function asText(v){ if (v == null) return ""; if (Array.isArray(v)) return v.map(asText).join("\n"); if (typeof v === "object") return Object.values(v).map(asText).join("\n"); return String(v); }
+function getPath(path){
+  const parts = path.split("."); let o = parts[0] === "pkg" ? P() : state; if (parts[0] === "pkg") parts.shift();
+  for (const k of parts) { if (o == null) return undefined; o = o[k]; } return o;
+}
+function setPath(path, val){
+  const parts = path.split("."); let o = parts[0] === "pkg" ? P() : state; if (parts[0] === "pkg") parts.shift();
+  for (let i = 0; i < parts.length - 1; i++) { if (o[parts[i]] == null) o[parts[i]] = {}; o = o[parts[i]]; }
+  o[parts[parts.length - 1]] = val;
+}
+function toast(msg, ms){ const d = document.createElement("div"); d.className = "toast"; d.textContent = msg; document.body.appendChild(d); setTimeout(() => d.remove(), ms || 2600); }
+function fmtTgl(d){ const b = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]; return d.getDate() + " " + b[d.getMonth()] + " " + d.getFullYear(); }
+function parseISO(s){ if (!s) return null; const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s); return m ? new Date(+m[1], +m[2]-1, +m[3]) : null; }
+function parseDMY(s){ const m = /^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})$/.exec(s.trim()); return m ? new Date(+m[3], +m[2]-1, +m[1]) : null; }
+function key(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function addDays(d, n){ const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+const BULAN_SINGKAT = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+const HARI = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+
+/* ============ SIMPAN ============ */
+let storageOK = true, saveTimer = null;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    state.savedAt = new Date().toISOString();
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); storageOK = true; } catch (e) { storageOK = false; }
+    renderSaveBar();
+  }, 400);
+}
+function saveNow(){
+  clearTimeout(saveTimer); state.savedAt = new Date().toISOString();
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); storageOK = true; } catch (e) { storageOK = false; }
+}
+window.addEventListener("pagehide", saveNow);
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") saveNow(); });
+function load(){
+  try { const raw = localStorage.getItem(STORE_KEY); if (raw) { const s = JSON.parse(raw); applyLoaded(s); return true; } } catch (e) { storageOK = false; }
+  return false;
+}
+function applyLoaded(s){
+  const d = defaultState();
+  state = Object.assign(d, s);
+  state.profil = Object.assign(d.profil, s.profil || {});
+  state.kalender = Object.assign(d.kalender, s.kalender || {});
+  state.ai = Object.assign(d.ai, s.ai || {});
+  // gabungkan daftar regulasi: pertahankan centang lama, tambahkan yang baru
+  const old = {}; (s.regs || []).forEach(r => old[r.id] = r);
+  state.regs = REGS_DEFAULT.map(r => Object.assign({}, r, {checked: old[r.id] ? !!old[r.id].checked : true}));
+  if (!Array.isArray(state.pkgs) || !state.pkgs.length) state.pkgs = [newPkg()];
+  state.pkgs = state.pkgs.map(p => Object.assign(newPkg(), p));
+  if (state.active >= state.pkgs.length) state.active = 0;
+}
+function downloadJSON(){
+  state.exportedAt = new Date().toISOString();
+  const nama = (state.profil.namaGuru || "guru").replace(/[^\w]+/g, "-").slice(0, 30);
+  downloadBlob(new Blob([JSON.stringify(state, null, 1)], {type:"application/json"}), "ajar-merata-" + nama + "-" + key(new Date()) + ".json");
+  save(); renderSaveBar();
+}
+function downloadBlob(blob, name){
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+function openJSON(){
+  const inp = document.createElement("input"); inp.type = "file"; inp.accept = ".json,application/json";
+  inp.onchange = () => {
+    const f = inp.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => { try { const s = JSON.parse(rd.result); if (!s.profil || !s.pkgs) throw new Error("bukan berkas Ajar Merata"); applyLoaded(s); save(); closeLayer(); renderAll(); toast("Berkas dibuka. Silakan lanjutkan pekerjaan."); } catch (e) { alertModal("Berkas tidak bisa dibuka", "Pastikan yang dipilih adalah berkas .json hasil unduhan Ajar Merata. (" + e.message + ")"); } };
+    rd.readAsText(f);
+  };
+  inp.click();
+}
+function renderSaveBar(){
+  const el = document.getElementById("saveBar"); if (!el) return;
+  const t = state.savedAt ? new Date(state.savedAt) : null;
+  const jam = t ? "pukul " + String(t.getHours()).padStart(2,"0") + "." + String(t.getMinutes()).padStart(2,"0") : "siap";
+  el.innerHTML = storageOK
+    ? `<span><span class="dot"></span> Tersimpan otomatis di perangkat ini (${jam})</span><span class="hint" style="opacity:.85">· Unduh berkas .json sebagai cadangan atau untuk pindah HP/laptop.</span><button class="btn sm" style="margin-left:auto" data-act="downloadJSON">⬇ Unduh .json</button>`
+    : `<span><span class="dot warn"></span> Penyimpanan otomatis tidak tersedia di sini. Unduh .json sebelum menutup halaman.</span><button class="btn sm" style="margin-left:auto" data-act="downloadJSON">⬇ Unduh .json</button>`;
+}
+
+/* ============ AI ============ */
+function sistemPrompt(p){
+  const regs = regsFor(p);
+  const kbc = p && p.kbc;
+  return [
+    "Anda adalah pendamping penyusunan perangkat ajar untuk guru di Indonesia, terutama guru di daerah 3T (tertinggal, terdepan, terluar).",
+    "ACUAN yang dicentang guru (jadikan rujukan, jangan dikutip pasalnya):\n- " + (regs.length ? regs.join("\n- ") : "(tidak ada)"),
+    "ATURAN WAJIB:",
+    "1. Gunakan nomenklatur resmi terbaru: murid, Capaian Pembelajaran (CP), Tujuan Pembelajaran (TP), Alur Tujuan Pembelajaran (ATP), Kriteria Ketercapaian Tujuan Pembelajaran (KKTP), Dimensi Profil Lulusan (DPL), pembelajaran mendalam.",
+    "2. Jangan mengarang nomor regulasi, pasal, ketentuan, kutipan hukum, judul buku, nama penulis, situs, atau tautan. Bila perlu menyebut sumber, sebut jenisnya saja (misalnya buku teks mata pelajaran, lingkungan sekitar).",
+    "3. Untuk Pendidikan Agama dan mapel PAI, jangan menulis teks ayat, hadis, atau kutipan kitab suci. Tulis penanda [Guru menuliskan ayat/hadis/kutipan kitab suci beserta sumbernya].",
+    "4. Pembelajaran mendalam: prinsip berkesadaran, bermakna, dan menggembirakan; pengalaman belajar memahami, mengaplikasi, dan merefleksi; kerangka praktik pedagogis, kemitraan pembelajaran, lingkungan pembelajaran, dan pemanfaatan digital.",
+    "5. Delapan Dimensi Profil Lulusan: " + DPL.join("; ") + ".",
+    kbc ? "6. Integrasikan Kurikulum Berbasis Cinta (Panca Cinta): " + PANCA_CINTA.join("; ") + ". Wujudkan dalam sikap, kegiatan, dan pembiasaan yang nyata, bukan slogan." : "6. Kurikulum Berbasis Cinta tidak diminta untuk paket ini.",
+    "7. Konteks 3T: kegiatan harus tetap bisa berjalan tanpa listrik, internet, proyektor, atau printer bila sarana itu terbatas. Gunakan bahan dan contoh dari lingkungan murid serta potensi daerah. Bila ada kelas rangkap, beri pembedaan kegiatan per tingkat kelas. Bahasa ibu murid boleh dipakai sebagai jembatan ke bahasa Indonesia.",
+    "8. Tulis dalam bahasa Indonesia baku yang sederhana, operasional, dan langsung dapat dipakai guru. Hindari jargon yang tidak perlu.",
+    "9. Jawab HANYA dengan JSON valid sesuai format yang diminta. Tanpa pengantar, tanpa penutup, tanpa blok kode."
+  ].join("\n");
+}
+function konteks(p){
+  const pr = state.profil, f = faseOf(p);
+  const sarana = [];
+  sarana.push("listrik: " + pr.listrik, "internet: " + pr.internet);
+  sarana.push(pr.proyektor ? "ada proyektor" : "tidak ada proyektor");
+  sarana.push(pr.printer ? "ada printer" : "tidak ada printer/terbatas");
+  sarana.push(pr.lab ? "ada laboratorium" : "tidak ada laboratorium");
+  sarana.push(pr.perpustakaan ? "ada perpustakaan/pojok baca" : "tidak ada perpustakaan");
+  return [
+    "KONTEKS:",
+    "- Satuan pendidikan: " + (pr.sekolah || "(belum diisi)") + " (" + (p.kementerian === "kemenag" ? "madrasah, Kementerian Agama" : "sekolah, Kemendikdasmen") + ")" + (pr.kabupaten ? ", " + pr.kabupaten : "") + (pr.provinsi ? ", " + pr.provinsi : "") + ".",
+    "- Daerah: " + (pr.daerah3T ? "daerah 3T (" + pr.jenis3T + ")" : "tidak dinyatakan sebagai daerah 3T") + ".",
+    "- Sarana: " + sarana.join(", ") + ".",
+    "- Potensi dan kearifan lokal: " + (pr.potensi || "(tidak diisi)") + ".",
+    "- Bahasa ibu murid: " + (pr.bahasaIbu || "(tidak diisi)") + ".",
+    "- Mata pelajaran: " + mapelName(p) + "; jenjang " + p.jenjang + "; kelas " + p.kelas + "; Fase " + f + "; " + p.menitJP + " menit per JP.",
+    "- Jumlah murid: " + (p.jumlahMurid || "(tidak diisi)") + "; kelas rangkap: " + (p.kelasRangkap || "tidak") + ".",
+    "- Catatan guru tentang murid: " + (p.catatanMurid || "(tidak ada)") + "."
+  ].join("\n");
+}
+function cleanJSON(txt){
+  let t = String(txt || "").trim();
+  t = t.replace(/^```(?:json)?/i, "").replace(/```\s*$/i, "").trim();
+  const i1 = t.search(/[\[{]/); if (i1 > 0) t = t.slice(i1);
+  const lastObj = Math.max(t.lastIndexOf("}"), t.lastIndexOf("]")); if (lastObj > -1) t = t.slice(0, lastObj + 1);
+  try { return JSON.parse(t); } catch (e) {}
+  const t2 = t.replace(/,\s*([}\]])/g, "$1").replace(/[“”]/g, '"');
+  return JSON.parse(t2);
+}
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+async function callGemini(sys, prompt){
+  const order = state.ai.lastOk ? [state.ai.lastOk].concat(state.ai.models.filter(m => m !== state.ai.lastOk)) : state.ai.models.slice();
+  let lastErr = null;
+  for (const model of order) {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      let res;
+      try {
+        res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + encodeURIComponent(model) + ":generateContent?key=" + encodeURIComponent(userKey() || apiKey), {
+          method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({
+            contents:[{role:"user", parts:[{text: prompt}]}],
+            systemInstruction:{parts:[{text: sys}]},
+            generationConfig:{responseMimeType:"application/json", temperature:0.6}
+          })
+        });
+      } catch (e) { lastErr = {kind:"jaringan", msg:"Tidak bisa terhubung ke server AI (" + e.message + ")."}; await sleep(1500 * (attempt + 1)); continue; }
+      if (res.ok) {
+        const data = await res.json();
+        const cand = data.candidates && data.candidates[0];
+        const text = cand && cand.content && cand.content.parts ? cand.content.parts.map(x => x.text || "").join("") : "";
+        if (!text) { lastErr = {kind:"kosong", msg:"AI tidak memberi jawaban" + (cand && cand.finishReason ? " (" + cand.finishReason + ")" : "") + "."}; break; }
+        try { const obj = cleanJSON(text); state.ai.lastOk = model; save(); return obj; }
+        catch (e) { lastErr = {kind:"format", msg:"Jawaban AI terpotong atau tidak berformat JSON. Coba lagi, atau kurangi jumlah TP per klik.", raw:text}; if (cand && cand.finishReason === "MAX_TOKENS") break; continue; }
+      }
+      let detail = ""; try { const j = await res.json(); detail = j.error && j.error.message ? j.error.message : ""; } catch (e) {}
+      if (res.status === 403 || res.status === 404 || res.status === 400) { lastErr = {kind:"model", msg:"Model " + model + " tidak bisa dipakai (HTTP " + res.status + "). " + detail}; break; }
+      if (res.status === 429) { lastErr = {kind:"kuota", msg:"Kuota AI akun Gemini sedang habis (HTTP 429). Tunggu beberapa menit atau coba besok."}; await sleep(2500 * (attempt + 1)); continue; }
+      lastErr = {kind:"server", msg:"Server AI sibuk (HTTP " + res.status + "). " + detail}; await sleep(2000 * (attempt + 1));
+    }
+  }
+  throw lastErr || {kind:"lain", msg:"AI gagal tanpa keterangan."};
+}
+
+/* runAI: panggil AI; bila gagal, tawarkan mode salin-prompt */
+function runAI(opts){
+  const p = P();
+  const sys = sistemPrompt(p);
+  const full = opts.prompt + "\n\n" + konteks(p);
+  if (state.ai.alwaysManual || !aiLangsung()) return manualPrompt(sys, full, opts);
+  if (!inCanvas() && !opts.force) return manualPrompt(sys, full, opts, true);
+  showBusy(opts.label || "AI sedang menyusun...");
+  callGemini(sys, full).then(obj => {
+    hideBusy();
+    try { opts.onResult(obj); save(); render(); toast("Selesai. Periksa dan sunting hasilnya bila perlu."); }
+    catch (e) { aiErrorModal({kind:"format", msg:"Isi jawaban AI tidak sesuai format yang diharapkan (" + e.message + ")."}, sys, full, opts); }
+  }).catch(err => { hideBusy(); aiErrorModal(err, sys, full, opts); });
+}
+function aiErrorModal(err, sys, full, opts){
+  const saran = {
+    model:"Kunci AI bawaan Canvas hanya berlaku untuk model tertentu. Buka Menu › Pengaturan AI untuk mengganti daftar model, atau minta Gemini di Canvas memperbarui nama model.",
+    kuota:"Kuota harian akun Gemini Anda habis. Tunggu sebentar atau coba lagi besok.",
+    jaringan:"Periksa sinyal. Pekerjaan Anda tetap tersimpan.",
+    format:"Muat ulang lalu coba lagi, atau pilih lebih sedikit TP/soal per klik.",
+    server:"Tunggu 1–2 menit lalu coba lagi.", kosong:"Ubah sedikit isian lalu coba lagi."
+  }[err.kind] || "";
+  openLayer(`<div class="modal"><div class="mhead"><h2>AI belum berhasil</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
+    <div class="note bad"><b>Penyebab:</b> ${esc(err.msg)}</div>
+    <p class="small">${esc(saran)}</p>
+    <p class="small">Bila Anda membuka aplikasi ini di luar Gemini Canvas (misalnya dari berkas di HP), AI langsung tidak tersedia. Pakai <b>mode salin-prompt</b>: aplikasi menyiapkan perintah, Anda menempelkannya ke Gemini, ChatGPT, atau Meta AI, lalu menempelkan jawabannya kembali di sini.</p>
+    <div class="row"><button class="btn ai" data-act="aiRetry">↻ Coba lagi</button><button class="btn" data-act="aiManual">📋 Pakai mode salin-prompt</button></div></div>`);
+  ACT.aiRetry = () => { closeLayer(); runAI(opts); };
+  ACT.aiManual = () => { closeLayer(); manualPrompt(sys, full, opts); };
+}
+function inCanvas(){
+  const h = location.hostname || "";
+  return /\.goog$|googleusercontent\.com$|gemini\.google\.com$/.test(h);
+}
+function manualPrompt(sys, full, opts, outside){
+  const all = sys + "\n\n=== TUGAS ===\n" + full;
+  const why = !aiLangsung() ? `<div class="note info small">Aplikasi dibuka di luar Gemini Canvas, jadi AI dijalankan lewat chatbot pilihan Anda. Ingin AI langsung? Buka versi Canvas, atau isi kunci API Gemini gratis Anda di Menu › Pengaturan AI.</div>` : "";
+  openLayer(`<div class="modal"><div class="mhead"><h2>Mode salin-prompt</h2><button class="btn sm" data-act="closeLayer">✕</button></div>${why}
+    ${outside ? `<div class="note info small">Aplikasi ini dibuka di luar Gemini Canvas, jadi AI tidak bisa dipanggil langsung. Ikuti tiga langkah di bawah memakai chatbot apa saja. <button class="btn sm" data-act="mpForce">Tetap coba AI langsung</button></div>` : ""}
+    <ol class="small"><li>Tekan <b>Salin perintah</b>.</li><li>Buka Gemini, ChatGPT, atau Meta AI (WhatsApp), tempel, lalu kirim.</li><li>Salin seluruh jawaban AI, tempel di kotak kedua, tekan <b>Proses jawaban</b>.</li></ol>
+    <label class="f">Perintah untuk AI</label><textarea class="in" id="mpPrompt" readonly style="min-height:120px">${esc(all)}</textarea>
+    <div class="row" style="margin:8px 0 14px"><button class="btn pri" data-act="mpCopy">📋 Salin perintah</button></div>
+    <label class="f">Tempel jawaban AI di sini</label><textarea class="in" id="mpAnswer" style="min-height:140px" placeholder='{ ... }'></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn ai" data-act="mpProcess">Proses jawaban</button></div></div>`);
+  ACT.mpCopy = () => copyText(all);
+  ACT.mpForce = () => { closeLayer(); runAI(Object.assign({}, opts, {force:true})); };
+  ACT.mpProcess = () => {
+    const v = document.getElementById("mpAnswer").value;
+    try { const obj = cleanJSON(v); opts.onResult(obj); save(); closeLayer(); render(); toast("Jawaban diproses."); }
+    catch (e) { toast("Jawaban belum bisa dibaca. Pastikan Anda menyalin seluruh jawaban yang berbentuk JSON.", 4000); }
+  };
+}
+function copyText(t){
+  const done = () => toast("Tersalin.");
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, () => fallbackCopy(t));
+  else fallbackCopy(t);
+}
+function fallbackCopy(t){
+  const ta = document.createElement("textarea"); ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); toast("Tersalin."); } catch (e) { toast("Gagal menyalin. Tandai teks lalu salin manual."); }
+  ta.remove();
+}
+
+/* ============ KALENDER ============ */
+function liburSet(){
+  const set = {}, bad = [];
+  String(state.kalender.libur || "").split(/\n/).forEach(line => {
+    const l = line.trim(); if (!l) return;
+    let m = /^(\d{1,2}[-\/.]\d{1,2}[-\/.]\d{4})\s*(?:sampai|s\.?d\.?|-|–)\s*(\d{1,2}[-\/.]\d{1,2}[-\/.]\d{4})\s*(.*)$/i.exec(l);
+    if (m) { const a = parseDMY(m[1]), b = parseDMY(m[2]); if (!a || !b || b < a) { bad.push(l); return; } for (let d = a; d <= b; d = addDays(d, 1)) set[key(d)] = m[3] || "Libur"; return; }
+    m = /^(\d{1,2}[-\/.]\d{1,2}[-\/.]\d{4})\s*(.*)$/.exec(l);
+    if (m) { const a = parseDMY(m[1]); if (!a) { bad.push(l); return; } set[key(a)] = m[2] || "Libur"; return; }
+    bad.push(l);
+  });
+  return {set, bad};
+}
+/* hasil: {s1:{weeks:[{start, jp, meet, label, month}], total}, s2:..., bad} */
+function hitungKalender(p){
+  p = p || P();
+  const {set, bad} = liburSet();
+  const out = {bad};
+  [["s1", state.kalender.s1Mulai, state.kalender.s1Akhir], ["s2", state.kalender.s2Mulai, state.kalender.s2Akhir]].forEach(([s, a, b]) => {
+    const A = parseISO(a), B = parseISO(b), weeks = [];
+    if (A && B && B >= A) {
+      let wk = addDays(A, -((A.getDay() + 6) % 7)); // Senin minggu pertama
+      while (wk <= B) {
+        let jp = 0, meet = 0, libur = 0;
+        for (let i = 0; i < 6; i++) {
+          const d = addDays(wk, i); if (d < A || d > B) continue;
+          const dow = d.getDay(); const j = +(p.jadwal[dow] || 0);
+          if (!j) continue;
+          if (set[key(d)]) { libur++; continue; }
+          jp += j; meet++;
+        }
+        weeks.push({start:key(wk), month:wk.getMonth() < 0 ? 0 : (addDays(wk, 3)).getMonth(), year:addDays(wk,3).getFullYear(), jp, meet, libur});
+        wk = addDays(wk, 7);
+      }
+    }
+    // nomor minggu per bulan
+    const cnt = {};
+    weeks.forEach(w => { const k2 = w.year + "-" + w.month; cnt[k2] = (cnt[k2] || 0) + 1; w.mInMonth = cnt[k2]; w.label = BULAN_SINGKAT[w.month] + "-" + w.mInMonth; });
+    out[s] = {weeks, total: weeks.reduce((x, w) => x + w.jp, 0), efektif: weeks.filter(w => w.jp > 0).length};
+  });
+  return out;
+}
+function jpPerMinggu(p){ return Object.values(p.jadwal || {}).reduce((a, b) => a + (+b || 0), 0); }
+function atpJP(p, sem){ return (p.atp || []).filter(t => !sem || +t.semester === sem).reduce((a, t) => a + (+t.jp || 0), 0); }
+
+/* ============ PROMES ============ */
+function sebarPromes(p){
+  const kal = hitungKalender(p); const res = {};
+  [1, 2].forEach(sem => {
+    const weeks = kal["s" + sem].weeks.map(w => Object.assign({}, w, {sisa: w.jp}));
+    const rows = []; let wi = 0;
+    p.atp.filter(t => +t.semester === sem).forEach(t => {
+      let need = +t.jp || 0; const cells = {};
+      while (need > 0 && wi < weeks.length) {
+        const w = weeks[wi];
+        if (w.sisa <= 0) { wi++; continue; }
+        const take = Math.min(need, w.sisa); cells[w.start] = (cells[w.start] || 0) + take; w.sisa -= take; need -= take;
+        if (w.sisa <= 0) wi++;
+      }
+      rows.push({tp:t, cells, kurang:need});
+    });
+    res[sem] = {weeks, rows};
+  });
+  return res;
+}
+
+/* ============ KERANGKA UI ============ */
+const STEPS = [
+  {n:1, t:"Profil Guru & Sekolah", ai:false},
+  {n:2, t:"Paket Mengajar", ai:false},
+  {n:3, t:"Kalender & Minggu Efektif", ai:false},
+  {n:4, t:"Capaian Pembelajaran (CP)", ai:false},
+  {n:5, t:"Alur Tujuan Pembelajaran (ATP)", ai:true},
+  {n:6, t:"Program Tahunan (Prota)", ai:false},
+  {n:7, t:"Program Semester (Promes)", ai:false},
+  {n:8, t:"KKTP", ai:true},
+  {n:9, t:"Modul Ajar Pembelajaran Mendalam", ai:true},
+  {n:10, t:"Lembar Kerja Murid (LKPD)", ai:true},
+  {n:11, t:"Rencana Asesmen", ai:true},
+  {n:12, t:"Kisi-kisi & Kartu Soal", ai:true},
+  {n:13, t:"Analisis Butir Soal", ai:false}
+];
+function stepDone(n){
+  const p = P(), pr = state.profil;
+  switch (n) {
+    case 1: return !!(pr.namaGuru && pr.sekolah);
+    case 2: return !!(p.mapel && p.kelas && (p.mapel !== "__lain" || p.mapelLain));
+    case 3: return jpPerMinggu(p) > 0 && hitungKalender(p).s1.total > 0;
+    case 4: return !!p.cpTeks.trim();
+    case 5: return p.atp.length > 0;
+    case 6: case 7: return p.atp.length > 0 && jpPerMinggu(p) > 0;
+    case 8: return p.atp.length > 0 && p.atp.every(t => p.kktp[t.id]);
+    case 9: return Object.values(p.modul).some(m => m && m.parts && ["identifikasi","desain","pengalaman","asesmen","lampiran"].every(k => m.parts[k]));
+    case 10: return Object.keys(p.lkpd).length > 0;
+    case 11: return p.asesmen.rows.length > 0;
+    case 12: return p.kisi.butir.length > 0;
+    case 13: return !!p.analisis.hasil;
+  }
+  return false;
+}
+function renderNav(){
+  const el = document.getElementById("steps");
+  el.innerHTML = STEPS.map(s => `<button class="step ${state.step === s.n ? "active" : ""} ${stepDone(s.n) ? "done" : ""}" data-act="go" data-arg="${s.n}">
+    <span class="n">${stepDone(s.n) && state.step !== s.n ? "✓" : s.n}</span><span><span class="t">${esc(s.t)}${s.ai ? '<span class="ai-tag">AI</span>' : ""}</span></span></button>`).join("");
+  const act = el.querySelector(".step.active"); if (act && act.scrollIntoView && window.innerWidth < 960) act.scrollIntoView({block:"nearest", inline:"center"});
+}
+function renderPkgSel(){
+  const sel = document.getElementById("pkgSel");
+  sel.innerHTML = state.pkgs.map((p, i) => `<option value="${i}" ${i === state.active ? "selected" : ""}>${esc((mapelName(p) || "Paket baru").slice(0, 28))} · ${esc(p.jenjang)} ${esc(p.kelas)}</option>`).join("");
+}
+function render(){
+  const p0 = P(); syncTxtFields(p0); syncKKTP(p0); syncLKPD(p0);
+  renderNav(); renderPkgSel(); renderSaveBar();
+  const fn = RENDER[state.step] || RENDER[1];
+  const main = document.getElementById("main");
+  main.innerHTML = fn() + navBottom();
+}
+function renderAll(){ render(); window.scrollTo(0, 0); }
+function navBottom(){
+  const n = state.step;
+  return `<div class="navbtm">${n > 1 ? `<button class="btn" data-act="go" data-arg="${n-1}">← Langkah ${n-1}</button>` : "<span></span>"}${n < 13 ? `<button class="btn pri" data-act="go" data-arg="${n+1}">Lanjut ke Langkah ${n+1} →</button>` : ""}</div>`;
+}
+function head(n, lead, helpItems){
+  const s = STEPS[n-1];
+  return `<div class="row" style="gap:6px;margin-bottom:6px"><span class="pill">Langkah ${n} dari 13</span>${s.ai ? '<span class="pill" style="color:var(--clay)">Memakai AI</span>' : '<span class="pill">Tanpa AI</span>'}${stepDone(n) ? '<span class="pill ok">✓ Sudah terisi</span>' : ""}</div>
+  <h2>${esc(s.t)}</h2><p class="lead">${lead}</p>${helpItems ? `<details class="help"><summary>📘 Petunjuk langkah ini</summary><ol>${helpItems.map(h => "<li>" + h + "</li>").join("")}</ol></details>` : ""}`;
+}
+function needPkgInfo(){
+  const p = P();
+  if (!stepDone(2)) return `<div class="note warn">Lengkapi dulu <b>Langkah 2 (Paket Mengajar)</b>: pilih jenjang, kelas, dan mata pelajaran. <button class="btn sm" data-act="go" data-arg="2">Buka Langkah 2</button></div>`;
+  return "";
+}
+function needATP(){
+  if (!P().atp.length) return `<div class="note warn">Belum ada Tujuan Pembelajaran. Buat dulu di <b>Langkah 5 (ATP)</b>. <button class="btn sm" data-act="go" data-arg="5">Buka Langkah 5</button></div>`;
+  return "";
+}
+
+/* ---------- layer / modal ---------- */
+function openLayer(html){ const l = document.getElementById("layer"); l.innerHTML = `<div class="ovl" data-act="ovlClick">${html}</div>`; }
+function closeLayer(){ document.getElementById("layer").innerHTML = ""; }
+function alertModal(title, body){ openLayer(`<div class="modal"><div class="mhead"><h2>${esc(title)}</h2><button class="btn sm" data-act="closeLayer">✕</button></div><p>${esc(body)}</p><div class="row"><button class="btn pri" data-act="closeLayer">Tutup</button></div></div>`); }
+function confirmModal(title, body, yesLabel, onYes){
+  openLayer(`<div class="modal"><div class="mhead"><h2>${esc(title)}</h2></div><p>${body}</p><div class="row"><button class="btn danger" data-act="cfYes">${esc(yesLabel)}</button><button class="btn" data-act="closeLayer">Batal</button></div></div>`);
+  ACT.cfYes = () => { closeLayer(); onYes(); };
+}
+function showBusy(msg){ const d = document.createElement("div"); d.className = "busy"; d.id = "busy"; d.innerHTML = `<div class="busy-box"><div class="spin"></div><b>${esc(msg)}</b><div class="small muted" style="margin-top:6px">Biasanya 10–40 detik. Jangan tutup halaman.</div></div>`; document.body.appendChild(d); }
+function hideBusy(){ const d = document.getElementById("busy"); if (d) d.remove(); }
+
+/* ---------- menu ---------- */
+function openMenu(){
+  openLayer(`<div class="modal"><div class="mhead"><h2>Menu</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
+  <div class="menu-list">
+    <button class="btn" data-act="downloadJSON">⬇ Unduh berkas kerja (.json)</button>
+    <button class="btn" data-act="openJSON">📂 Buka berkas kerja (.json)</button>
+    <button class="btn" data-act="openProgress">📊 Ringkasan progres</button>
+    <button class="btn" data-act="openRegs">⚖ Acuan hukum (landasan regulasi)</button>
+    <button class="btn" data-act="openGuide">📖 Cara pakai</button>
+    <button class="btn" data-act="openAISettings">⚙ Pengaturan AI</button>
+    <button class="btn" data-act="loadSample">🧪 Muat data contoh (SD kelas rangkap, IPAS)</button>
+    <button class="btn danger" data-act="resetAll">✨ Mulai baru (hapus semua isian)</button>
+  </div>
+  <p class="small muted" style="margin-top:12px">Ajar Merata v${APP_VER}. Daftar acuan diperiksa per ${ACUAN_DICEK}.</p></div>`);
+}
+function openProgress(){
+  const rows = state.pkgs.map((p, i) => {
+    const done = STEPS.filter(s => { const keep = state.active; state.active = i; const d = stepDone(s.n); state.active = keep; return d; }).length;
+    return `<tr><td>${esc(mapelName(p) || "(belum dipilih)")}</td><td>${esc(p.jenjang)} ${esc(p.kelas)}</td><td class="num">${done}/13</td><td class="num">${p.atp.length}</td><td class="num">${Object.keys(p.modul).length}</td></tr>`;
+  }).join("");
+  openLayer(`<div class="modal"><div class="mhead"><h2>Ringkasan progres</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
+  <div class="tbl-wrap"><table class="t"><tr><th>Paket</th><th>Kelas</th><th class="num">Langkah</th><th class="num">TP</th><th class="num">Modul</th></tr>${rows}</table></div>
+  <p class="small muted">Satu guru bisa punya beberapa paket (misalnya guru kelas yang memegang beberapa mapel). Tambah paket di Langkah 2.</p></div>`);
+}
+function openRegs(){
+  const p = P();
+  const list = state.regs.map((r, i) => `<label class="chk" style="border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0;${regApplies(r, p) ? "" : "opacity:.6"}">
+     <input type="checkbox" data-regi="${i}" ${r.checked ? "checked" : ""}><span><b>${i+1}.</b> ${esc(r.text)}<br><span class="small muted">${esc(SCOPE_LABEL[r.scope])}${regApplies(r, p) ? "" : " · tidak berlaku untuk paket aktif"}</span></span></label>`).join("");
+  const custom = (state.regsCustom || []).map((r, i) => `<div class="row" style="margin:6px 0"><label class="chk" style="flex:1"><input type="checkbox" data-regc="${i}" ${r.checked ? "checked" : ""}><span>${esc(r.text)}</span></label><button class="btn sm danger" data-act="delRegC" data-arg="${i}">Hapus</button></div>`).join("");
+  openLayer(`<div class="modal"><div class="mhead"><h2>Acuan hukum</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
+  <p class="small">Acuan yang dicentang dan berlaku untuk paket aktif dicetak sebagai <b>Landasan Regulasi</b> di setiap dokumen Word dan dipakai sebagai rujukan AI. Daftar diperiksa per ${ACUAN_DICEK}. Peraturan dapat berubah: periksa status keberlakuan di kanal resmi Kemendikdasmen (JDIH) dan Kemenag sebelum mengutip.</p>
+  <div class="note info small">Nomor 4 diterbitkan oleh <b>Badan Kebijakan Pendidikan Dasar dan Menengah (BKPDM)</b> dan hanya mengubah CP Pendidikan Agama dan Budi Pekerti. CP mapel lain tetap mengacu pada Kepka BSKAP 046/H/KR/2025.</div>
+  ${list}
+  <h3 style="margin-top:14px">Acuan tambahan (Pergub, Perbup, SK kepala sekolah, dll.)</h3>${custom || '<p class="small muted">Belum ada.</p>'}
+  <div class="row"><input class="in" id="regNew" style="flex:1" placeholder="Ketik nomor dan judul acuan persis seperti dokumen resminya"><button class="btn pri" data-act="addRegC">Tambah</button></div></div>`);
+}
+function openAISettings(){
+  const k = userKey();
+  openLayer(`<div class="modal"><div class="mhead"><h2>Pengaturan AI</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
+  <div class="note ${IN_CANVAS ? "ok" : "info"} small">${IN_CANVAS ? "Aplikasi berjalan di <b>Gemini Canvas</b>. AI memakai akun Google Anda sendiri, gratis sesuai kuota akun." : "Aplikasi berjalan <b>di luar Gemini Canvas</b>. Tanpa kunci API, tombol AI memakai mode salin-prompt."}</div>
+  <h3>Kunci API Gemini pribadi <span class="small muted">(opsional, gratis)</span></h3>
+  <p class="small">Buat kunci di <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> dengan akun Google Anda, lalu tempel di sini. Kunci hanya disimpan di perangkat ini dan <b>tidak</b> ikut tersimpan di berkas .json. Jangan bagikan kunci Anda kepada orang lain.</p>
+  <div class="row"><input class="in" id="aiKey" type="password" autocomplete="off" style="flex:1" placeholder="Tempel kunci API" value="${esc(k)}">${k ? '<button class="btn danger" data-act="delKey">Hapus kunci</button>' : ""}</div>
+  <h3 style="margin-top:14px">Daftar model</h3>
+  <p class="small">Aplikasi mencoba model berikut berurutan dan mengingat yang berhasil. Google mengganti nama model dari waktu ke waktu; bila AI menolak (HTTP 403/404), perbarui daftar ini.</p>
+  <textarea class="in" id="aiModels" style="min-height:100px">${esc(state.ai.models.join("\n"))}</textarea>
+  <p class="small muted">Model terakhir yang berhasil: <b>${esc(state.ai.lastOk || "belum ada")}</b></p>
+  <label class="chk"><input type="checkbox" id="aiManual" ${state.ai.alwaysManual ? "checked" : ""}><span><b>Selalu pakai mode salin-prompt</b> (perintah disalin ke Gemini, ChatGPT, atau Meta AI, lalu jawabannya ditempel kembali).</span></label>
+  <div class="row" style="margin-top:10px"><button class="btn pri" data-act="saveAISettings">Simpan</button><button class="btn" data-act="resetAIModels">Kembalikan model bawaan</button></div></div>`);
+}
+function openGuide(){
+  openLayer(`<div class="modal"><div class="mhead"><h2>Cara pakai Ajar Merata</h2><button class="btn sm" data-act="closeLayer">✕</button></div>
+  <details class="help" open><summary>Mulai cepat</summary><ol>
+    <li>Ingin mencoba dulu? Buka Menu › <b>Muat data contoh</b>. Profil, paket, kalender, CP contoh, dan ATP langsung terisi sehingga langkah tanpa AI bisa dicoba.</li>
+    <li>Mulai sungguhan: isi Langkah 1–4 berurutan. Langkah 4 (CP) adalah sumber semua isi berikutnya.</li>
+    <li>Langkah 5 (ATP) adalah pusat. Prota, Promes, KKTP, Modul, LKPD, asesmen, dan soal dibangun dari ATP.</li>
+    <li>Setiap langkah punya tombol <b>Unduh Word</b>. Dokumen sudah berisi identitas, landasan regulasi, dan kolom tanda tangan.</li>
+  </ol></details>
+  <details class="help"><summary>Menyimpan dan melanjutkan</summary><ul>
+    <li>Isian tersimpan otomatis di perangkat ini bila peramban mengizinkan (lihat bilah hijau di atas).</li>
+    <li>Unduh <b>berkas .json</b> sebagai cadangan, atau untuk pindah ke HP/laptop lain lewat Menu › Buka berkas kerja.</li>
+    <li>Berkas .json bisa dikirim lewat WhatsApp ke rekan guru sebagai contoh.</li>
+  </ul></details>
+  <details class="help"><summary>Fitur khusus untuk sekolah 3T</summary><ul>
+    <li><b>Kondisi sarana</b> (Langkah 1) memberi tahu AI agar kegiatan tetap jalan tanpa listrik, internet, proyektor, atau printer.</li>
+    <li><b>Potensi dan kearifan lokal</b> dipakai sebagai contoh dan bahan belajar.</li>
+    <li><b>Kelas rangkap</b> (Langkah 2): modul dan LKPD diberi pembedaan per tingkat kelas.</li>
+    <li><b>Bahasa ibu murid</b> dipakai sebagai jembatan di kegiatan awal.</li>
+    <li><b>Mode salin-prompt</b>: bila AI di Canvas gagal, perintah bisa disalin ke chatbot lain lalu jawabannya ditempel kembali.</li>
+  </ul></details>
+  <details class="help"><summary>Madrasah dan Kurikulum Berbasis Cinta</summary><ul>
+    <li>Pilih <b>Kementerian Agama</b> di Langkah 1 atau 2. Jenjang berubah menjadi RA, MI, MTs, MA, MAK dan mapel PAI madrasah muncul.</li>
+    <li>Centang <b>Integrasikan Kurikulum Berbasis Cinta</b> di Langkah 2 agar Panca Cinta masuk ke ATP, modul, dan asesmen.</li>
+    <li>AI tidak menulis teks ayat/hadis. Kotak penanda disediakan agar guru mengisinya sendiri dari sumber yang sahih.</li>
+  </ul></details>
+  <details class="help"><summary>Masalah umum</summary><ul>
+    <li><b>AI gagal (HTTP 403/404):</b> nama model sudah tidak dilayani Canvas. Buka Menu › Pengaturan AI, atau pakai mode salin-prompt.</li>
+    <li><b>HTTP 429:</b> kuota akun Gemini habis. Tunggu atau coba besok.</li>
+    <li><b>Total JP ATP merah:</b> JP usulan melebihi JP kalender. Kurangi JP beberapa TP atau pindahkan ke semester lain.</li>
+    <li><b>Tanggal libur tidak terbaca:</b> tulis satu kegiatan per baris dengan format <code>DD-MM-YYYY Keterangan</code> atau <code>DD-MM-YYYY sampai DD-MM-YYYY Keterangan</code>.</li>
+    <li><b>Tabel di Word terlalu lebar:</b> klik tabel › Tata Letak › Paskan Otomatis › Paskan ke Jendela.</li>
+  </ul></details></div>`);
+}
+
+/* ---------- event ---------- */
+const ACT = {};
+ACT.go = (n) => { state.step = +n; save(); renderAll(); };
+ACT.openMenu = openMenu; ACT.closeLayer = closeLayer;
+ACT.ovlClick = (a, el, ev) => { if (ev.target === el) closeLayer(); };
+ACT.downloadJSON = () => { downloadJSON(); toast("Berkas .json diunduh. Simpan di tempat yang mudah ditemukan."); };
+ACT.openJSON = openJSON; ACT.openProgress = openProgress; ACT.openRegs = openRegs; ACT.openGuide = openGuide; ACT.openAISettings = openAISettings;
+ACT.addRegC = () => { const v = document.getElementById("regNew").value.trim(); if (!v) return; state.regsCustom.push({text:v, checked:true}); save(); openRegs(); };
+ACT.delRegC = (i) => { state.regsCustom.splice(+i, 1); save(); openRegs(); };
+ACT.saveAISettings = () => {
+  const m = document.getElementById("aiModels").value.split(/\n/).map(x => x.trim()).filter(Boolean);
+  state.ai.models = m.length ? m : AI_MODELS.slice(); if (!state.ai.models.includes(state.ai.lastOk)) state.ai.lastOk = "";
+  state.ai.alwaysManual = document.getElementById("aiManual").checked;
+  setUserKey(document.getElementById("aiKey").value.trim()); save(); closeLayer(); toast("Pengaturan AI disimpan.");
+};
+ACT.delKey = () => { setUserKey(""); openAISettings(); toast("Kunci dihapus dari perangkat ini."); };
+ACT.resetAIModels = () => { state.ai.models = AI_MODELS.slice(); state.ai.lastOk = ""; save(); openAISettings(); };
+ACT.resetAll = () => confirmModal("Mulai baru?", "Semua isian di perangkat ini akan dihapus. Unduh .json dulu bila masih diperlukan.", "Ya, hapus semua", () => { state = defaultState(); state.pkgs.push(newPkg()); save(); renderAll(); toast("Mulai dari awal."); });
+ACT.loadSample = () => confirmModal("Muat data contoh?", "Isian yang ada sekarang akan diganti dengan data contoh. Unduh .json dulu bila masih diperlukan.", "Muat contoh", () => { loadSample(); save(); renderAll(); toast("Data contoh dimuat."); });
+
+document.addEventListener("click", ev => {
+  const el = ev.target.closest("[data-act]"); if (!el) return;
+  const fn = ACT[el.dataset.act]; if (!fn) return;
+  if (el.dataset.act !== "ovlClick") ev.preventDefault();
+  fn(el.dataset.arg, el, ev);
+});
+document.addEventListener("input", ev => {
+  const el = ev.target;
+  if (el.dataset.bind) {
+    let v = el.type === "checkbox" ? el.checked : el.value;
+    if (el.dataset.num !== undefined) v = v === "" ? 0 : +v;
+    setPath(el.dataset.bind, v);
+    if (el.dataset.after && AFTER[el.dataset.after]) AFTER[el.dataset.after]();
+    save();
+    if (el.dataset.rerender !== undefined) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    else if (el.dataset.live) { const fn = LIVE[el.dataset.live]; if (fn) fn(); }
+  }
+  if (el.dataset.regi !== undefined) { state.regs[+el.dataset.regi].checked = el.checked; save(); }
+  if (el.dataset.regc !== undefined) { state.regsCustom[+el.dataset.regc].checked = el.checked; save(); }
+});
+document.addEventListener("change", ev => {
+  const el = ev.target;
+  if (el.id === "pkgSel") { state.active = +el.value; save(); renderAll(); return; }
+});
+const LIVE = {};
+
+/* ============ LANGKAH 1–4 ============ */
+const RENDER = {};
+const AFTER = {};
+function inp(bind, label, opt){
+  opt = opt || {}; const v = getPath(bind);
+  return `<div><label class="f">${label}${opt.hint ? ` <small>${opt.hint}</small>` : ""}</label><input class="in" ${opt.type ? `type="${opt.type}"` : ""} data-bind="${bind}" ${opt.num ? "data-num" : ""} ${opt.live ? `data-live="${opt.live}"` : ""} value="${esc(v)}" placeholder="${esc(opt.ph || "")}" ${opt.min != null ? `min="${opt.min}"` : ""}></div>`;
+}
+function sel(bind, label, options, opt){
+  opt = opt || {}; const v = getPath(bind);
+  const o = options.map(x => { const val = Array.isArray(x) ? x[0] : x, lab = Array.isArray(x) ? x[1] : x; return `<option value="${esc(val)}" ${String(v) === String(val) ? "selected" : ""}>${esc(lab)}</option>`; }).join("");
+  return `<div><label class="f">${label}${opt.hint ? ` <small>${opt.hint}</small>` : ""}</label><select class="in" data-bind="${bind}" ${opt.rerender ? "data-rerender" : ""} ${opt.after ? `data-after="${opt.after}"` : ""}>${opt.empty ? `<option value="">${esc(opt.empty)}</option>` : ""}${o}</select></div>`;
+}
+function ta(bind, label, opt){
+  opt = opt || {};
+  return `<div><label class="f">${label}${opt.hint ? ` <small>${opt.hint}</small>` : ""}</label><textarea class="in" data-bind="${bind}" ${opt.live ? `data-live="${opt.live}"` : ""} style="${opt.h ? "min-height:" + opt.h + "px" : ""}" placeholder="${esc(opt.ph || "")}">${esc(getPath(bind))}</textarea></div>`;
+}
+function cb(bind, label){ return `<label class="chk"><input type="checkbox" data-bind="${bind}" ${getPath(bind) ? "checked" : ""}><span>${label}</span></label>`; }
+
+/* ---- 1. Profil ---- */
+RENDER[1] = () => {
+  return `<section class="card">${head(1, "Data ini dicetak di setiap dokumen dan membantu AI memahami kondisi sekolah Anda.", [
+    "Isi nama guru, satuan pendidikan, dan kepala sekolah/madrasah untuk kolom tanda tangan.",
+    "Bagian <b>Kondisi sekolah</b> menentukan jenis kegiatan yang disarankan AI. Isi sesuai keadaan sebenarnya.",
+    "Tulis potensi dan kearifan lokal sekonkret mungkin (misalnya: nelayan, kebun sagu, tenun ikat, upacara adat panen)."])}
+    <h3>Guru dan satuan pendidikan</h3>
+    <div class="grid2">
+      ${sel("profil.kementerian", "Satuan pendidikan di bawah", [["kemendikdasmen","Kemendikdasmen (TK, SD, SMP, SMA, SMK)"],["kemenag","Kementerian Agama (RA, MI, MTs, MA, MAK)"]], {rerender:true, after:"profilKem"})}
+      ${inp("profil.tahunAjaran", "Tahun ajaran", {ph:"2026/2027"})}
+      ${inp("profil.namaGuru", "Nama guru (dengan gelar)", {ph:"Contoh: Maria Ngadha, S.Pd."})}
+      ${inp("profil.nip", "NIP / NUPTK", {hint:"(kosongkan bila tidak ada)"})}
+      ${inp("profil.sekolah", "Nama sekolah / madrasah")}
+      ${inp("profil.npsn", "NPSN", {hint:"(opsional)"})}
+      ${inp("profil.kepala", "Nama kepala sekolah / madrasah")}
+      ${inp("profil.nipKepala", "NIP kepala", {hint:"(opsional)"})}
+      ${inp("profil.desa", "Desa / kecamatan")}
+      ${inp("profil.kabupaten", "Kabupaten / kota")}
+      ${inp("profil.provinsi", "Provinsi")}
+      ${inp("profil.kotaTtd", "Tempat tanda tangan", {hint:"(nama tempat di bawah dokumen)"})}
+    </div>
+    <h3 style="margin-top:18px">Kondisi sekolah</h3>
+    ${cb("profil.daerah3T", "Sekolah berada di daerah 3T (tertinggal, terdepan, atau terluar)")}
+    <div class="grid3">
+      ${sel("profil.jenis3T", "Kategori daerah", ["Tertinggal","Terdepan (perbatasan)","Terluar (pulau/pesisir terluar)","Terpencil/sulit dijangkau","Belum tahu"])}
+      ${sel("profil.listrik", "Listrik", ["Ada sepanjang hari","Terbatas","Tidak ada"])}
+      ${sel("profil.internet", "Internet di sekolah", ["Stabil","Tidak stabil","Tidak ada"])}
+    </div>
+    <div class="grid2" style="margin-top:6px">
+      ${cb("profil.proyektor", "Ada proyektor/TV yang bisa dipakai")}
+      ${cb("profil.printer", "Ada printer/fotokopi yang mudah dijangkau")}
+      ${cb("profil.lab", "Ada laboratorium/alat praktik")}
+      ${cb("profil.perpustakaan", "Ada perpustakaan atau pojok baca")}
+    </div>
+    <div class="grid2" style="margin-top:8px">
+      ${ta("profil.potensi", "Potensi dan kearifan lokal", {ph:"Contoh: desa nelayan, hutan bakau, kebun kelapa, tenun ikat, pasar mingguan, tradisi gotong royong membangun rumah", h:90})}
+      ${ta("profil.bahasaIbu", "Bahasa ibu murid", {ph:"Contoh: bahasa Manggarai; sebagian murid kelas rendah belum lancar berbahasa Indonesia", h:90})}
+    </div>
+  </section>`;
+};
+AFTER.profilKem = () => {
+  const p = P(); const k = state.profil.kementerian;
+  if (p.kementerian !== k && !p.mapel) { p.kementerian = k; p.jenjang = JENJANG[k][1]; p.kelas = KELAS[p.jenjang][3] || KELAS[p.jenjang][0]; p.menitJP = MENIT[p.jenjang]; p.kbc = k === "kemenag"; }
+};
+
+/* ---- 2. Paket ---- */
+RENDER[2] = () => {
+  const p = P(), opts = mapelOptions(p);
+  const list = state.pkgs.map((q, i) => `<div class="row" style="justify-content:space-between;border:1px solid ${i === state.active ? "var(--teal)" : "var(--line)"};background:${i === state.active ? "var(--teal-soft)" : "#fff"};border-radius:10px;padding:8px 10px;margin:6px 0">
+    <span><b>${esc(mapelName(q) || "Paket baru (belum diisi)")}</b><br><span class="small muted">${q.kementerian === "kemenag" ? "Kemenag" : "Kemendikdasmen"} · ${esc(q.jenjang)} kelas ${esc(q.kelas)} · Fase ${faseOf(q)}${q.kelasRangkap ? " · rangkap" : ""}</span></span>
+    <span class="row">${i === state.active ? '<span class="pill ok">Aktif</span>' : `<button class="btn sm" data-act="pkgPick" data-arg="${i}">Pilih</button>`}${state.pkgs.length > 1 ? `<button class="btn sm danger" data-act="pkgDel" data-arg="${i}">Hapus</button>` : ""}</span></div>`).join("");
+  const days = [1,2,3,4,5,6].map(d => `<div><label class="f">${HARI[d]}</label><input class="in" type="number" min="0" max="12" data-bind="pkg.jadwal.${d}" data-num data-live="jpw" value="${esc(p.jadwal[d] || 0)}"></div>`).join("");
+  return `<section class="card">${head(2, "Satu paket = satu mapel di satu kelas. Guru kelas atau guru yang memegang banyak mapel cukup menambah paket.", [
+    "Pilih jenjang, kelas, dan mapel. Fase terisi otomatis.",
+    "Isi <b>jadwal JP per hari</b> untuk mapel ini. Angka ini dipakai untuk menghitung JP setahun di Langkah 3.",
+    "Bila Anda mengajar <b>kelas rangkap</b>, tulis kelas yang digabung. AI akan membedakan kegiatan per tingkat.",
+    "Centang <b>Kurikulum Berbasis Cinta</b> untuk madrasah atau mapel PAI agar Panca Cinta terintegrasi."])}
+    <h3>Daftar paket</h3>${list}
+    <div class="row" style="margin:6px 0 16px"><button class="btn" data-act="pkgAdd">＋ Tambah paket baru</button><button class="btn" data-act="pkgCopy">⧉ Salin paket ini</button></div>
+    <h3>Rincian paket aktif</h3>
+    <div class="grid2">
+      ${sel("pkg.kementerian", "Kementerian", [["kemendikdasmen","Kemendikdasmen"],["kemenag","Kementerian Agama"]], {rerender:true, after:"pkgKem"})}
+      ${sel("pkg.jenjang", "Jenjang", JENJANG[p.kementerian], {rerender:true, after:"pkgJenjang"})}
+      ${sel("pkg.kelas", "Kelas / kelompok", KELAS[p.jenjang] || [], {rerender:true, after:"pkgKelas"})}
+      <div><label class="f">Fase</label><div class="in" style="background:var(--paper)">Fase ${faseOf(p)}</div></div>
+      ${sel("pkg.mapel", "Mata pelajaran", opts.concat([["__lain","Lainnya (ketik sendiri)"]]), {rerender:true, after:"pkgMapel", empty:"— pilih —"})}
+      ${p.mapel === "__lain" ? inp("pkg.mapelLain", "Nama mapel", {ph:"Contoh: Bahasa Daerah Manggarai"}) : ""}
+      ${p.mapel === "Pendidikan Agama dan Budi Pekerti" ? sel("pkg.agama", "Agama", AGAMA_LIST, {rerender:true, after:"pkgMapel"}) : ""}
+      ${inp("pkg.menitJP", "Menit per JP", {type:"number", num:true, hint:"(SD 35 · SMP 40 · SMA/SMK 45; PAUD: durasi kegiatan)"})}
+    </div>
+    <h3 style="margin-top:16px">Jadwal mapel ini (JP per hari)</h3>
+    <div class="grid3" style="grid-template-columns:repeat(3,1fr)">${days}</div>
+    <p class="small" id="jpwInfo"><b>${jpPerMinggu(p)} JP per minggu.</b> Isi 0 untuk hari tanpa jadwal mapel ini.</p>
+    <h3 style="margin-top:12px">Murid dan kelas</h3>
+    <div class="grid2">
+      ${inp("pkg.jumlahMurid", "Jumlah murid", {ph:"Contoh: 14"})}
+      ${inp("pkg.kelasRangkap", "Kelas rangkap", {ph:"Contoh: kelas 3 (6 murid) dan kelas 4 (8 murid) digabung", hint:"(kosongkan bila tidak)"})}
+    </div>
+    <div style="margin-top:10px">${ta("pkg.catatanMurid", "Catatan tentang murid", {ph:"Contoh: 4 murid belum lancar membaca; banyak murid membantu orang tua melaut pada pagi hari; 1 murid berkebutuhan khusus (low vision)", h:80})}</div>
+    <div class="note ${p.kbc ? "ok" : "info"}" style="margin-top:12px">${cb("pkg.kbc", "<b>Integrasikan Kurikulum Berbasis Cinta (Panca Cinta)</b> — dianjurkan untuk madrasah dan mapel PAI.")}</div>
+  </section>`;
+};
+LIVE.jpw = () => { const el = document.getElementById("jpwInfo"); if (el) el.innerHTML = `<b>${jpPerMinggu(P())} JP per minggu.</b> Isi 0 untuk hari tanpa jadwal mapel ini.`; renderNav(); };
+AFTER.pkgKem = () => { const p = P(); p.jenjang = JENJANG[p.kementerian][1]; p.kelas = KELAS[p.jenjang][0]; p.mapel = ""; p.menitJP = MENIT[p.jenjang]; p.kbc = p.kementerian === "kemenag"; };
+AFTER.pkgJenjang = () => { const p = P(); p.kelas = KELAS[p.jenjang][0]; p.menitJP = MENIT[p.jenjang]; if (!mapelOptions(p).includes(p.mapel) && p.mapel !== "__lain") p.mapel = ""; };
+AFTER.pkgKelas = () => { const p = P(); if (!mapelOptions(p).includes(p.mapel) && p.mapel !== "__lain") p.mapel = ""; };
+AFTER.pkgMapel = () => { const p = P(); if (p.kementerian === "kemenag" || (isAgamaSekolah(p) && p.agama === "Islam")) p.kbc = true; p.cpSumber = ""; };
+ACT.pkgPick = (i) => { state.active = +i; save(); renderAll(); };
+ACT.pkgAdd = () => { const q = newPkg(); q.kementerian = state.profil.kementerian; q.jenjang = P().jenjang; q.kelas = P().kelas; q.menitJP = P().menitJP; q.kbc = q.kementerian === "kemenag"; state.pkgs.push(q); state.active = state.pkgs.length - 1; save(); renderAll(); toast("Paket baru dibuat. Pilih mapelnya."); };
+ACT.pkgCopy = () => { const q = JSON.parse(JSON.stringify(P())); q.id = uid(); q.mapel = ""; q.mapelLain = ""; q.cpTeks = ""; q.elemen = []; q.atp = []; q.kktp = {}; q.modul = {}; q.lkpd = {}; q.asesmen = {rows:[]}; q.kisi = {tpIds:[], jumlah:10, bentuk:"Pilihan ganda", butir:[]}; q.analisis = {kunci:"", data:"", hasil:null}; state.pkgs.push(q); state.active = state.pkgs.length - 1; save(); renderAll(); toast("Kelas, jadwal, dan catatan murid disalin. Pilih mapelnya."); };
+ACT.pkgDel = (i) => confirmModal("Hapus paket?", "Semua isian paket <b>" + esc(mapelName(state.pkgs[+i]) || "ini") + "</b> akan hilang.", "Hapus", () => { state.pkgs.splice(+i, 1); state.active = 0; save(); renderAll(); });
+
+/* ---- 3. Kalender ---- */
+RENDER[3] = () => {
+  const p = P();
+  return `<section class="card">${head(3, "Hitung minggu efektif dan JP yang benar-benar tersedia. Hasilnya menjadi batas JP di ATP dan dasar Promes.", [
+    "Isi tanggal awal dan akhir tiap semester sesuai kalender pendidikan dari dinas/kanwil daerah Anda.",
+    "Tulis hari libur dan kegiatan yang meniadakan pelajaran, <b>satu baris satu kegiatan</b>: <code>DD-MM-YYYY Keterangan</code> atau <code>DD-MM-YYYY sampai DD-MM-YYYY Keterangan</code>.",
+    "Masukkan juga minggu asesmen sumatif akhir semester bila pada minggu itu pelajaran biasa ditiadakan.",
+    "JP dihitung dari jadwal mapel di Langkah 2. Kalender berlaku untuk semua paket; jadwal berbeda per paket."])}
+    ${jpPerMinggu(p) ? "" : `<div class="note warn">Jadwal JP mapel ini masih 0. Isi dulu di <b>Langkah 2</b>. <button class="btn sm" data-act="go" data-arg="2">Buka Langkah 2</button></div>`}
+    <div class="grid2">
+      ${inp("kalender.s1Mulai", "Semester 1 mulai", {type:"date", live:"kal"})}
+      ${inp("kalender.s1Akhir", "Semester 1 berakhir", {type:"date", live:"kal"})}
+      ${inp("kalender.s2Mulai", "Semester 2 mulai", {type:"date", live:"kal"})}
+      ${inp("kalender.s2Akhir", "Semester 2 berakhir", {type:"date", live:"kal"})}
+    </div>
+    <div style="margin-top:10px">${ta("kalender.libur", "Hari libur & kegiatan tanpa KBM", {live:"kal", h:150, ph:"17-08-2026 HUT Kemerdekaan RI\n07-12-2026 sampai 12-12-2026 Asesmen sumatif akhir semester"})}</div>
+    <div id="kalOut">${kalSummary(p)}</div>
+    <div class="row" style="margin-top:10px">${wordBtns("kalender")}</div>
+  </section>`;
+};
+function kalSummary(p){
+  const k = hitungKalender(p);
+  const bad = k.bad.length ? `<div class="note bad">Baris berikut tidak terbaca dan diabaikan:<br>${k.bad.map(esc).join("<br>")}</div>` : "";
+  const tbl = (s, title) => {
+    const byM = {}; k[s].weeks.forEach(w => { const kk = w.year + "-" + String(w.month).padStart(2, "0"); (byM[kk] = byM[kk] || {m:w.month, y:w.year, n:0, ef:0, jp:0}); byM[kk].n++; if (w.jp > 0) byM[kk].ef++; byM[kk].jp += w.jp; });
+    const rows = Object.keys(byM).sort().map(kk => { const b = byM[kk]; return `<tr><td>${BULAN_SINGKAT[b.m]} ${b.y}</td><td class="num">${b.n}</td><td class="num">${b.n - b.ef}</td><td class="num">${b.ef}</td><td class="num">${b.jp}</td></tr>`; }).join("");
+    return `<h3 style="margin-top:14px">${title}</h3><div class="tbl-wrap"><table class="t"><tr><th>Bulan</th><th class="num">Minggu</th><th class="num">Tidak efektif</th><th class="num">Efektif</th><th class="num">JP</th></tr>${rows || '<tr><td colspan="5" class="muted">Tanggal belum lengkap.</td></tr>'}<tr><th>Jumlah</th><th class="num">${k[s].weeks.length}</th><th class="num">${k[s].weeks.length - k[s].efektif}</th><th class="num">${k[s].efektif}</th><th class="num">${k[s].total}</th></tr></table></div>`;
+  };
+  return bad + tbl("s1", "Semester 1 (ganjil)") + tbl("s2", "Semester 2 (genap)") +
+    `<div class="note info"><b>JP tersedia setahun: ${k.s1.total + k.s2.total} JP</b> (Semester 1: ${k.s1.total} JP · Semester 2: ${k.s2.total} JP). Minggu dihitung efektif bila ada minimal satu pertemuan mapel ini.</div>`;
+}
+LIVE.kal = () => { const el = document.getElementById("kalOut"); if (el) el.innerHTML = kalSummary(P()); renderNav(); };
+
+/* ---- 4. CP ---- */
+RENDER[4] = () => {
+  const p = P();
+  if (!p.cpSumber) p.cpSumber = cpSumberSaran(p);
+  const sumberOpts = ["Keputusan Kepala BSKAP No. 046/H/KR/2025", "Keputusan Kepala BKPDM No. 020 Tahun 2026 (perubahan CP Agama & BP)", "Keputusan Dirjen Pendis No. 9941 Tahun 2025 (CP PAI & Bahasa Arab Madrasah)", "Kurikulum muatan lokal daerah/satuan pendidikan"];
+  const el = p.elemen.map((e, i) => `<div class="elem"><div class="row" style="justify-content:space-between"><b>Elemen ${i+1}</b><button class="btn sm danger" data-act="elDel" data-arg="${i}">Hapus</button></div>
+    <input class="in" style="margin:6px 0" data-bind="pkg.elemen.${i}.nama" value="${esc(e.nama)}" placeholder="Nama elemen">
+    <textarea class="in" data-bind="pkg.elemen.${i}.teks" placeholder="Teks CP elemen ini">${esc(e.teks)}</textarea></div>`).join("");
+  return `<section class="card">${head(4, "CP adalah sumber semua dokumen berikutnya. Aplikasi tidak mengarang isi CP: salin teks resminya.", [
+    "Buka dokumen CP resmi untuk mapel dan fase Anda (lihat sumber di bawah), salin bagian <b>Capaian Pembelajaran per elemen</b>.",
+    "Tempel di kotak teks. Pisahkan tiap elemen dengan <b>satu baris kosong</b>, dan tulis nama elemen di baris pertama tiap bagian.",
+    "Tekan <b>Pecah per elemen</b>. Memecah CP per elemen membuat ATP lebih rinci dan jawaban AI tidak terpotong.",
+    "Untuk mapel Agama dan Budi Pekerti di sekolah, pakai CP hasil perubahan Kepka BKPDM 020/2026. Untuk PAI dan Bahasa Arab di madrasah, pakai Kepdirjen Pendis 9941/2025."])}
+    ${needPkgInfo()}
+    <div class="grid2">${sel("pkg.cpSumber", "Sumber dasar hukum CP", sumberOpts.includes(p.cpSumber) ? sumberOpts : sumberOpts.concat([p.cpSumber]))}<div><label class="f">Disarankan untuk paket ini</label><div class="in" style="background:var(--paper)">${esc(cpSumberSaran(p))}</div></div></div>
+    <div class="note info small">Unduh dokumen CP dari kanal resmi Kemendikdasmen (untuk sekolah) atau Kemenag/Ditjen Pendis (untuk madrasah). Untuk CP Agama dan Budi Pekerti, BKPDM menegaskan bahwa perubahan 2026 hanya berlaku bagi mapel agama; mapel lain tetap memakai Kepka BSKAP 046/H/KR/2025.</div>
+    <label class="f" style="margin-top:8px">Teks CP resmi — ${esc(mapelName(p) || "mapel")} Fase ${faseOf(p)}</label>
+    <textarea class="in" data-bind="pkg.cpTeks" style="min-height:200px" placeholder="Nama Elemen 1&#10;Pada akhir Fase ..., murid mampu ...&#10;&#10;Nama Elemen 2&#10;...">${esc(p.cpTeks)}</textarea>
+    <div class="row" style="margin:8px 0 14px"><button class="btn pri" data-act="cpSplit">✂ Pecah per elemen (baris kosong)</button><button class="btn" data-act="elAdd">＋ Tambah elemen manual</button></div>
+    <h3>Elemen CP (${p.elemen.length})</h3>
+    ${el || '<p class="small muted">Belum ada elemen. Anda tetap bisa lanjut: ATP akan dibuat dari seluruh teks CP sebagai satu elemen.</p>'}
+    <div class="row" style="margin-top:10px">${wordBtns("cp")}</div>
+  </section>`;
+};
+ACT.cpSplit = () => {
+  const p = P(); const txt = p.cpTeks.trim();
+  if (!txt) { toast("Tempel teks CP terlebih dahulu."); return; }
+  const blocks = txt.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+  p.elemen = blocks.map((b, i) => { const lines = b.split(/\n/); return lines.length > 1 && lines[0].length < 120 ? {id:uid(), nama:lines[0].replace(/[:：]\s*$/, "").trim(), teks:lines.slice(1).join("\n").trim()} : {id:uid(), nama:"Elemen " + (i + 1), teks:b}; });
+  save(); render(); toast(p.elemen.length + " elemen dibuat. Periksa nama elemennya.");
+};
+ACT.elAdd = () => { P().elemen.push({id:uid(), nama:"", teks:""}); save(); render(); };
+ACT.elDel = (i) => { P().elemen.splice(+i, 1); save(); render(); };
+
+/* ============ LANGKAH 5–8 ============ */
+function tpLabel(p, t){ return "TP " + (p.atp.indexOf(t) + 1); }
+function elemenList(p){ return p.elemen.length ? p.elemen : [{id:"__all", nama:"Seluruh CP", teks:p.cpTeks}]; }
+function budgetBox(p){
+  const k = hitungKalender(p), a1 = atpJP(p, 1), a2 = atpJP(p, 2);
+  const c = (a, b) => `<span class="${a > b ? "over" : ""}">${a} / ${b} JP</span>`;
+  return `<div class="budget"><span>Semester 1: ${c(a1, k.s1.total)}</span><span>Semester 2: ${c(a2, k.s2.total)}</span><span>Setahun: ${c(a1 + a2, k.s1.total + k.s2.total)}</span></div>
+  ${(a1 > k.s1.total || a2 > k.s2.total) ? '<div class="note bad small">JP di ATP melebihi JP kalender. Kurangi JP beberapa TP atau pindahkan TP ke semester lain.</div>' : ""}`;
+}
+
+/* ---- 5. ATP ---- */
+RENDER[5] = () => {
+  const p = P(); const els = elemenList(p);
+  if (!p.atpOpsi) p.atpOpsi = {elemen:els[0].id, semester:"auto", jp:""};
+  if (!els.find(e => e.id === p.atpOpsi.elemen)) p.atpOpsi.elemen = els[0].id;
+  const k = hitungKalender(p); const sisa = Math.max(0, k.s1.total + k.s2.total - atpJP(p));
+  const rows = p.atp.map((t, i) => `<tr>
+    <td class="num">${i + 1}</td>
+    <td><textarea class="cell-in" data-bind="pkg.atp.${i}.elemen" rows="2">${esc(t.elemen)}</textarea></td>
+    <td style="min-width:230px"><textarea class="cell-in" data-bind="pkg.atp.${i}.tp" rows="3">${esc(t.tp)}</textarea></td>
+    <td style="min-width:150px"><textarea class="cell-in" data-bind="pkg.atp.${i}.materi" rows="2">${esc(t.materi)}</textarea></td>
+    <td class="num"><input class="cell-in" style="width:56px;text-align:center" type="number" min="0" data-bind="pkg.atp.${i}.jp" data-num data-live="budget" value="${esc(t.jp)}"></td>
+    <td class="num"><select class="cell-in" data-bind="pkg.atp.${i}.semester" data-live="budget"><option value="1" ${+t.semester === 1 ? "selected" : ""}>1</option><option value="2" ${+t.semester === 2 ? "selected" : ""}>2</option></select></td>
+    <td style="min-width:140px"><textarea class="cell-in" data-bind="pkg.atp.${i}.dplTxt" rows="2" placeholder="pisahkan dengan koma">${esc((t.dpl || []).join(", "))}</textarea></td>
+    ${p.kbc ? `<td style="min-width:120px"><textarea class="cell-in" data-bind="pkg.atp.${i}.cintaTxt" rows="2">${esc((t.cinta || []).join(", "))}</textarea></td>` : ""}
+    <td class="num"><button class="btn sm ghost" data-act="tpUp" data-arg="${i}" title="Naik">↑</button><button class="btn sm ghost" data-act="tpDown" data-arg="${i}" title="Turun">↓</button><button class="btn sm ghost danger" data-act="tpDel" data-arg="${i}" title="Hapus">✕</button></td></tr>`).join("");
+  const elOpts = els.map(e => [e.id, e.nama || "(elemen tanpa nama)"]);
+  const curEl = els.find(e => e.id === p.atpOpsi.elemen) || els[0];
+  const sudah = p.atp.filter(t => t.elemenId === curEl.id).length;
+  return `<section class="card">${head(5, "Turunkan CP menjadi Tujuan Pembelajaran yang berurutan. ATP adalah pusat: Prota, Promes, KKTP, modul, dan soal dibangun dari sini.", [
+    "Pilih satu elemen CP, isi perkiraan JP untuk elemen itu, lalu tekan <b>Buat ATP elemen ini</b>. Ulangi untuk elemen lain.",
+    "Periksa setiap TP: apakah kata kerjanya bisa diamati? apakah lingkup materinya jelas? Sunting langsung di tabel.",
+    "Atur JP dan semester sampai angka di kotak anggaran tidak merah.",
+    "AI gagal? Anda bisa mengetik TP sendiri dengan <b>Tambah TP manual</b>."])}
+    ${needPkgInfo()}
+    ${!p.cpTeks.trim() ? `<div class="note warn">Teks CP masih kosong. Isi di <b>Langkah 4</b> agar ATP sesuai CP resmi. <button class="btn sm" data-act="go" data-arg="4">Buka Langkah 4</button></div>` : ""}
+    <div class="sec"><h4>Anggaran JP dari kalender</h4><div id="budgetBox">${budgetBox(p)}</div></div>
+    <div class="sec"><h4>Buat ATP dengan AI</h4>
+      <div class="grid3">
+        ${sel("pkg.atpOpsi.elemen", "Elemen CP", elOpts, {rerender:true})}
+        ${sel("pkg.atpOpsi.semester", "Semester", [["auto","Atur otomatis"],["1","Semester 1"],["2","Semester 2"]])}
+        ${inp("pkg.atpOpsi.jp", "Perkiraan JP elemen ini", {type:"number", ph:"Sisa JP: " + sisa})}
+      </div>
+      <p class="small muted pre" style="max-height:90px;overflow:auto;margin:8px 0">${esc((curEl.teks || "").slice(0, 600))}</p>
+      <button class="btn ai ${sudah ? "done" : ""}" data-act="genATP">${sudah ? "↻ Buat ulang ATP elemen ini (" + sudah + " TP akan diganti)" : "✦ Buat ATP elemen ini (1 klik AI)"}</button>
+    </div>
+    <h3>Tabel ATP (${p.atp.length} TP)</h3>
+    <div class="tbl-wrap"><table class="t"><tr><th class="num">No</th><th>Elemen</th><th>Tujuan Pembelajaran</th><th>Materi pokok</th><th class="num">JP</th><th class="num">Smt</th><th>DPL</th>${p.kbc ? "<th>Panca Cinta</th>" : ""}<th class="num">Atur</th></tr>
+      ${rows || `<tr><td colspan="${p.kbc ? 9 : 8}" class="muted">Belum ada TP.</td></tr>`}</table></div>
+    <div class="row" style="margin-top:8px"><button class="btn" data-act="tpAdd">＋ Tambah TP manual</button></div>
+    <div class="row" style="margin-top:12px">${wordBtns("atp")}</div>
+  </section>`;
+};
+LIVE.budget = () => { const b = document.getElementById("budgetBox"); if (b) b.innerHTML = budgetBox(P()); };
+function syncTxtFields(p){
+  p.atp.forEach(t => {
+    if (t.dplTxt !== undefined) { t.dpl = t.dplTxt.split(",").map(x => x.trim()).filter(Boolean); delete t.dplTxt; }
+    if (t.cintaTxt !== undefined) { t.cinta = t.cintaTxt.split(",").map(x => x.trim()).filter(Boolean); delete t.cintaTxt; }
+    t.semester = +t.semester || 1; t.jp = +t.jp || 0;
+  });
+}
+ACT.tpAdd = () => { const p = P(); p.atp.push({id:uid(), elemenId:"", elemen:p.elemen[0] ? p.elemen[0].nama : "", tp:"", materi:"", jp:4, semester:1, dpl:[], cinta:[]}); save(); render(); };
+ACT.tpDel = (i) => { const p = P(); const t = p.atp[+i]; confirmModal("Hapus TP?", esc(t.tp || "TP ini") + "<br><span class='small muted'>KKTP, modul, dan LKPD untuk TP ini ikut terhapus.</span>", "Hapus", () => { delete p.kktp[t.id]; delete p.modul[t.id]; delete p.lkpd[t.id]; p.atp.splice(+i, 1); save(); render(); }); };
+ACT.tpUp = (i) => { const a = P().atp; i = +i; if (i > 0) { [a[i-1], a[i]] = [a[i], a[i-1]]; save(); render(); } };
+ACT.tpDown = (i) => { const a = P().atp; i = +i; if (i < a.length - 1) { [a[i+1], a[i]] = [a[i], a[i+1]]; save(); render(); } };
+ACT.genATP = () => {
+  const p = P(); syncTxtFields(p);
+  if (!stepDone(2)) { toast("Lengkapi Langkah 2 dulu."); return; }
+  const els = elemenList(p); const el = els.find(e => e.id === p.atpOpsi.elemen) || els[0];
+  if (!(el.teks || "").trim()) { toast("Teks CP elemen ini kosong. Isi di Langkah 4."); return; }
+  const k = hitungKalender(p);
+  const sisaEl = els.filter(e => !p.atp.some(t => t.elemenId === e.id) || e.id === el.id).length || 1;
+  const sisaJP = Math.max(0, k.s1.total + k.s2.total - atpJP(p) + p.atp.filter(t => t.elemenId === el.id).reduce((a, t) => a + (+t.jp || 0), 0));
+  const target = +p.atpOpsi.jp || Math.round(sisaJP / sisaEl) || 20;
+  const semRule = p.atpOpsi.semester === "auto" ? "Bagi TP ke semester 1 dan 2 secara wajar sesuai urutan dan JP yang tersedia." : "Semua TP untuk semester " + p.atpOpsi.semester + ".";
+  const prompt = [
+    "TUGAS: Turunkan Capaian Pembelajaran elemen berikut menjadi Tujuan Pembelajaran (TP) yang berurutan sebagai Alur Tujuan Pembelajaran.",
+    "Elemen: " + el.nama, "Teks CP elemen:\n" + el.teks,
+    "Anggaran: sekitar " + target + " JP untuk elemen ini. JP kalender: Semester 1 = " + k.s1.total + " JP, Semester 2 = " + k.s2.total + " JP. " + semRule,
+    "Ketentuan:",
+    "- Setiap TP memuat kompetensi dengan kata kerja operasional yang dapat diamati dan lingkup materi yang jelas. Boleh menyertakan konteks lokal murid.",
+    "- Urutkan dari yang mendasar ke yang kompleks. Satu TP biasanya 2–12 JP. Jumlah JP semua TP mendekati anggaran.",
+    "- Seluruh kompetensi dalam teks CP harus tercakup; jangan menambah kompetensi di luar CP.",
+    "- dpl: pilih 1–3 dimensi yang paling relevan, tulis persis dari daftar: " + DPL_SHORT.join(", ") + ".",
+    p.kbc ? "- cinta: pilih 1–2 nilai yang relevan, tulis persis dari daftar: " + PANCA_CINTA.join(", ") + "." : "- cinta: kosongkan ([]).",
+    'FORMAT JSON: {"tp":[{"tp":"Murid mampu ...","materi":"...","jp":6,"semester":1,"dpl":["Penalaran Kritis"],"cinta":[]}]}'
+  ].join("\n");
+  const go = () => runAI({label:"Menyusun ATP elemen " + el.nama + "...", prompt, onResult: (o) => {
+    const arr = o.tp || o.TP || o.atp || (Array.isArray(o) ? o : null); if (!Array.isArray(arr) || !arr.length) throw new Error("daftar TP kosong");
+    const keep = p.atp.filter(t => t.elemenId !== el.id);
+    const neu = arr.map(x => ({id:uid(), elemenId:el.id, elemen:el.nama, tp:asText(x.tp || x.tujuan), materi:asText(x.materi || x.materi_pokok), jp:+x.jp || 2, semester:p.atpOpsi.semester === "auto" ? (+x.semester === 2 ? 2 : 1) : +p.atpOpsi.semester, dpl:Array.isArray(x.dpl) ? x.dpl.map(String) : [], cinta:Array.isArray(x.cinta) ? x.cinta.map(String) : []}));
+    // sisipkan sesuai urutan elemen
+    const order = els.map(e => e.id); const all = keep.concat(neu);
+    all.sort((a, b) => { const ia = order.indexOf(a.elemenId), ib = order.indexOf(b.elemenId); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+    p.atp = all;
+    const ids = new Set(all.map(t => t.id));
+    ["kktp","modul","lkpd"].forEach(f => Object.keys(p[f]).forEach(id => { if (!ids.has(id)) delete p[f][id]; }));
+  }});
+  if (p.atp.some(t => t.elemenId === el.id)) confirmModal("Buat ulang ATP elemen ini?", "TP lama dari elemen <b>" + esc(el.nama) + "</b> akan diganti.", "Ya, buat ulang", go); else go();
+};
+
+/* ---- 6. Prota ---- */
+RENDER[6] = () => {
+  const p = P(); syncTxtFields(p); const k = hitungKalender(p);
+  const body = [1, 2].map(sem => {
+    const tps = p.atp.filter(t => +t.semester === sem);
+    const r = tps.map(t => `<tr><td class="num">${p.atp.indexOf(t) + 1}</td><td>${esc(t.elemen)}</td><td>${esc(t.tp)}</td><td>${esc(t.materi)}</td><td class="num">${t.jp}</td></tr>`).join("");
+    return `<tr><th colspan="5">Semester ${sem}</th></tr>${r || '<tr><td colspan="5" class="muted">Belum ada TP.</td></tr>'}<tr><td colspan="4"><b>Jumlah semester ${sem}</b> <span class="small muted">(tersedia ${k["s" + sem].total} JP)</span></td><td class="num"><b>${atpJP(p, sem)}</b></td></tr>`;
+  }).join("");
+  return `<section class="card">${head(6, "Prota disusun otomatis dari ATP. Ubah isi di Langkah 5 bila perlu.", null)}
+    ${needATP()}
+    <div class="tbl-wrap"><table class="t"><tr><th class="num">No</th><th>Elemen</th><th>Tujuan Pembelajaran</th><th>Materi pokok</th><th class="num">JP</th></tr>${body}
+    <tr><th colspan="4">Jumlah setahun</th><th class="num">${atpJP(p)}</th></tr></table></div>
+    <div class="row" style="margin-top:12px">${wordBtns("prota")}</div></section>`;
+};
+
+/* ---- 7. Promes ---- */
+function promesTable(p, sem, forWord){
+  const pr = sebarPromes(p)[sem]; const W = pr.weeks;
+  if (!W.length) return '<p class="muted">Tanggal semester belum diisi di Langkah 3.</p>';
+  const months = []; W.forEach(w => { const last = months[months.length - 1]; if (last && last.m === w.month && last.y === w.year) last.n++; else months.push({m:w.month, y:w.year, n:1}); });
+  const th1 = months.map(m => `<th class="num" colspan="${m.n}">${BULAN_SINGKAT[m.m]} ${String(m.y).slice(2)}</th>`).join("");
+  const th2 = W.map(w => `<th class="num" style="${w.jp ? "" : "background:#e9e4d6"}">${w.mInMonth}</th>`).join("");
+  const rows = pr.rows.map(r => `<tr><td class="num">${p.atp.indexOf(r.tp) + 1}</td><td style="min-width:${forWord ? 0 : 200}px">${esc(r.tp.tp)}</td><td class="num">${r.tp.jp}</td>${W.map(w => r.cells[w.start] ? `<td class="hl">${r.cells[w.start]}</td>` : `<td class="num" style="${w.jp ? "" : "background:#f1ede2"}"></td>`).join("")}</tr>${r.kurang ? `<tr><td></td><td colspan="${W.length + 2}" style="color:#b3261e">⚠ ${r.kurang} JP belum terjadwal</td></tr>` : ""}`).join("");
+  const tot = `<tr><th></th><th>JP tersedia per minggu</th><th class="num">${W.reduce((a, w) => a + w.jp, 0)}</th>${W.map(w => `<th class="num">${w.jp || "-"}</th>`).join("")}</tr>`;
+  return `<table class="t"><tr><th rowspan="2" class="num">No</th><th rowspan="2">Tujuan Pembelajaran</th><th rowspan="2" class="num">JP</th>${th1}</tr><tr>${th2}</tr>${rows || `<tr><td colspan="${W.length + 3}" class="muted">Belum ada TP di semester ini.</td></tr>`}${tot}</table>`;
+}
+RENDER[7] = () => {
+  const p = P(); syncTxtFields(p);
+  return `<section class="card">${head(7, "TP disebar ke minggu efektif sesuai urutan ATP dan JP per minggu. Kolom abu-abu adalah minggu tanpa pelajaran.", [
+    "Penyebaran dihitung ulang otomatis setiap ATP atau kalender berubah.",
+    "Bila muncul tanda ⚠ JP belum terjadwal, kurangi JP TP di Langkah 5 atau pindahkan TP ke semester lain.",
+    "Dokumen Word Promes dicetak mendatar (landscape)."])}
+    ${needATP()}
+    <h3>Semester 1</h3><div class="tbl-wrap">${promesTable(p, 1)}</div>
+    <h3 style="margin-top:14px">Semester 2</h3><div class="tbl-wrap">${promesTable(p, 2)}</div>
+    <div class="row" style="margin-top:12px">${wordBtns("promes")}</div></section>`;
+};
+
+/* ---- 8. KKTP ---- */
+const LEVEL = [["l1","Perlu bimbingan"],["l2","Cukup"],["l3","Baik"],["l4","Sangat baik"]];
+RENDER[8] = () => {
+  const p = P(); syncTxtFields(p);
+  if (!p.kktpPilih) p.kktpPilih = [];
+  if (p.kktpInterval == null) p.kktpInterval = "0–60: perlu bimbingan (remedial) · 61–70: cukup · 71–85: baik · 86–100: sangat baik (pengayaan). Sesuaikan dengan ketetapan satuan pendidikan.";
+  const pick = p.atp.map((t, i) => `<label class="chk"><input type="checkbox" data-kpick="${t.id}" ${p.kktpPilih.includes(t.id) ? "checked" : ""}><span><b>TP ${i + 1}</b> ${esc(t.tp)} ${p.kktp[t.id] ? '<span class="pill ok">ada</span>' : ""}</span></label>`).join("");
+  const list = p.atp.filter(t => p.kktp[t.id]).map(t => {
+    const k = p.kktp[t.id], i = p.atp.indexOf(t);
+    const rub = (k.rubrik || []).map((r, ri) => `<tr><td><textarea class="cell-in" data-bind="pkg.kktp.${t.id}.rubrik.${ri}.aspek">${esc(r.aspek)}</textarea></td>${LEVEL.map(([f]) => `<td><textarea class="cell-in" rows="3" data-bind="pkg.kktp.${t.id}.rubrik.${ri}.${f}">${esc(r[f])}</textarea></td>`).join("")}</tr>`).join("");
+    return `<div class="sec"><h4><span>TP ${i + 1}: ${esc(t.tp)}</span><button class="btn sm danger" data-act="kktpDel" data-arg="${t.id}">Hapus</button></h4>
+      <label class="f">Kriteria ketercapaian (satu baris satu kriteria)</label><textarea class="in" data-bind="pkg.kktp.${t.id}.kriteriaTxt">${esc((k.kriteria || []).join("\n"))}</textarea>
+      <label class="f" style="margin-top:8px">Rubrik</label><div class="tbl-wrap"><table class="t"><tr><th>Aspek</th>${LEVEL.map(l => `<th>${l[1]}</th>`).join("")}</tr>${rub}</table></div>
+      <label class="f" style="margin-top:8px">Tindak lanjut</label><textarea class="in" data-bind="pkg.kktp.${t.id}.tindakLanjut">${esc(k.tindakLanjut || "")}</textarea></div>`;
+  }).join("");
+  return `<section class="card">${head(8, "Kriteria untuk menilai apakah TP sudah tercapai, lengkap dengan rubrik empat tingkat.", [
+    "Centang TP yang ingin dibuatkan KKTP (paling banyak 4 per klik agar jawaban AI tidak terpotong).",
+    "Tekan <b>Buat KKTP</b>, lalu sunting kriteria dan rubrik sesuai kelas Anda.",
+    "Interval nilai di bawah dapat diubah sesuai ketetapan sekolah/madrasah."])}
+    ${needATP()}
+    <div class="sec"><h4>Pilih TP <span class="row"><button class="btn sm" data-act="kPickNone">Kosongkan</button><button class="btn sm" data-act="kPickTodo">Pilih yang belum ada</button></span></h4>${pick || '<p class="muted small">Belum ada TP.</p>'}
+      <button class="btn ai" data-act="genKKTP" style="margin-top:8px">✦ Buat KKTP untuk TP terpilih</button></div>
+    ${ta("pkg.kktpInterval", "Interval nilai dan tindak lanjut umum", {h:60})}
+    <h3 style="margin-top:14px">KKTP tersusun (${Object.keys(p.kktp).length})</h3>${list || '<p class="muted small">Belum ada.</p>'}
+    <div class="row" style="margin-top:12px">${wordBtns("kktp")}</div></section>`;
+};
+document.addEventListener("input", ev => {
+  const id = ev.target.dataset && ev.target.dataset.kpick; if (!id) return;
+  const p = P(); p.kktpPilih = p.kktpPilih.filter(x => x !== id); if (ev.target.checked) p.kktpPilih.push(id); save();
+});
+ACT.kPickNone = () => { P().kktpPilih = []; save(); render(); };
+ACT.kPickTodo = () => { const p = P(); p.kktpPilih = p.atp.filter(t => !p.kktp[t.id]).slice(0, 4).map(t => t.id); save(); render(); };
+ACT.kktpDel = (id) => { delete P().kktp[id]; save(); render(); };
+function syncKKTP(p){ Object.values(p.kktp).forEach(k => { if (k.kriteriaTxt !== undefined) { k.kriteria = k.kriteriaTxt.split(/\n/).map(x => x.trim()).filter(Boolean); delete k.kriteriaTxt; } }); }
+ACT.genKKTP = () => {
+  const p = P(); const tps = p.atp.filter(t => p.kktpPilih.includes(t.id));
+  if (!tps.length) { toast("Centang minimal satu TP."); return; }
+  if (tps.length > 4) { toast("Pilih paling banyak 4 TP per klik."); return; }
+  const prompt = [
+    "TUGAS: Susun Kriteria Ketercapaian Tujuan Pembelajaran (KKTP) untuk setiap TP berikut, memakai pendekatan rubrik empat tingkat.",
+    tps.map((t, i) => "[" + (i + 1) + "] " + t.tp + " (materi: " + t.materi + ")").join("\n"),
+    "Ketentuan: 3–5 kriteria per TP yang dapat diamati; rubrik 3–4 aspek; deskripsi tiap tingkat konkret dan berbeda jelas; tindak lanjut singkat untuk murid yang belum dan sudah mencapai. Untuk kelas rangkap, kriteria tetap per TP.",
+    'FORMAT JSON: {"kktp":[{"no":1,"kriteria":["..."],"rubrik":[{"aspek":"...","l1":"Perlu bimbingan: ...","l2":"Cukup: ...","l3":"Baik: ...","l4":"Sangat baik: ..."}],"tindakLanjut":"..."}]}',
+    "Isi l1–l4 tanpa awalan nama tingkat."
+  ].join("\n");
+  runAI({label:"Menyusun KKTP...", prompt, onResult: (o) => {
+    const arr = o.kktp || (Array.isArray(o) ? o : null); if (!Array.isArray(arr) || !arr.length) throw new Error("KKTP kosong");
+    arr.forEach((x, i) => { const t = tps[(+x.no || i + 1) - 1] || tps[i]; if (!t) return;
+      p.kktp[t.id] = {kriteria:(x.kriteria || []).map(asText), rubrik:(x.rubrik || []).map(r => ({aspek:asText(r.aspek), l1:asText(r.l1), l2:asText(r.l2), l3:asText(r.l3), l4:asText(r.l4)})), tindakLanjut:asText(x.tindakLanjut || x.tindak_lanjut)}; });
+    p.kktpPilih = [];
+  }});
+};
+
+/* ============ LANGKAH 9–13 ============ */
+function tpSelect(bind, p){
+  const cur = getPath(bind);
+  return `<div><label class="f">Tujuan Pembelajaran</label><select class="in" data-bind="${bind}" data-rerender>${p.atp.map((t, i) => `<option value="${t.id}" ${cur === t.id ? "selected" : ""}>TP ${i + 1}: ${esc(t.tp.slice(0, 110))}</option>`).join("")}</select></div>`;
+}
+function curTP(p, bind){ let id = getPath(bind); let t = p.atp.find(x => x.id === id); if (!t && p.atp[0]) { t = p.atp[0]; setPath(bind, t.id); } return t; }
+function linesArea(bind, label, arr, h){ return `<div><label class="f">${label} <small>(satu baris satu butir)</small></label><textarea class="in" data-bind="${bind}" style="min-height:${h || 80}px">${esc((arr || []).map(asText).join("\n"))}</textarea></div>`; }
+function toLines(v){ return Array.isArray(v) ? v.map(asText) : String(v || "").split(/\n/).map(x => x.trim()).filter(Boolean); }
+
+/* ---- 9. Modul ajar ---- */
+const MODUL_PARTS = [
+  {k:"identifikasi", t:"Identifikasi", d:"murid, materi, DPL" },
+  {k:"desain", t:"Desain Pembelajaran", d:"lintas disiplin, praktik pedagogis, kemitraan, lingkungan, digital"},
+  {k:"pengalaman", t:"Pengalaman Belajar", d:"awal, memahami, mengaplikasi, merefleksi, penutup"},
+  {k:"asesmen", t:"Asesmen", d:"awal, proses, akhir"},
+  {k:"lampiran", t:"Lampiran", d:"rubrik, bahan bacaan, glosarium, alat & bahan"}
+];
+const FIELD_LABEL = {murid:"Kesiapan dan karakteristik murid", materi:"Analisis materi pelajaran", dpl:"Dimensi Profil Lulusan", cinta:"Panca Cinta", rangkap:"Strategi kelas rangkap",
+  lintas_disiplin:"Keterkaitan lintas disiplin ilmu", topik:"Topik pembelajaran", praktik_pedagogis:"Praktik pedagogis (model, strategi, metode)", kemitraan:"Kemitraan pembelajaran", lingkungan:"Lingkungan pembelajaran", digital:"Pemanfaatan digital",
+  awal:"Asesmen awal", proses:"Asesmen proses (formatif)", akhir:"Asesmen akhir (sumatif)",
+  bahan_bacaan:"Bahan bacaan guru dan murid", glosarium:"Glosarium", media:"Alat, bahan, dan media dari lingkungan sekitar", rubrik:"Rubrik penilaian",
+  dimensi:"Dimensi", nilai:"Nilai", wujud:"Wujud dalam pembelajaran", istilah:"Istilah", arti:"Arti", aspek:"Aspek", l1:"Perlu bimbingan", l2:"Cukup", l3:"Baik", l4:"Sangat baik",
+  ke:"Pertemuan", kegiatan_awal:"Kegiatan awal", memahami:"Memahami", mengaplikasi:"Mengaplikasi", merefleksi:"Merefleksi", penutup:"Kegiatan penutup", diferensiasi:"Diferensiasi / kelas rangkap"};
+function lbl(k){ return FIELD_LABEL[k] || k.replace(/_/g, " ").replace(/^./, c => c.toUpperCase()); }
+function editObj(base, obj){
+  return Object.keys(obj).map(k => {
+    const v = obj[k], path = base + "." + k;
+    if (Array.isArray(v) && v.length && typeof v[0] === "object") {
+      const cols = Object.keys(v[0]);
+      return `<label class="f" style="margin-top:8px">${esc(lbl(k))}</label><div class="tbl-wrap"><table class="t"><tr>${cols.map(c => `<th>${esc(lbl(c))}</th>`).join("")}</tr>${v.map((row, i) => `<tr>${cols.map(c => `<td><textarea class="cell-in" rows="${c === "ke" ? 1 : 3}" data-bind="${path}.${i}.${c}">${esc(asText(row[c]))}</textarea></td>`).join("")}</tr>`).join("")}</table></div>`;
+    }
+    return `<label class="f" style="margin-top:8px">${esc(lbl(k))}</label><textarea class="in" data-bind="${path}" style="min-height:${String(asText(v)).length > 260 ? 140 : 80}px">${esc(asText(v))}</textarea>`;
+  }).join("");
+}
+function modulOf(p, t){ if (!p.modul[t.id]) p.modul[t.id] = {tema:t.materi || "", pertemuan:+p.modulOpsi.pertemuan || 2, dalil:"", parts:{}}; return p.modul[t.id]; }
+RENDER[9] = () => {
+  const p = P(); if (!p.atp.length) return `<section class="card">${head(9, "Susun modul ajar per TP dengan pendekatan pembelajaran mendalam.", null)}${needATP()}</section>`;
+  const t = curTP(p, "pkg.modulOpsi.tpId"); const m = modulOf(p, t);
+  const jpPer = m.pertemuan ? Math.round((+t.jp || 0) / m.pertemuan * 10) / 10 : t.jp;
+  const parts = MODUL_PARTS.map((x, i) => {
+    const has = !!m.parts[x.k];
+    return `<div class="sec"><h4><span>${i + 1}. ${x.t} <span class="small muted">(${x.d})</span></span><button class="btn sm ai ${has ? "done" : ""}" data-act="genModul" data-arg="${x.k}">${has ? "↻ Buat ulang" : "✦ Klik " + (i + 1)}</button></h4>
+      ${x.k === "desain" ? `<div class="kv small" style="margin:4px 0 8px"><div>CP elemen</div><div>${esc((elemenList(p).find(e => e.id === t.elemenId) || {teks:p.cpTeks}).teks.slice(0, 500))}</div><div>Tujuan pembelajaran</div><div>${esc(t.tp)}</div></div>` : ""}
+      ${has ? editObj("pkg.modul." + t.id + ".parts." + x.k, m.parts[x.k]) : '<p class="small muted">Belum dibuat.</p>'}</div>`;
+  }).join("");
+  return `<section class="card">${head(9, "Modul ajar per TP dalam lima bagian: Identifikasi, Desain Pembelajaran, Pengalaman Belajar, Asesmen, dan Lampiran.", [
+    "Pilih TP, lalu sesuaikan topik dan jumlah pertemuan. Alokasi waktu dihitung dari JP TP dibagi jumlah pertemuan.",
+    "Tulis rencana Anda di <b>Instruksi khusus</b> (misalnya: \"pertemuan 2 belajar di pantai\") agar hasil AI sesuai kelas Anda.",
+    "Tekan Klik 1 sampai Klik 5 berurutan. Setiap bagian memakai hasil bagian sebelumnya agar modul utuh.",
+    "Semua isi bisa disunting langsung. Unduh Word setelah kelima bagian terisi."])}
+    <div class="grid2">${tpSelect("pkg.modulOpsi.tpId", p)}
+      ${inp("pkg.modul." + t.id + ".tema", "Topik / tema")}
+      ${inp("pkg.modul." + t.id + ".pertemuan", "Jumlah pertemuan", {type:"number", num:true, min:1})}
+      <div><label class="f">Alokasi waktu</label><div class="in" style="background:var(--paper)">${t.jp} JP × ${p.menitJP} menit · ±${jpPer} JP per pertemuan</div></div></div>
+    <div style="margin-top:8px">${ta("pkg.modulOpsi.instruksi", "Instruksi khusus untuk AI (berlaku untuk semua TP)", {ph:"Contoh: murid belajar di luar kelas memakai benda di sekitar sekolah; hindari tugas yang perlu dicetak; gunakan permainan tradisional", h:70})}</div>
+    ${isAgama(p) ? `<div class="note warn" style="margin-top:10px"><b>Ayat, hadis, atau kutipan kitab suci tidak dibuat oleh AI.</b> Tulis sendiri beserta sumbernya:<textarea class="in" style="margin-top:6px" data-bind="pkg.modul.${t.id}.dalil" placeholder="Contoh: QS ... ayat ... (tulis teks dan terjemahan dari mushaf/sumber sahih)">${esc(m.dalil || "")}</textarea></div>` : ""}
+    ${parts}
+    <div class="row" style="margin-top:12px">${wordBtns("modul")}</div></section>`;
+};
+ACT.genModul = (part) => {
+  const p = P(); const t = curTP(p, "pkg.modulOpsi.tpId"); const m = modulOf(p, t);
+  const el = elemenList(p).find(e => e.id === t.elemenId) || {nama:t.elemen, teks:p.cpTeks};
+  const prev = Object.keys(m.parts).filter(k => k !== part).map(k => k.toUpperCase() + ": " + JSON.stringify(m.parts[k]).slice(0, 1800)).join("\n");
+  const base = [
+    "MODUL AJAR PEMBELAJARAN MENDALAM untuk satu TP.",
+    "Elemen CP: " + el.nama + "\nTeks CP: " + (el.teks || "").slice(0, 1500),
+    "TP: " + t.tp, "Materi pokok: " + t.materi, "Topik: " + (m.tema || t.materi),
+    "DPL terkait: " + (t.dpl || []).join(", ") + (p.kbc ? "\nPanca Cinta terkait: " + (t.cinta || []).join(", ") : ""),
+    "Alokasi: " + t.jp + " JP (" + p.menitJP + " menit/JP) dalam " + m.pertemuan + " pertemuan.",
+    "Instruksi khusus guru: " + (p.modulOpsi.instruksi || "(tidak ada)"),
+    prev ? "BAGIAN YANG SUDAH ADA (jaga konsistensi):\n" + prev : ""
+  ].join("\n");
+  const kbcLine = p.kbc ? ',"cinta":[{"nilai":"Cinta Ilmu","wujud":"..."}]' : "";
+  const spec = {
+    identifikasi: "TUGAS: tulis bagian IDENTIFIKASI.\n- murid: kesiapan, pengetahuan awal, minat, latar belakang, dan kebutuhan belajar murid (pakai catatan guru dan konteks daerah).\n- materi: jenis pengetahuan, relevansi dengan kehidupan murid di daerahnya, tingkat kesulitan, struktur materi, integrasi nilai dan karakter.\n- dpl: dimensi yang dikembangkan dan wujudnya.\n- rangkap: strategi bila kelas rangkap (tulis \"Tidak ada kelas rangkap\" bila tidak).\n" + 'FORMAT JSON: {"murid":"...","materi":"...","dpl":[{"dimensi":"...","wujud":"..."}]' + kbcLine + ',"rangkap":"..."}',
+    desain: "TUGAS: tulis bagian DESAIN PEMBELAJARAN.\n- lintas_disiplin, topik, praktik_pedagogis (model/strategi/metode yang mendukung pembelajaran mendalam), kemitraan (orang tua, tokoh adat/agama, nelayan/petani, puskesmas, dsb. yang ada di sekitar), lingkungan (ruang fisik, budaya belajar; manfaatkan alam sekitar), digital (bila sarana terbatas, tulis alternatif tanpa perangkat digital).\n" + 'FORMAT JSON: {"lintas_disiplin":"...","topik":"...","praktik_pedagogis":"...","kemitraan":"...","lingkungan":"...","digital":"..."}',
+    pengalaman: "TUGAS: tulis bagian PENGALAMAN BELAJAR untuk " + m.pertemuan + " pertemuan. Setiap pertemuan memuat kegiatan_awal (orientasi, apersepsi, motivasi; boleh memakai bahasa ibu murid), memahami, mengaplikasi, merefleksi, penutup, serta diferensiasi (termasuk pembedaan tingkat kelas bila kelas rangkap). Tulis langkah bernomor yang konkret dengan perkiraan menit, dan tandai prinsip [berkesadaran]/[bermakna]/[menggembirakan] di kegiatan yang relevan.\n" + 'FORMAT JSON: {"pertemuan":[{"ke":1,"kegiatan_awal":"1. ... (10 menit)","memahami":"...","mengaplikasi":"...","merefleksi":"...","penutup":"...","diferensiasi":"..."}]}',
+    asesmen: "TUGAS: tulis bagian ASESMEN. Untuk awal, proses (formatif), dan akhir (sumatif): sebutkan tujuan, teknik, instrumen, dan contoh butir/tugas singkat. Instrumen harus bisa dipakai tanpa cetak (misalnya ditulis di papan, lisan, unjuk kerja).\n" + 'FORMAT JSON: {"awal":"...","proses":"...","akhir":"..."}',
+    lampiran: "TUGAS: tulis bagian LAMPIRAN: rubrik penilaian 3–4 aspek, bahan bacaan ringkas untuk guru dan murid (sederhana, sesuai usia), glosarium 4–8 istilah, serta alat dan bahan dari lingkungan sekitar. Jangan mencantumkan judul buku atau tautan yang tidak pasti.\n" + 'FORMAT JSON: {"rubrik":[{"aspek":"...","l1":"...","l2":"...","l3":"...","l4":"..."}],"bahan_bacaan":"...","glosarium":[{"istilah":"...","arti":"..."}],"media":"..."}'
+  }[part];
+  runAI({label:"Menyusun " + MODUL_PARTS.find(x => x.k === part).t + "...", prompt: base + "\n\n" + spec, onResult: (o) => {
+    if (!o || typeof o !== "object") throw new Error("bukan objek");
+    if (part === "pengalaman" && !Array.isArray(o.pertemuan)) throw new Error("daftar pertemuan kosong");
+    m.parts[part] = o;
+  }});
+};
+
+/* ---- 10. LKPD ---- */
+RENDER[10] = () => {
+  const p = P(); if (!p.atp.length) return `<section class="card">${head(10, "Lembar kerja murid per TP.", null)}${needATP()}</section>`;
+  const t = curTP(p, "pkg.lkpdTp"); const L = p.lkpd[t.id];
+  let body = '<p class="small muted">Belum dibuat.</p>';
+  if (L) {
+    const base = "pkg.lkpd." + t.id;
+    body = `${inp(base + ".judul", "Judul")}<div style="margin-top:8px">${ta(base + ".tujuan", "Tujuan", {h:60})}</div>
+      <div class="grid2" style="margin-top:8px">${linesArea(base + ".petunjukTxt", "Petunjuk", L.petunjuk)}${linesArea(base + ".alatTxt", "Alat dan bahan", L.alat_bahan)}</div>
+      ${(L.kegiatan || []).map((k, i) => `<div class="sec"><h4>Kegiatan ${i + 1}</h4><div class="grid2">${inp(base + ".kegiatan." + i + ".judul", "Judul kegiatan")}${inp(base + ".kegiatan." + i + ".untuk", "Untuk", {ph:"Semua murid / Kelas 3 / Kelas 4"})}</div>
+        <div class="grid2" style="margin-top:8px">${linesArea(base + ".kegiatan." + i + ".langkahTxt", "Langkah", k.langkah, 100)}${linesArea(base + ".kegiatan." + i + ".pertanyaanTxt", "Pertanyaan / tugas", k.pertanyaan, 100)}</div></div>`).join("")}
+      ${linesArea(base + ".refleksiTxt", "Refleksi murid", L.refleksi)}`;
+  }
+  return `<section class="card">${head(10, "Lembar kerja murid yang bisa ditulis di papan atau buku tulis bila tidak bisa mencetak.", [
+    "Pilih TP lalu tekan Buat LKPD. Bila Anda sudah membuat modul untuk TP ini, LKPD menyesuaikan kegiatan modul.",
+    "Untuk kelas rangkap, AI membuat kegiatan berbeda per tingkat kelas (lihat kolom <b>Untuk</b>).",
+    "Sunting bahasa agar sesuai kemampuan membaca murid Anda."])}
+    <div class="grid2">${tpSelect("pkg.lkpdTp", p)}<div style="align-self:end"><button class="btn ai ${L ? "done" : ""}" data-act="genLKPD">${L ? "↻ Buat ulang LKPD" : "✦ Buat LKPD (1 klik AI)"}</button></div></div>
+    <div style="margin-top:12px">${body}</div>
+    <div class="row" style="margin-top:12px">${wordBtns("lkpd")}</div></section>`;
+};
+function syncLKPD(p){
+  Object.values(p.lkpd || {}).forEach(L => {
+    [["petunjukTxt","petunjuk"],["alatTxt","alat_bahan"],["refleksiTxt","refleksi"]].forEach(([a, b]) => { if (L[a] !== undefined) { L[b] = toLines(L[a]); delete L[a]; } });
+    (L.kegiatan || []).forEach(k => { if (k.langkahTxt !== undefined) { k.langkah = toLines(k.langkahTxt); delete k.langkahTxt; } if (k.pertanyaanTxt !== undefined) { k.pertanyaan = toLines(k.pertanyaanTxt); delete k.pertanyaanTxt; } });
+  });
+}
+ACT.genLKPD = () => {
+  const p = P(); const t = curTP(p, "pkg.lkpdTp"); const m = p.modul[t.id];
+  const prompt = [
+    "TUGAS: Susun Lembar Kerja Murid (LKPD) untuk TP berikut. Bahasa sederhana sesuai usia murid kelas " + p.kelas + ".",
+    "TP: " + t.tp, "Materi: " + t.materi,
+    m && m.parts.pengalaman ? "Kegiatan di modul ajar: " + JSON.stringify(m.parts.pengalaman).slice(0, 1800) : "",
+    "Ketentuan: 2–3 kegiatan yang memakai benda dan situasi di sekitar murid; bisa dikerjakan di buku tulis tanpa dicetak; pertanyaan dari mudah ke menantang; ada refleksi singkat. Bila kelas rangkap, buat kegiatan terpisah per tingkat kelas dan isi kolom untuk.",
+    'FORMAT JSON: {"judul":"...","tujuan":"...","petunjuk":["..."],"alat_bahan":["..."],"kegiatan":[{"judul":"...","untuk":"Semua murid","langkah":["..."],"pertanyaan":["..."]}],"refleksi":["..."]}'
+  ].join("\n");
+  runAI({label:"Menyusun LKPD...", prompt, onResult: (o) => {
+    if (!o.kegiatan) throw new Error("kegiatan kosong");
+    p.lkpd[t.id] = {judul:asText(o.judul), tujuan:asText(o.tujuan), petunjuk:toLines(o.petunjuk), alat_bahan:toLines(o.alat_bahan), kegiatan:(o.kegiatan || []).map(k => ({judul:asText(k.judul), untuk:asText(k.untuk || "Semua murid"), langkah:toLines(k.langkah), pertanyaan:toLines(k.pertanyaan)})), refleksi:toLines(o.refleksi)};
+  }});
+};
+
+/* ---- 11. Rencana asesmen ---- */
+const AS_COLS = [["tp","TP"],["diagnostik","Asesmen awal/diagnostik"],["formatif","Asesmen formatif"],["sumatif","Asesmen sumatif"],["teknik","Teknik"],["instrumen","Instrumen"],["waktu","Waktu"]];
+RENDER[11] = () => {
+  const p = P();
+  const rows = p.asesmen.rows.map((r, i) => `<tr>${AS_COLS.map(([c]) => `<td style="min-width:${c === "tp" ? 60 : 140}px"><textarea class="cell-in" rows="3" data-bind="pkg.asesmen.rows.${i}.${c}">${esc(r[c])}</textarea></td>`).join("")}<td class="num"><button class="btn sm ghost danger" data-act="asDel" data-arg="${i}">✕</button></td></tr>`).join("");
+  return `<section class="card">${head(11, "Rencana asesmen setahun: kapan dan bagaimana kemajuan murid diperiksa untuk setiap TP.", [
+    "Tekan tombol per semester. AI menyusun rencana untuk semua TP di semester itu (paling banyak 8 TP per klik; bila lebih, tekan lagi untuk sisanya).",
+    "Utamakan teknik yang tidak memerlukan cetak: observasi, unjuk kerja, tanya jawab, portofolio buku tulis."])}
+    ${needATP()}
+    <div class="row"><button class="btn ai" data-act="genAs" data-arg="1">✦ Rencana Semester 1</button><button class="btn ai" data-act="genAs" data-arg="2">✦ Rencana Semester 2</button><button class="btn" data-act="asAdd">＋ Baris manual</button>${p.asesmen.rows.length ? '<button class="btn danger" data-act="asClear">Kosongkan</button>' : ""}</div>
+    <div class="tbl-wrap" style="margin-top:10px"><table class="t"><tr>${AS_COLS.map(c => `<th>${c[1]}</th>`).join("")}<th></th></tr>${rows || `<tr><td colspan="8" class="muted">Belum ada.</td></tr>`}</table></div>
+    <div class="row" style="margin-top:12px">${wordBtns("asesmen")}</div></section>`;
+};
+ACT.asAdd = () => { P().asesmen.rows.push({tp:"", diagnostik:"", formatif:"", sumatif:"", teknik:"", instrumen:"", waktu:""}); save(); render(); };
+ACT.asDel = (i) => { P().asesmen.rows.splice(+i, 1); save(); render(); };
+ACT.asClear = () => confirmModal("Kosongkan rencana asesmen?", "Semua baris akan dihapus.", "Kosongkan", () => { P().asesmen.rows = []; save(); render(); });
+ACT.genAs = (sem) => {
+  const p = P(); const done = p.asesmen.rows.map(r => r.tp);
+  const tps = p.atp.filter(t => +t.semester === +sem && !done.includes(tpLabel(p, t))).slice(0, 8);
+  if (!tps.length) { toast("Semua TP semester " + sem + " sudah ada di rencana, atau belum ada TP."); return; }
+  const prompt = ["TUGAS: Susun rencana asesmen untuk TP berikut (semester " + sem + ").", tps.map(t => tpLabel(p, t) + ": " + t.tp).join("\n"),
+    "Untuk tiap TP isi: diagnostik (bila perlu), formatif, sumatif (boleh \"digabung dengan TP lain\" bila wajar), teknik, instrumen, dan waktu (minggu/pertemuan). Pakai teknik yang realistis tanpa cetak bila sarana terbatas.",
+    'FORMAT JSON: {"rows":[{"tp":"TP 1","diagnostik":"...","formatif":"...","sumatif":"...","teknik":"...","instrumen":"...","waktu":"..."}]}'].join("\n");
+  runAI({label:"Menyusun rencana asesmen...", prompt, onResult: (o) => {
+    const arr = o.rows || o.rencana || (Array.isArray(o) ? o : null); if (!Array.isArray(arr)) throw new Error("rencana kosong");
+    arr.forEach(r => p.asesmen.rows.push({tp:asText(r.tp), diagnostik:asText(r.diagnostik), formatif:asText(r.formatif), sumatif:asText(r.sumatif), teknik:asText(r.teknik), instrumen:asText(r.instrumen), waktu:asText(r.waktu)}));
+  }});
+};
+
+/* ---- 12. Kisi-kisi & kartu soal ---- */
+RENDER[12] = () => {
+  const p = P(); const K = p.kisi;
+  const pick = p.atp.map((t, i) => `<label class="chk"><input type="checkbox" data-kisipick="${t.id}" ${K.tpIds.includes(t.id) ? "checked" : ""}><span><b>TP ${i + 1}</b> ${esc(t.tp)}</span></label>`).join("");
+  const items = K.butir.map((b, i) => {
+    const base = "pkg.kisi.butir." + i;
+    return `<div class="sec"><h4><span>Soal ${i + 1} <span class="small muted">${esc(b.tp)} · ${esc(b.level)} · ${esc(b.bentuk)}</span></span><button class="btn sm danger" data-act="soalDel" data-arg="${i}">Hapus</button></h4>
+      ${inp(base + ".indikator", "Indikator soal")}
+      <div style="margin-top:6px">${ta(base + ".soal", "Soal / stimulus", {h:70})}</div>
+      ${b.opsi ? `<div class="grid2" style="margin-top:6px">${Object.keys(b.opsi).map(o => inp(base + ".opsi." + o, "Pilihan " + o)).join("")}</div>` : ""}
+      <div class="grid2" style="margin-top:6px">${inp(base + ".kunci", "Kunci jawaban")}${inp(base + ".level", "Level kognitif")}</div>
+      <div style="margin-top:6px">${ta(base + ".pembahasan", "Pembahasan / pedoman penskoran", {h:60})}</div></div>`;
+  }).join("");
+  return `<section class="card">${head(12, "Opsional, untuk guru yang memakai tes tertulis. Menghasilkan kisi-kisi, kartu soal, naskah soal, dan kunci.", [
+    "Centang TP yang diujikan, pilih bentuk dan jumlah soal (paling banyak 10 per klik).",
+    "Klik lagi untuk menambah soal. Soal baru ditambahkan di bawah yang lama.",
+    "Unduh <b>Naskah soal</b> (tanpa kunci) untuk murid, dan <b>Kisi-kisi &amp; kartu soal</b> untuk arsip guru."])}
+    ${needATP()}
+    <div class="sec"><h4>Pilih TP yang diujikan</h4>${pick || '<p class="muted small">Belum ada TP.</p>'}
+      <div class="grid3" style="margin-top:8px">${sel("pkg.kisi.bentuk", "Bentuk soal", ["Pilihan ganda","Pilihan ganda kompleks","Isian singkat","Uraian","Campuran"])}${inp("pkg.kisi.jumlah", "Jumlah soal per klik", {type:"number", num:true, min:1})}${sel("pkg.kisi.level", "Sebaran level", ["Seimbang (pemahaman, aplikasi, penalaran)","Lebih banyak pemahaman","Lebih banyak penalaran (HOTS)"])}</div>
+      <button class="btn ai" data-act="genSoal" style="margin-top:8px">✦ Buat soal</button></div>
+    <h3>Butir soal (${K.butir.length})</h3>${items || '<p class="muted small">Belum ada.</p>'}
+    <div class="row" style="margin-top:12px">${wordBtns("kisi")}${wordBtns("naskah", "Naskah soal (murid)")}</div></section>`;
+};
+document.addEventListener("input", ev => {
+  const id = ev.target.dataset && ev.target.dataset.kisipick; if (!id) return;
+  const K = P().kisi; K.tpIds = K.tpIds.filter(x => x !== id); if (ev.target.checked) K.tpIds.push(id); save();
+});
+ACT.soalDel = (i) => { P().kisi.butir.splice(+i, 1); save(); render(); };
+ACT.genSoal = () => {
+  const p = P(), K = p.kisi; const tps = p.atp.filter(t => K.tpIds.includes(t.id));
+  if (!tps.length) { toast("Centang minimal satu TP."); return; }
+  const n = Math.min(10, Math.max(1, +K.jumlah || 5));
+  const prompt = ["TUGAS: Buat " + n + " butir soal " + K.bentuk + " beserta kisi-kisinya untuk TP berikut. Sebaran level: " + (K.level || "seimbang") + ".",
+    tps.map(t => tpLabel(p, t) + ": " + t.tp).join("\n"),
+    "Ketentuan: konteks soal dekat dengan kehidupan murid di daerahnya; bahasa sederhana; satu kunci yang benar untuk pilihan ganda (4 pilihan A–D) dengan pengecoh yang masuk akal; level ditulis L1 (pemahaman), L2 (aplikasi), atau L3 (penalaran). Untuk soal non-pilihan-ganda, isi opsi dengan null dan tulis pedoman penskoran di pembahasan. Hindari soal yang memerlukan gambar.",
+    K.butir.length ? "Hindari mengulang soal yang sudah ada: " + K.butir.map(b => b.soal).join(" | ").slice(0, 1200) : "",
+    'FORMAT JSON: {"butir":[{"tp":"TP 1","indikator":"Disajikan ..., murid dapat ...","level":"L2","bentuk":"Pilihan ganda","soal":"...","opsi":{"A":"...","B":"...","C":"...","D":"..."},"kunci":"B","pembahasan":"..."}]}'].join("\n");
+  runAI({label:"Menyusun soal...", prompt, onResult: (o) => {
+    const arr = o.butir || o.soal || (Array.isArray(o) ? o : null); if (!Array.isArray(arr) || !arr.length) throw new Error("soal kosong");
+    arr.forEach(b => K.butir.push({tp:asText(b.tp), indikator:asText(b.indikator), level:asText(b.level), bentuk:asText(b.bentuk || K.bentuk), soal:asText(b.soal), opsi:b.opsi && typeof b.opsi === "object" ? Object.fromEntries(Object.entries(b.opsi).map(([a, v]) => [a, asText(v)])) : null, kunci:asText(b.kunci), pembahasan:asText(b.pembahasan)}));
+  }});
+};
+
+/* ---- 13. Analisis butir soal ---- */
+RENDER[13] = () => {
+  const p = P(); const A = p.analisis;
+  return `<section class="card">${head(13, "Hitung tingkat kesukaran, daya beda, efektivitas pengecoh, dan reliabilitas dari jawaban murid. Semua dihitung di perangkat, tanpa AI.", [
+    "Isi <b>kunci jawaban</b> berurutan, misalnya <code>ABCDA BDCAB</code> (spasi diabaikan). Tombol di bawah bisa mengambil kunci dari soal pilihan ganda di Langkah 12.",
+    "Isi <b>jawaban murid</b>, satu baris satu murid: <code>Nama; ABCDABDCAB</code>. Untuk soal non-pilihan-ganda, tulis skor 1/0 per butir (misalnya <code>Nama; 1101101110</code>) dan kosongkan kunci.",
+    "Tekan <b>Analisis</b>. Hasil dapat diunduh sebagai Word."])}
+    ${inp("pkg.analisis.kunci", "Kunci jawaban", {ph:"ABCDABDCAB"})}
+    <div class="row" style="margin:6px 0 10px"><button class="btn sm" data-act="kunciDariSoal">Ambil kunci dari Langkah 12</button></div>
+    ${ta("pkg.analisis.data", "Jawaban murid (satu baris satu murid)", {h:180, ph:"Ani; ABCDABDCAB\nBeni; ABCCABDCAA"})}
+    <div class="row" style="margin-top:8px"><button class="btn pri" data-act="analisis">Analisis</button></div>
+    <div id="anOut">${A.hasil ? analisisHTML(A.hasil) : ""}</div>
+    <div class="row" style="margin-top:12px">${wordBtns("analisis")}</div></section>`;
+};
+ACT.kunciDariSoal = () => { const p = P(); const k = p.kisi.butir.filter(b => b.opsi).map(b => (b.kunci || "?").trim().charAt(0).toUpperCase()).join(""); if (!k) { toast("Belum ada soal pilihan ganda di Langkah 12."); return; } p.analisis.kunci = k; save(); render(); };
+function hitungAnalisis(kunciRaw, dataRaw){
+  const kunci = String(kunciRaw || "").toUpperCase().replace(/[^A-Z]/g, "");
+  const rows = String(dataRaw || "").split(/\n/).map(l => l.trim()).filter(Boolean).map(l => {
+    const m = /^(.*?)[;,\t|]\s*(.+)$/.exec(l) || /^(\S+)\s+(.+)$/.exec(l);
+    return m ? {nama:m[1].trim(), jwb:m[2].toUpperCase().replace(/[\s,;]/g, "")} : null;
+  }).filter(Boolean);
+  if (!rows.length) throw new Error("Belum ada jawaban murid yang terbaca.");
+  const mode = kunci ? "pg" : "skor";
+  const n = kunci ? kunci.length : Math.max(...rows.map(r => r.jwb.length));
+  if (!n) throw new Error("Jumlah butir 0.");
+  const murid = rows.map(r => {
+    const s = []; for (let i = 0; i < n; i++) { const c = r.jwb.charAt(i); s.push(mode === "pg" ? (c && c === kunci[i] ? 1 : 0) : (c === "1" ? 1 : 0)); }
+    return {nama:r.nama, jwb:r.jwb, s, total:s.reduce((a, b) => a + b, 0)};
+  });
+  const N = murid.length, sorted = murid.slice().sort((a, b) => b.total - a.total);
+  const g = Math.max(1, Math.round(N * 0.27)); const up = sorted.slice(0, g), lo = sorted.slice(-g);
+  const items = []; let sumpq = 0;
+  for (let i = 0; i < n; i++) {
+    const benar = murid.reduce((a, m) => a + m.s[i], 0); const pp = benar / N; sumpq += pp * (1 - pp);
+    const D = (up.reduce((a, m) => a + m.s[i], 0) - lo.reduce((a, m) => a + m.s[i], 0)) / g;
+    const kes = pp < 0.3 ? "Sukar" : pp <= 0.7 ? "Sedang" : "Mudah";
+    const db = D < 0 ? "Negatif" : D < 0.2 ? "Jelek" : D < 0.4 ? "Cukup" : D < 0.7 ? "Baik" : "Baik sekali";
+    let peng = "";
+    if (mode === "pg") {
+      const opts = {}; murid.forEach(m => { const c = m.jwb.charAt(i) || "-"; opts[c] = (opts[c] || 0) + 1; });
+      const letters = [...new Set(["A","B","C","D"].concat(Object.keys(opts).filter(x => /[A-E]/.test(x))))].sort();
+      peng = letters.map(L => { const pct = Math.round((opts[L] || 0) / N * 100); return L + ":" + pct + "%" + (L === kunci[i] ? "*" : (pct < 5 ? "!" : "")); }).join(" ");
+    }
+    const kep = (D < 0.2 || pp < 0.1 || pp > 0.95) ? (D < 0 ? "Buang/ganti" : "Revisi") : "Pakai";
+    items.push({no:i + 1, benar, p:pp, kes, D, db, peng, kep});
+  }
+  const tot = murid.map(m => m.total), mean = tot.reduce((a, b) => a + b, 0) / N;
+  const varr = tot.reduce((a, b) => a + (b - mean) * (b - mean), 0) / (N > 1 ? N - 1 : 1);
+  const kr20 = n > 1 && varr > 0 ? (n / (n - 1)) * (1 - sumpq / varr) : null;
+  return {mode, n, N, g, items, murid:murid.map(m => ({nama:m.nama, total:m.total, nilai:Math.round(m.total / n * 100)})), mean, kr20};
+}
+function analisisHTML(h){
+  const it = h.items.map(x => `<tr><td class="num">${x.no}</td><td class="num">${x.benar}</td><td class="num">${x.p.toFixed(2)}</td><td>${x.kes}</td><td class="num">${x.D.toFixed(2)}</td><td>${x.db}</td>${h.mode === "pg" ? `<td class="small">${esc(x.peng)}</td>` : ""}<td><b>${x.kep}</b></td></tr>`).join("");
+  const mu = h.murid.map((m, i) => `<tr><td class="num">${i + 1}</td><td>${esc(m.nama)}</td><td class="num">${m.total}</td><td class="num">${m.nilai}</td></tr>`).join("");
+  const rel = h.kr20 == null ? "-" : h.kr20.toFixed(2) + (h.kr20 >= 0.7 ? " (reliabel)" : " (kurang reliabel)");
+  return `<div class="note info" style="margin-top:12px"><b>${h.N} murid · ${h.n} butir.</b> Rata-rata skor ${h.mean.toFixed(1)} · Reliabilitas KR-20: ${rel}. Kelompok atas/bawah masing-masing ${h.g} murid (27%).</div>
+    <h3>Analisis per butir</h3><div class="tbl-wrap"><table class="t"><tr><th class="num">No</th><th class="num">Benar</th><th class="num">p</th><th>Kesukaran</th><th class="num">D</th><th>Daya beda</th>${h.mode === "pg" ? "<th>Sebaran jawaban</th>" : ""}<th>Keputusan</th></tr>${it}</table></div>
+    <p class="small muted">p = proporsi murid yang menjawab benar (sukar &lt; 0,30; sedang 0,30–0,70; mudah &gt; 0,70). D = selisih proporsi benar kelompok atas dan bawah. * = kunci; ! = pengecoh dipilih kurang dari 5% murid (kurang berfungsi). Pada kelas kecil (di bawah 20 murid), angka ini hanya petunjuk awal.</p>
+    <h3>Nilai murid</h3><div class="tbl-wrap"><table class="t"><tr><th class="num">No</th><th>Nama</th><th class="num">Skor</th><th class="num">Nilai</th></tr>${mu}</table></div>`;
+}
+ACT.analisis = () => { const A = P().analisis; try { A.hasil = hitungAnalisis(A.kunci, A.data); save(); render(); toast("Analisis selesai."); } catch (e) { toast(e.message, 3500); } };
+
+/* ============ EKSPOR WORD ============ */
+function wordBtns(kind, label){
+  return `<button class="btn pri" data-act="wordDl" data-arg="${kind}">📄 Unduh Word${label ? ": " + esc(label) : ""}</button><button class="btn" data-act="wordCopy" data-arg="${kind}">📋 Salin untuk Word${label ? " (" + esc(label) + ")" : ""}</button>`;
+}
+function docShell(title, body, landscape){
+  const page = landscape ? "size:29.7cm 21cm;mso-page-orientation:landscape;margin:1.5cm 1.5cm 1.5cm 1.5cm;" : "size:21cm 29.7cm;margin:2cm 2cm 2cm 2.5cm;";
+  return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>${esc(title)}</title>
+  <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->
+  <style>@page Section1{${page}} div.Section1{page:Section1}
+  body{font-family:"Times New Roman",serif;font-size:12pt;line-height:1.35}
+  h1{font-size:14pt;text-align:center;margin:0 0 4pt} h2{font-size:12.5pt;margin:12pt 0 4pt} h3{font-size:12pt;margin:10pt 0 3pt}
+  p.sub{text-align:center;margin:0 0 10pt}
+  table{border-collapse:collapse;width:100%} td,th{border:1px solid #000;padding:3pt 5pt;vertical-align:top;font-size:11pt}
+  th{background:#e8e8e8} table.id td{border:none;padding:1pt 4pt} table.ttd td{border:none;text-align:center;padding:2pt}
+  .c,.num{text-align:center} td.hl{background:#d9ead3;text-align:center;font-weight:bold} .small{font-size:10pt} ol,ul{margin-top:2pt;margin-bottom:2pt}</style></head>
+  <body><div class="Section1">${body}</div></body></html>`;
+}
+function identitas(p, extra){
+  const pr = state.profil;
+  const rows = [[satuanLabel(p), pr.sekolah], ["Nama guru", pr.namaGuru], ["NIP/NUPTK", pr.nip], ["Mata pelajaran", mapelName(p)], ["Kelas / Fase", p.kelas + " / Fase " + faseOf(p) + (p.kelasRangkap ? " (kelas rangkap: " + p.kelasRangkap + ")" : "")], ["Tahun ajaran", pr.tahunAjaran]].concat(extra || []);
+  return `<table class="id">${rows.filter(r => r[1] !== undefined).map(r => `<tr><td style="width:30%">${esc(r[0])}</td><td style="width:2%">:</td><td>${esc(r[1] || "")}</td></tr>`).join("")}</table>`;
+}
+function landasan(p){
+  const r = regsFor(p);
+  if (!r.length) return "";
+  return `<h2>Landasan Regulasi</h2><ol class="small">${r.map(x => `<li>${esc(x)}</li>`).join("")}</ol>`;
+}
+function ttd(p){
+  const pr = state.profil;
+  return `<br><table class="ttd"><tr><td style="width:50%">Mengetahui,<br>Kepala ${satuanLabel(p)}</td><td>${esc(pr.kotaTtd || pr.kabupaten || "...........")}, ${fmtTgl(new Date())}<br>Guru ${esc(mapelName(p))}</td></tr>
+  <tr><td><br><br><br><b><u>${esc(pr.kepala || "..............................")}</u></b><br>NIP. ${esc(pr.nipKepala || "-")}</td><td><br><br><br><b><u>${esc(pr.namaGuru || "..............................")}</u></b><br>NIP. ${esc(pr.nip || "-")}</td></tr></table>`;
+}
+function judul(t, p){ return `<h1>${esc(t)}</h1><p class="sub">${esc(mapelName(p))} · Kelas ${esc(p.kelas)} · Fase ${faseOf(p)} · ${esc(state.profil.sekolah || "")}</p>`; }
+function rubrikTbl(rub){ return `<table><tr><th>Aspek</th>${LEVEL.map(l => `<th>${l[1]}</th>`).join("")}</tr>${(rub || []).map(r => `<tr><td>${nl2br(r.aspek)}</td>${LEVEL.map(([f]) => `<td>${nl2br(r[f])}</td>`).join("")}</tr>`).join("")}</table>`; }
+function ul(arr, ordered){ const a = toLines(arr); if (!a.length) return ""; const t = ordered ? "ol" : "ul"; return `<${t}>${a.map(x => `<li>${esc(x)}</li>`).join("")}</${t}>`; }
+function objHTML(o){
+  return Object.keys(o).map(k => {
+    const v = o[k];
+    if (Array.isArray(v) && v.length && typeof v[0] === "object") { const cols = Object.keys(v[0]); return `<h3>${esc(lbl(k))}</h3><table><tr>${cols.map(c => `<th>${esc(lbl(c))}</th>`).join("")}</tr>${v.map(r => `<tr>${cols.map(c => `<td>${nl2br(asText(r[c]))}</td>`).join("")}</tr>`).join("")}</table>`; }
+    return `<h3>${esc(lbl(k))}</h3><p>${nl2br(asText(v))}</p>`;
+  }).join("");
+}
+
+const DOC = {};
+DOC.kalender = (p) => {
+  const k = hitungKalender(p);
+  const sem = (s, t) => { const byM = {}; k[s].weeks.forEach(w => { const kk = w.year + "-" + String(w.month).padStart(2, "0"); (byM[kk] = byM[kk] || {m:w.month, y:w.year, n:0, ef:0, jp:0}); byM[kk].n++; if (w.jp) byM[kk].ef++; byM[kk].jp += w.jp; });
+    return `<h2>${t}</h2><table><tr><th>No</th><th>Bulan</th><th>Jumlah minggu</th><th>Minggu tidak efektif</th><th>Minggu efektif</th><th>JP</th></tr>${Object.keys(byM).sort().map((kk, i) => { const b = byM[kk]; return `<tr><td class="c">${i + 1}</td><td>${BULAN_SINGKAT[b.m]} ${b.y}</td><td class="c">${b.n}</td><td class="c">${b.n - b.ef}</td><td class="c">${b.ef}</td><td class="c">${b.jp}</td></tr>`; }).join("")}<tr><th colspan="2">Jumlah</th><th>${k[s].weeks.length}</th><th>${k[s].weeks.length - k[s].efektif}</th><th>${k[s].efektif}</th><th>${k[s].total}</th></tr></table>`; };
+  const jad = [1,2,3,4,5,6].filter(d => +p.jadwal[d]).map(d => HARI[d] + " " + p.jadwal[d] + " JP").join(", ");
+  const lib = String(state.kalender.libur || "").split(/\n/).filter(x => x.trim());
+  return {title:"Rincian Minggu dan JP Efektif", landscape:false, body: judul("RINCIAN MINGGU DAN JAM PELAJARAN EFEKTIF", p) + identitas(p, [["Jadwal mapel", jad + " (" + jpPerMinggu(p) + " JP/minggu)"]]) + landasan(p) + sem("s1", "Semester 1") + sem("s2", "Semester 2") +
+    `<p><b>Jumlah JP efektif setahun: ${k.s1.total + k.s2.total} JP.</b></p><h2>Hari libur dan kegiatan tanpa KBM</h2>${ul(lib)}` + ttd(p)};
+};
+DOC.cp = (p) => ({title:"Capaian Pembelajaran", body: judul("CAPAIAN PEMBELAJARAN", p) + identitas(p, [["Sumber CP", p.cpSumber || cpSumberSaran(p)]]) + landasan(p) +
+  (p.elemen.length ? `<table><tr><th style="width:25%">Elemen</th><th>Capaian Pembelajaran</th></tr>${p.elemen.map(e => `<tr><td>${esc(e.nama)}</td><td>${nl2br(e.teks)}</td></tr>`).join("")}</table>` : `<p>${nl2br(p.cpTeks)}</p>`) + ttd(p)});
+DOC.atp = (p) => ({title:"Alur Tujuan Pembelajaran", landscape:true, body: judul("ALUR TUJUAN PEMBELAJARAN (ATP)", p) + identitas(p) + landasan(p) +
+  `<table><tr><th>No</th><th>Elemen</th><th>Tujuan Pembelajaran</th><th>Materi pokok</th><th>JP</th><th>Smt</th><th>Dimensi Profil Lulusan</th>${p.kbc ? "<th>Panca Cinta</th>" : ""}</tr>${p.atp.map((t, i) => `<tr><td class="c">${i + 1}</td><td>${esc(t.elemen)}</td><td>${esc(t.tp)}</td><td>${esc(t.materi)}</td><td class="c">${t.jp}</td><td class="c">${t.semester}</td><td>${esc((t.dpl || []).join(", "))}</td>${p.kbc ? `<td>${esc((t.cinta || []).join(", "))}</td>` : ""}</tr>`).join("")}<tr><th colspan="4">Jumlah JP</th><th>${atpJP(p)}</th><th colspan="${p.kbc ? 3 : 2}"></th></tr></table>` + ttd(p)});
+DOC.prota = (p) => { const k = hitungKalender(p); return {title:"Program Tahunan", body: judul("PROGRAM TAHUNAN (PROTA)", p) + identitas(p) + landasan(p) +
+  `<table><tr><th>Smt</th><th>No</th><th>Tujuan Pembelajaran</th><th>Materi pokok</th><th>JP</th></tr>${[1,2].map(s => p.atp.filter(t => +t.semester === s).map((t, i, a) => `<tr>${i === 0 ? `<td class="c" rowspan="${a.length + 1}">${s}</td>` : ""}<td class="c">${p.atp.indexOf(t) + 1}</td><td>${esc(t.tp)}</td><td>${esc(t.materi)}</td><td class="c">${t.jp}</td></tr>`).join("") + (p.atp.some(t => +t.semester === s) ? `<tr><td colspan="3"><b>Jumlah semester ${s}</b> (tersedia ${k["s" + s].total} JP)</td><td class="c"><b>${atpJP(p, s)}</b></td></tr>` : "")).join("")}<tr><th colspan="4">Jumlah setahun</th><th>${atpJP(p)}</th></tr></table>` + ttd(p)}; };
+DOC.promes = (p) => ({title:"Program Semester", landscape:true, body: judul("PROGRAM SEMESTER (PROMES)", p) + identitas(p) + landasan(p) + `<h2>Semester 1</h2>${promesTable(p, 1, true)}<h2>Semester 2</h2>${promesTable(p, 2, true)}<p class="small">Angka di sel = JP yang dialokasikan pada minggu tersebut. Sel kosong berarsir = minggu tanpa pelajaran mapel ini.</p>` + ttd(p)});
+DOC.kktp = (p) => ({title:"KKTP", body: judul("KRITERIA KETERCAPAIAN TUJUAN PEMBELAJARAN (KKTP)", p) + identitas(p) + landasan(p) +
+  p.atp.filter(t => p.kktp[t.id]).map(t => { const k = p.kktp[t.id]; return `<h2>TP ${p.atp.indexOf(t) + 1}: ${esc(t.tp)}</h2><h3>Kriteria ketercapaian</h3>${ul(k.kriteria, true)}<h3>Rubrik</h3>${rubrikTbl(k.rubrik)}${k.tindakLanjut ? `<h3>Tindak lanjut</h3><p>${nl2br(k.tindakLanjut)}</p>` : ""}`; }).join("") +
+  `<h2>Interval nilai</h2><p>${nl2br(p.kktpInterval || "")}</p>` + ttd(p)});
+DOC.modul = (p) => {
+  const t = curTP(p, "pkg.modulOpsi.tpId"); if (!t) return null; const m = modulOf(p, t); const pa = m.parts;
+  const el = elemenList(p).find(e => e.id === t.elemenId) || {teks:p.cpTeks};
+  let b = judul("MODUL AJAR PEMBELAJARAN MENDALAM", p) + identitas(p, [["Topik", m.tema || t.materi], ["Alokasi waktu", t.jp + " JP × " + p.menitJP + " menit (" + m.pertemuan + " pertemuan)"]]) + landasan(p);
+  b += `<h2>A. Identifikasi</h2>${pa.identifikasi ? objHTML(pa.identifikasi) : "<p>-</p>"}`;
+  if (m.dalil) b += `<h3>Dalil/ayat/kutipan (ditulis guru)</h3><p>${nl2br(m.dalil)}</p>`;
+  b += `<h2>B. Desain Pembelajaran</h2><h3>Capaian Pembelajaran</h3><p>${nl2br(el.teks || "")}</p><h3>Tujuan Pembelajaran</h3><p>${esc(t.tp)}</p>${pa.desain ? objHTML(pa.desain) : ""}`;
+  b += `<h2>C. Pengalaman Belajar</h2>` + ((pa.pengalaman && pa.pengalaman.pertemuan) ? pa.pengalaman.pertemuan.map(x => `<h3>Pertemuan ${esc(x.ke)}</h3><table>${["kegiatan_awal","memahami","mengaplikasi","merefleksi","penutup","diferensiasi"].filter(f => x[f]).map(f => `<tr><td style="width:22%"><b>${esc(lbl(f))}</b></td><td>${nl2br(asText(x[f]))}</td></tr>`).join("")}</table>`).join("") : "<p>-</p>");
+  b += `<h2>D. Asesmen</h2>${pa.asesmen ? objHTML(pa.asesmen) : "<p>-</p>"}`;
+  if (p.kktp[t.id]) b += `<h3>Kriteria ketercapaian (KKTP)</h3>${ul(p.kktp[t.id].kriteria, true)}`;
+  b += `<h2>E. Lampiran</h2>${pa.lampiran ? objHTML(pa.lampiran) : "<p>-</p>"}`;
+  return {title:"Modul Ajar TP " + (p.atp.indexOf(t) + 1), body: b + ttd(p)};
+};
+DOC.lkpd = (p) => {
+  const t = curTP(p, "pkg.lkpdTp"); if (!t) return null; const L = p.lkpd[t.id]; if (!L) return null;
+  return {title:"LKPD TP " + (p.atp.indexOf(t) + 1), body: `<h1>LEMBAR KERJA MURID</h1><p class="sub">${esc(L.judul)}</p>
+    <table class="id"><tr><td style="width:25%">Nama</td><td>: ..............................................</td></tr><tr><td>Kelas</td><td>: ..............................................</td></tr><tr><td>Mata pelajaran</td><td>: ${esc(mapelName(p))}</td></tr></table>
+    <h2>Tujuan</h2><p>${nl2br(L.tujuan)}</p><h2>Petunjuk</h2>${ul(L.petunjuk, true)}${toLines(L.alat_bahan).length ? `<h2>Alat dan bahan</h2>${ul(L.alat_bahan)}` : ""}
+    ${(L.kegiatan || []).map((k, i) => `<h2>Kegiatan ${i + 1}: ${esc(k.judul)}${k.untuk && !/semua/i.test(k.untuk) ? " (" + esc(k.untuk) + ")" : ""}</h2><h3>Langkah</h3>${ul(k.langkah, true)}<h3>Jawablah</h3>${toLines(k.pertanyaan).map((q, j) => `<p>${j + 1}. ${esc(q)}</p><p>.................................................................................................................</p>`).join("")}`).join("")}
+    <h2>Refleksi</h2>${toLines(L.refleksi).map(q => `<p>${esc(q)}</p><p>.................................................................................................................</p>`).join("")}`};
+};
+DOC.asesmen = (p) => ({title:"Rencana Asesmen", landscape:true, body: judul("RENCANA ASESMEN", p) + identitas(p) + landasan(p) + `<table><tr>${AS_COLS.map(c => `<th>${c[1]}</th>`).join("")}</tr>${p.asesmen.rows.map(r => `<tr>${AS_COLS.map(([c]) => `<td>${nl2br(r[c])}</td>`).join("")}</tr>`).join("")}</table>` + ttd(p)});
+DOC.kisi = (p) => { const B = p.kisi.butir; return {title:"Kisi-kisi dan Kartu Soal", body: judul("KISI-KISI DAN KARTU SOAL", p) + identitas(p) + landasan(p) +
+  `<h2>Kisi-kisi</h2><table><tr><th>No</th><th>TP</th><th>Indikator soal</th><th>Level</th><th>Bentuk</th><th>Kunci</th></tr>${B.map((b, i) => `<tr><td class="c">${i + 1}</td><td>${esc(b.tp)}</td><td>${esc(b.indikator)}</td><td class="c">${esc(b.level)}</td><td>${esc(b.bentuk)}</td><td class="c">${esc(b.kunci)}</td></tr>`).join("")}</table>
+  <h2>Kartu soal</h2>${B.map((b, i) => `<table style="margin-bottom:8pt"><tr><th style="width:22%">No. soal</th><td>${i + 1}</td></tr><tr><th>TP</th><td>${esc(b.tp)}</td></tr><tr><th>Indikator</th><td>${esc(b.indikator)}</td></tr><tr><th>Level / bentuk</th><td>${esc(b.level)} / ${esc(b.bentuk)}</td></tr><tr><th>Soal</th><td>${nl2br(b.soal)}${b.opsi ? "<br>" + Object.entries(b.opsi).map(([o, v]) => esc(o) + ". " + esc(v)).join("<br>") : ""}</td></tr><tr><th>Kunci</th><td>${esc(b.kunci)}</td></tr><tr><th>Pembahasan / pedoman skor</th><td>${nl2br(b.pembahasan)}</td></tr></table>`).join("")}` + ttd(p)}; };
+DOC.naskah = (p) => ({title:"Naskah Soal", body: `<h1>${esc((state.profil.sekolah || "").toUpperCase())}</h1><p class="sub">Asesmen ${esc(mapelName(p))} · Kelas ${esc(p.kelas)} · Tahun ajaran ${esc(state.profil.tahunAjaran)}</p>
+  <table class="id"><tr><td style="width:20%">Nama</td><td>: ........................................</td><td style="width:20%">Kelas</td><td>: ............</td></tr></table><p><b>Petunjuk:</b> Bacalah setiap soal dengan teliti. Kerjakan yang mudah lebih dahulu.</p>
+  ${p.kisi.butir.map((b, i) => `<p>${i + 1}. ${nl2br(b.soal)}</p>${b.opsi ? `<p style="margin-left:18pt">${Object.entries(b.opsi).map(([o, v]) => esc(o) + ". " + esc(v)).join("<br>")}</p>` : "<p>.................................................................................................................</p>"}`).join("")}`});
+DOC.analisis = (p) => { const h = p.analisis.hasil; if (!h) return null; return {title:"Analisis Butir Soal", body: judul("ANALISIS BUTIR SOAL", p) + identitas(p) + landasan(p) + analisisHTML(h).replace(/class="tbl-wrap"/g, "").replace(/class="note info"/g, "") + ttd(p)}; };
+
+function buildDoc(kind){
+  const p = P(); syncTxtFields(p); syncKKTP(p); syncLKPD(p);
+  const d = DOC[kind] && DOC[kind](p);
+  if (!d) { toast("Belum ada isi untuk diunduh di langkah ini."); return null; }
+  d.body = d.body.replace(/<table(?![^>]*class="(?:id|ttd)")([^>]*)>/g, '<table border="1" cellspacing="0" cellpadding="4"$1>');
+  return d;
+}
+ACT.wordDl = (kind) => {
+  const d = buildDoc(kind); if (!d) return;
+  const html = docShell(d.title, d.body, d.landscape);
+  const nama = (d.title + " " + mapelName(P()) + " kelas " + P().kelas).replace(/[^\w\-]+/g, "_").slice(0, 80);
+  downloadBlob(new Blob(["﻿", html], {type:"application/msword"}), nama + ".doc");
+  toast("Dokumen Word diunduh. Bila Word bertanya, pilih Aktifkan Pengeditan.", 3500);
+};
+ACT.wordCopy = (kind) => {
+  const d = buildDoc(kind); if (!d) return;
+  const html = docShell(d.title, d.body, d.landscape);
+  const plain = d.body.replace(/<br\s*\/?>/g, "\n").replace(/<\/(p|tr|h\d|li)>/g, "\n").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+  if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+    navigator.clipboard.write([new ClipboardItem({"text/html": new Blob([html], {type:"text/html"}), "text/plain": new Blob([plain], {type:"text/plain"})})]).then(() => toast("Tersalin. Tempel di Word atau Google Dokumen."), () => copyRich(d.body));
+  } else copyRich(d.body);
+};
+function copyRich(body){
+  const div = document.createElement("div"); div.innerHTML = body; div.style.position = "fixed"; div.style.left = "-9999px"; document.body.appendChild(div);
+  const r = document.createRange(); r.selectNodeContents(div); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  try { document.execCommand("copy"); toast("Tersalin. Tempel di Word atau Google Dokumen."); } catch (e) { toast("Gagal menyalin. Pakai Unduh Word."); }
+  s.removeAllRanges(); div.remove();
+}
+
+/* ============ DATA CONTOH ============ */
+function loadSample(){
+  state = defaultState();
+  Object.assign(state.profil, {kementerian:"kemendikdasmen", namaGuru:"Maria Ngadha, S.Pd.", nip:"-", sekolah:"SD Negeri Contoh Pesisir (fiktif)", npsn:"", kepala:"Yohanes Bata, S.Pd.", nipKepala:"-",
+    desa:"Desa Tanjung Harapan", kabupaten:"Kabupaten Contoh", provinsi:"Nusa Tenggara Timur", kotaTtd:"Tanjung Harapan", daerah3T:true, jenis3T:"Terluar (pulau/pesisir terluar)",
+    listrik:"Terbatas", internet:"Tidak ada", proyektor:false, printer:false, lab:false, perpustakaan:true,
+    potensi:"Desa nelayan di pesisir; hutan bakau; rumput laut; kebun kelapa dan jagung; tenun ikat; gotong royong menarik perahu", bahasaIbu:"Bahasa daerah setempat; sebagian murid kelas 3 belum lancar berbahasa Indonesia"});
+  const p = newPkg();
+  Object.assign(p, {kementerian:"kemendikdasmen", jenjang:"SD", kelas:"4", mapel:"Ilmu Pengetahuan Alam dan Sosial (IPAS)", menitJP:35, jadwal:{1:0,2:3,3:0,4:2,5:0,6:0},
+    jumlahMurid:"14", kelasRangkap:"Kelas 3 (6 murid) dan kelas 4 (8 murid) belajar di satu ruang", catatanMurid:"Banyak murid membantu orang tua melaut atau ke kebun sepulang sekolah; 3 murid belum lancar membaca; murid senang belajar di luar kelas.", kbc:false,
+    cpSumber:"Keputusan Kepala BSKAP No. 046/H/KR/2025",
+    cpTeks:"Pemahaman IPAS\n[CONTOH UNTUK MENCOBA APLIKASI — bukan kutipan CP resmi. Ganti dengan teks CP resmi.] Murid mengidentifikasi bagian tumbuhan dan fungsinya, wujud zat dan perubahannya, gaya dan pengaruhnya dalam kehidupan sehari-hari, serta keragaman budaya, kearifan lokal, dan potensi daerah tempat tinggalnya.\n\nKeterampilan Proses\n[CONTOH] Murid mengamati fenomena di sekitarnya, mengajukan pertanyaan, melakukan penyelidikan sederhana, mencatat data, menarik kesimpulan, dan mengomunikasikan hasilnya secara lisan dan tertulis."});
+  p.elemen = [
+    {id:"e1", nama:"Pemahaman IPAS", teks:"[CONTOH] Murid mengidentifikasi bagian tumbuhan dan fungsinya, wujud zat dan perubahannya, gaya dan pengaruhnya dalam kehidupan sehari-hari, serta keragaman budaya, kearifan lokal, dan potensi daerah tempat tinggalnya."},
+    {id:"e2", nama:"Keterampilan Proses", teks:"[CONTOH] Murid mengamati fenomena di sekitarnya, mengajukan pertanyaan, melakukan penyelidikan sederhana, mencatat data, menarik kesimpulan, dan mengomunikasikan hasilnya secara lisan dan tertulis."}
+  ];
+  const T = (e, tp, materi, jp, sem, dpl) => ({id:uid(), elemenId:e, elemen:e === "e1" ? "Pemahaman IPAS" : "Keterampilan Proses", tp, materi, jp, semester:sem, dpl, cinta:[]});
+  p.atp = [
+    T("e1", "Murid mampu menyebutkan bagian tumbuhan (akar, batang, daun, bunga, buah) dan fungsinya dengan mengamati tumbuhan di sekitar sekolah, seperti kelapa dan bakau.", "Bagian tumbuhan dan fungsinya", 30, 1, ["Penalaran Kritis","Komunikasi"]),
+    T("e2", "Murid mampu mengamati dan mencatat pertumbuhan tanaman jagung selama dua minggu dalam tabel sederhana.", "Pengamatan dan pencatatan data", 20, 1, ["Kemandirian","Penalaran Kritis"]),
+    T("e1", "Murid mampu menjelaskan cara tumbuhan bakau menyesuaikan diri dengan lingkungan pantai dan manfaat bakau bagi desa.", "Adaptasi tumbuhan; manfaat hutan bakau", 30, 1, ["Penalaran Kritis","Kewargaan"]),
+    T("e1", "Murid mampu membedakan wujud zat padat, cair, dan gas melalui benda di rumah dan di laut.", "Wujud zat", 30, 1, ["Penalaran Kritis","Kolaborasi"]),
+    T("e1", "Murid mampu menjelaskan perubahan wujud zat (mencair, membeku, menguap, mengembun) melalui percobaan sederhana membuat garam dari air laut.", "Perubahan wujud zat", 35, 2, ["Penalaran Kritis","Kreativitas"]),
+    T("e1", "Murid mampu menunjukkan pengaruh gaya (dorongan dan tarikan) pada gerak benda melalui kegiatan menarik perahu dan permainan tradisional.", "Gaya dan gerak", 30, 2, ["Kolaborasi","Kesehatan"]),
+    T("e1", "Murid mampu menceritakan keragaman budaya dan kearifan lokal desanya, seperti tenun ikat dan gotong royong.", "Keragaman budaya dan kearifan lokal", 35, 2, ["Kewargaan","Komunikasi"]),
+    T("e2", "Murid mampu menyajikan hasil penyelidikan sederhana tentang potensi daerah (rumput laut atau kelapa) secara lisan dan tulisan.", "Mengomunikasikan hasil penyelidikan", 20, 2, ["Komunikasi","Kreativitas"])
+  ];
+  p.analisis = {kunci:"ABCDA BDCAB", data:"Ani; ABCDABDCAB\nBeni; ABCDABDCAA\nCika; ABCCABDCBB\nDion; ABDDABCCAB\nEka; CBCDABDDAB\nFani; ABCDACDCAB\nGusti; DBCAABDCBA\nHana; ABCDBBDCAB\nIwan; BACDABACAB\nJoni; ACCDABDCCB\nKiki; ABCDABDCAB\nLinus; ADBCABDBAD\nMega; ABCDABDCAB\nNoni; BBCDDBDCAC", hasil:null};
+  state.pkgs = [p]; state.active = 0; state.step = 1;
+}
+
+/* ============ MULAI ============ */
+(function init(){
+  const had = load();
+  if (!had) { try { localStorage.setItem(STORE_KEY + ".test", "1"); localStorage.removeItem(STORE_KEY + ".test"); } catch (e) { storageOK = false; } }
+  render();
+})();
+
+</script>
+</body>
+</html>
