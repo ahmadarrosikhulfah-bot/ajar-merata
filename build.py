@@ -8,6 +8,7 @@ Menghasilkan:
 import glob, json, os, re
 here = os.path.dirname(os.path.abspath(__file__))
 REPO = "ahmadarrosikhulfah-bot/ajar-merata"
+PAGES = "https://ahmadarrosikhulfah-bot.github.io/ajar-merata/app.js"
 CDN = f"https://cdn.jsdelivr.net/gh/{REPO}@main/app.js"
 
 js = "\n".join(open(f, encoding="utf-8").read() for f in sorted(glob.glob(os.path.join(here, "src", "0*.js"))))
@@ -42,7 +43,19 @@ w("canvas.html", f'''<!DOCTYPE html>
 </head>
 <body>
 <p id="am-loading" style="padding:24px">Memuat Ajar Merata...</p>
-<script src="{CDN}" onerror="document.getElementById('am-loading').textContent='Aplikasi belum termuat. Periksa koneksi internet lalu muat ulang halaman ini.'"></script>
+<script>
+(function () {{
+  var sumber = ["{PAGES}?j=" + Math.floor(Date.now() / 36e5), "{CDN}"];
+  function muat(i) {{
+    if (i >= sumber.length) {{ document.getElementById("am-loading").textContent = "Aplikasi belum termuat. Periksa koneksi internet lalu muat ulang halaman ini."; return; }}
+    var s = document.createElement("script");
+    s.src = sumber[i];
+    s.onerror = function () {{ muat(i + 1); }};
+    document.body.appendChild(s);
+  }}
+  muat(0);
+}})();
+</script>
 </body>
 </html>
 ''')

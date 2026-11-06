@@ -1713,6 +1713,7 @@ function loadSample(){
 
 /* ============ MULAI ============ */
 (function init(){
+  if (!document.getElementById("steps")) { document.body.insertAdjacentHTML("beforeend", '<p style="padding:24px">Ajar Merata gagal dimuat. Muat ulang halaman ini.</p>'); return; }
   const had = load();
   if (!had) { try { localStorage.setItem(STORE_KEY + ".test", "1"); localStorage.removeItem(STORE_KEY + ".test"); } catch (e) { storageOK = false; } }
   applyFont();
