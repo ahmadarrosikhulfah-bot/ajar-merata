@@ -5,8 +5,25 @@ function budgetBox(p){
   const k = hitungKalender(p), a1 = atpJP(p, 1), a2 = atpJP(p, 2);
   const c = (a, b) => `<span class="${a > b ? "over" : ""}">${a} / ${b} JP</span>`;
   return `<div class="budget"><span>Semester 1: ${c(a1, k.s1.total)}</span><span>Semester 2: ${c(a2, k.s2.total)}</span><span>Setahun: ${c(a1 + a2, k.s1.total + k.s2.total)}</span></div>
-  ${(a1 > k.s1.total || a2 > k.s2.total) ? '<div class="note bad small">JP di ATP melebihi JP kalender. Kurangi JP beberapa TP atau pindahkan TP ke semester lain.</div>' : ""}`;
+  ${(a1 > k.s1.total || a2 > k.s2.total) ? '<div class="note bad small">JP di ATP melebihi JP kalender. <button class="btn sm pri" data-act="fitJP">⚖ Sesuaikan JP dengan kalender</button> <span class="muted">atau ubah JP/semester di tabel.</span></div>' : ""}`;
 }
+
+/* Sesuaikan JP sekumpulan TP agar jumlahnya = target (proporsional, minimal 1 JP) */
+function scaleJP(list, target){
+  const sum = list.reduce((a, t) => a + (+t.jp || 0), 0);
+  if (!list.length || !sum || target <= 0) return;
+  list.forEach(t => { t.jp = Math.max(1, Math.round((+t.jp || 0) * target / sum)); });
+  let diff = target - list.reduce((a, t) => a + t.jp, 0);
+  const order = list.slice().sort((a, b) => b.jp - a.jp);
+  for (let i = 0; diff !== 0 && i < 1000; i++) { const t = order[i % order.length]; if (diff > 0) { t.jp++; diff--; } else if (t.jp > 1) { t.jp--; diff++; } }
+}
+function fitJPKalender(p){
+  const k = hitungKalender(p); let changed = false;
+  [1, 2].forEach(sem => { const list = p.atp.filter(t => +t.semester === sem), avail = k["s" + sem].total;
+    if (avail > 0 && list.length && atpJP(p, sem) > avail) { scaleJP(list, avail); changed = true; } });
+  return changed;
+}
+ACT.fitJP = () => { const p = P(); syncTxtFields(p); if (fitJPKalender(p)) { save(); render(); toast("JP sudah disesuaikan dengan kalender."); } else toast("JP sudah sesuai kalender."); };
 
 /* ---- 5. ATP ---- */
 RENDER[5] = () => {
@@ -88,11 +105,13 @@ ACT.genATP = () => {
   const go = () => runAI({label:"Menyusun ATP elemen " + el.nama + "...", prompt, onResult: (o) => {
     const arr = o.tp || o.TP || o.atp || (Array.isArray(o) ? o : null); if (!Array.isArray(arr) || !arr.length) throw new Error("daftar TP kosong");
     const keep = p.atp.filter(t => t.elemenId !== el.id);
-    const neu = arr.map(x => ({id:uid(), elemenId:el.id, elemen:el.nama, tp:asText(x.tp || x.tujuan), materi:asText(x.materi || x.materi_pokok), jp:+x.jp || 2, semester:p.atpOpsi.semester === "auto" ? (+x.semester === 2 ? 2 : 1) : +p.atpOpsi.semester, dpl:Array.isArray(x.dpl) ? x.dpl.map(String) : [], cinta:Array.isArray(x.cinta) ? x.cinta.map(String) : []}));
+    const neu0 = arr.map(x => ({id:uid(), elemenId:el.id, elemen:el.nama, tp:asText(x.tp || x.tujuan), materi:asText(x.materi || x.materi_pokok), jp:+x.jp || 2, semester:p.atpOpsi.semester === "auto" ? (+x.semester === 2 ? 2 : 1) : +p.atpOpsi.semester, dpl:Array.isArray(x.dpl) ? x.dpl.map(String) : [], cinta:Array.isArray(x.cinta) ? x.cinta.map(String) : []}));
+    const neu = neu0; scaleJP(neu, target);
     // sisipkan sesuai urutan elemen
     const order = els.map(e => e.id); const all = keep.concat(neu);
     all.sort((a, b) => { const ia = order.indexOf(a.elemenId), ib = order.indexOf(b.elemenId); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
     p.atp = all;
+    fitJPKalender(p);
     const ids = new Set(all.map(t => t.id));
     ["kktp","modul","lkpd"].forEach(f => Object.keys(p[f]).forEach(id => { if (!ids.has(id)) delete p[f][id]; }));
   }});
