@@ -11,7 +11,7 @@ Seluruh aplikasi berupa satu berkas `index.html`. Anda tidak perlu server, akun,
 1. **Mode salin-prompt.** Aplikasi menyiapkan perintah. Anda menyalinnya ke Gemini, ChatGPT, atau Meta AI di WhatsApp, lalu menempelkan jawabannya kembali ke aplikasi.
 2. **Kunci API Gemini pribadi.** Buat kunci gratis di [aistudio.google.com/apikey](https://aistudio.google.com/apikey), lalu tempel di Menu › Pengaturan AI. Kunci hanya tersimpan di perangkat Anda.
 
-**Lewat Gemini Canvas (AI langsung).** Buka link Canvas yang dibagikan pengelola. Di Canvas, AI berjalan dengan akun Google Anda sendiri.
+**Lewat Gemini Canvas (AI sekali klik).** Buka [share.gemini.google/lKV4p4D6IFDx](https://share.gemini.google/lKV4p4D6IFDx) dan masuk dengan akun Google. AI berjalan dengan kuota akun Google Anda sendiri, gratis.
 
 ## Alur 13 langkah
 

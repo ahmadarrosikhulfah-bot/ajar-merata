@@ -117,6 +117,7 @@ function openMenu(){
     <button class="btn" data-act="openGuide">📖 Cara pakai</button>
     <button class="btn" data-act="openWelcome">🏠 Layar sambutan</button>
     <button class="btn" data-act="openAISettings">⚙ Pengaturan AI</button>
+    ${IN_CANVAS ? "" : `<a class="btn" href="${CANVAS_URL}" target="_blank" rel="noopener">✦ Buka versi AI sekali klik (Gemini) ↗</a>`}
     <button class="btn" data-act="loadSample">🧪 Muat data contoh (SD kelas rangkap, IPAS)</button>
     <button class="btn danger" data-act="resetAll">✨ Mulai baru (hapus semua isian)</button>
   </div>

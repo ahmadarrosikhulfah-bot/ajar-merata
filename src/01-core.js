@@ -18,7 +18,8 @@ function setUserKey(v){ try { if (v) localStorage.setItem(USERKEY_STORE, v); els
 function aiLangsung(){ return IN_CANVAS || !!userKey(); }
 const AI_MODELS = ["gemini-3-flash-preview", "gemini-2.5-flash-preview-09-2025", "gemini-2.5-flash", "gemini-flash-latest"];
 
-const APP_VER = "1.0";
+const APP_VER = "1.1";
+const CANVAS_URL = "https://share.gemini.google/lKV4p4D6IFDx";
 const STORE_KEY = "ajarMerata.v1";
 const ACUAN_DICEK = "6 November 2026";
 

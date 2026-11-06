@@ -174,7 +174,8 @@ function setUserKey(v){ try { if (v) localStorage.setItem(USERKEY_STORE, v); els
 function aiLangsung(){ return IN_CANVAS || !!userKey(); }
 const AI_MODELS = ["gemini-3-flash-preview", "gemini-2.5-flash-preview-09-2025", "gemini-2.5-flash", "gemini-flash-latest"];
 
-const APP_VER = "1.0";
+const APP_VER = "1.1";
+const CANVAS_URL = "https://share.gemini.google/lKV4p4D6IFDx";
 const STORE_KEY = "ajarMerata.v1";
 const ACUAN_DICEK = "6 November 2026";
 
@@ -509,7 +510,7 @@ const CHATBOTS = [
 function manualPrompt(sys, full, opts){
   const all = sys + "\n\n=== TUGAS ===\n" + full;
   const why = !aiLangsung()
-    ? `<div class="note info small">Di halaman ini AI dijalankan lewat chatbot pilihan Anda, gratis. Ingin sekali klik? Buka versi Gemini Canvas, atau isi kunci API Gemini gratis di Menu › Pengaturan AI.</div>` : "";
+    ? `<div class="note info small">Di halaman ini AI dijalankan lewat chatbot pilihan Anda, gratis. Ingin sekali klik? <a class="btn sm pri" href="${CANVAS_URL}" target="_blank" rel="noopener" style="color:#fff">Buka versi AI sekali klik ↗</a><br><span class="muted">Unduh berkas .json dulu, lalu buka berkas itu di versi tersebut agar isian ikut pindah.</span></div>` : "";
   openLayer(`<div class="modal"><div class="mhead"><h2>${esc(opts.label || "Minta bantuan AI")}</h2><button class="btn sm" data-act="closeLayer">✕</button></div>${why}
     <div class="sec"><h4>1. Salin perintah</h4>
       <button class="btn pri" data-act="mpCopy" style="width:100%;justify-content:center">📋 Salin perintah untuk AI</button>
@@ -736,6 +737,7 @@ function openMenu(){
     <button class="btn" data-act="openGuide">📖 Cara pakai</button>
     <button class="btn" data-act="openWelcome">🏠 Layar sambutan</button>
     <button class="btn" data-act="openAISettings">⚙ Pengaturan AI</button>
+    ${IN_CANVAS ? "" : `<a class="btn" href="${CANVAS_URL}" target="_blank" rel="noopener">✦ Buka versi AI sekali klik (Gemini) ↗</a>`}
     <button class="btn" data-act="loadSample">🧪 Muat data contoh (SD kelas rangkap, IPAS)</button>
     <button class="btn danger" data-act="resetAll">✨ Mulai baru (hapus semua isian)</button>
   </div>

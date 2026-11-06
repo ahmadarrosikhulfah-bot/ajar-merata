@@ -120,7 +120,7 @@ const CHATBOTS = [
 function manualPrompt(sys, full, opts){
   const all = sys + "\n\n=== TUGAS ===\n" + full;
   const why = !aiLangsung()
-    ? `<div class="note info small">Di halaman ini AI dijalankan lewat chatbot pilihan Anda, gratis. Ingin sekali klik? Buka versi Gemini Canvas, atau isi kunci API Gemini gratis di Menu › Pengaturan AI.</div>` : "";
+    ? `<div class="note info small">Di halaman ini AI dijalankan lewat chatbot pilihan Anda, gratis. Ingin sekali klik? <a class="btn sm pri" href="${CANVAS_URL}" target="_blank" rel="noopener" style="color:#fff">Buka versi AI sekali klik ↗</a><br><span class="muted">Unduh berkas .json dulu, lalu buka berkas itu di versi tersebut agar isian ikut pindah.</span></div>` : "";
   openLayer(`<div class="modal"><div class="mhead"><h2>${esc(opts.label || "Minta bantuan AI")}</h2><button class="btn sm" data-act="closeLayer">✕</button></div>${why}
     <div class="sec"><h4>1. Salin perintah</h4>
       <button class="btn pri" data-act="mpCopy" style="width:100%;justify-content:center">📋 Salin perintah untuk AI</button>
